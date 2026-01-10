@@ -166,7 +166,6 @@
             line-height: 1.6;
             box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
             max-width: 75%;
-            position: relative;
         }
 
         .user-message {
@@ -214,45 +213,30 @@
             30% { transform: translateY(-10px); }
         }
 
-        .buttons-container {
-            padding: 15px 20px;
-            background: rgba(15, 15, 20, 0.8);
-            border-top: 1px solid rgba(0, 255, 255, 0.1);
-            max-height: 200px;
-            overflow-y: auto;
+        .question-suggestions {
+            margin-top: 20px;
+            animation: slideIn 0.4s ease-out;
         }
 
-        .buttons-container::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .buttons-container::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .buttons-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #00ffff 0%, #8a2be2 100%);
-            border-radius: 10px;
-        }
-
-        .buttons-label {
+        .suggestions-header {
             color: #00ffff;
             font-size: 0.85em;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
+            opacity: 0.9;
         }
 
-        .button-grid {
+        .suggestions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 8px;
         }
 
-        .faq-button {
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
-            border: 1px solid rgba(0, 255, 255, 0.3);
+        .suggestion-button {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.08) 0%, rgba(138, 43, 226, 0.08) 100%);
+            border: 1px solid rgba(0, 255, 255, 0.25);
             color: #00ffff;
             padding: 10px 14px;
             border-radius: 10px;
@@ -267,7 +251,7 @@
             gap: 8px;
         }
 
-        .faq-button::before {
+        .suggestion-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -278,19 +262,33 @@
             transition: left 0.5s ease;
         }
 
-        .faq-button:hover::before {
+        .suggestion-button:hover::before {
             left: 100%;
         }
 
-        .faq-button:hover {
+        .suggestion-button:hover {
             background: linear-gradient(135deg, rgba(0, 255, 255, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
             border-color: #00ffff;
             transform: translateX(5px);
             box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
         }
 
-        .faq-button:active {
+        .suggestion-button:active {
             transform: translateX(3px);
+        }
+
+        .suggestion-icon {
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+
+        .footer {
+            padding: 12px;
+            text-align: center;
+            background: rgba(10, 10, 15, 0.5);
+            border-top: 1px solid rgba(0, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.75em;
         }
 
         .welcome-message {
@@ -315,11 +313,6 @@
             color: #999;
             font-size: 0.95em;
             line-height: 1.6;
-        }
-
-        .button-icon {
-            font-size: 1.2em;
-            flex-shrink: 0;
         }
 
         strong {
@@ -382,29 +375,17 @@
                 font-size: 0.85em;
             }
 
-            .buttons-container {
-                padding: 12px 15px;
-                max-height: 180px;
-            }
-
-            .buttons-label {
-                font-size: 0.8em;
-                margin-bottom: 8px;
-            }
-
-            .button-grid {
+            .suggestions-grid {
                 grid-template-columns: 1fr;
-                gap: 6px;
             }
 
-            .faq-button {
-                padding: 10px 12px;
+            .suggestion-button {
                 font-size: 0.8em;
-                gap: 8px;
             }
 
-            .button-icon {
-                font-size: 1.1em;
+            .footer {
+                font-size: 0.7em;
+                padding: 10px;
             }
         }
 
@@ -445,13 +426,9 @@
                 font-size: 0.8em;
             }
 
-            .buttons-container {
-                max-height: 160px;
-            }
-
-            .faq-button {
-                padding: 9px 10px;
+            .suggestion-button {
                 font-size: 0.75em;
+                padding: 9px 12px;
             }
         }
 
@@ -465,13 +442,12 @@
                 padding: 8px 10px;
             }
 
-            .faq-button {
+            .suggestion-button {
                 font-size: 0.7em;
                 padding: 8px 10px;
             }
         }
 
-        /* Landscape orientation */
         @media (max-height: 500px) and (orientation: landscape) {
             .container {
                 max-height: 98vh;
@@ -490,10 +466,6 @@
                 height: 35px;
             }
 
-            .buttons-container {
-                max-height: 120px;
-            }
-
             .welcome-message {
                 padding: 20px;
             }
@@ -510,12 +482,9 @@
     <div class="container">
         <div class="header">
             <svg class="bot-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- Cute Qubit character -->
-                <!-- Outer orbit -->
                 <circle cx="50" cy="50" r="35" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.4">
                     <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
                 </circle>
-                <!-- Inner core (cute face) -->
                 <circle cx="50" cy="50" r="22" fill="url(#qubitGradient)"/>
                 <defs>
                     <linearGradient id="qubitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -523,12 +492,9 @@
                         <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.8" />
                     </linearGradient>
                 </defs>
-                <!-- Cute eyes -->
                 <circle cx="43" cy="47" r="3" fill="#000"/>
                 <circle cx="57" cy="47" r="3" fill="#000"/>
-                <!-- Cute smile -->
                 <path d="M 43 55 Q 50 60 57 55" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <!-- Electron particles -->
                 <circle cx="85" cy="50" r="4" fill="#ff00ff">
                     <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
                 </circle>
@@ -545,7 +511,6 @@
         <div class="chat-container" id="chatContainer">
             <div class="welcome-message">
                 <svg class="welcome-qubit" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Larger welcome qubit -->
                     <circle cx="50" cy="50" r="40" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.3">
                         <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite"/>
                     </circle>
@@ -562,7 +527,6 @@
                     <circle cx="42" cy="45" r="3.5" fill="#000"/>
                     <circle cx="58" cy="45" r="3.5" fill="#000"/>
                     <path d="M 42 54 Q 50 60 58 54" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    <!-- Sparkles -->
                     <circle cx="25" cy="25" r="2" fill="#00ffff" opacity="0.8">
                         <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
                     </circle>
@@ -574,53 +538,55 @@
                     </circle>
                 </svg>
                 <h2>Hi! I'm Qubit 👋</h2>
-                <p>Your friendly quantum guide to the Otten Group!<br>
-                Click any button below to learn about our research 🔬✨</p>
+                <p>Your friendly quantum guide to the Otten Group!</p>
+            </div>
+
+            <!-- Initial question suggestions -->
+            <div class="question-suggestions" id="initialSuggestions">
+                <div class="suggestions-header">💬 What would you like to know?</div>
+                <div class="suggestions-grid">
+                    <button class="suggestion-button" onclick="showAnswer(1)">
+                        <span class="suggestion-icon">👋</span>
+                        <span>Curious about Otten Group?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(2)">
+                        <span class="suggestion-icon">⚛️</span>
+                        <span>What algorithms do you develop?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(3)">
+                        <span class="suggestion-icon">🌌</span>
+                        <span>How do you simulate quantum systems?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(4)">
+                        <span class="suggestion-icon">🔍</span>
+                        <span>What is QCVV?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(5)">
+                        <span class="suggestion-icon">🛡️</span>
+                        <span>How do you handle errors?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(6)">
+                        <span class="suggestion-icon">🤝</span>
+                        <span>Do you collaborate with others?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(7)">
+                        <span class="suggestion-icon">🎓</span>
+                        <span>Is this lab promising?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(8)">
+                        <span class="suggestion-icon">📚</span>
+                        <span>Not sure if it's for me?</span>
+                    </button>
+                    <button class="suggestion-button" onclick="showAnswer(9)">
+                        <span class="suggestion-icon">🚀</span>
+                        <span>How do I get started?</span>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="buttons-container">
-            <div class="buttons-label">
-                💬 Ask me anything:
-            </div>
-            <div class="button-grid">
-                <button class="faq-button" onclick="showAnswer(1)">
-                    <span class="button-icon">👋</span>
-                    <span>Curious about Otten Group?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(2)">
-                    <span class="button-icon">⚛️</span>
-                    <span>What algorithms do you develop?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(3)">
-                    <span class="button-icon">🌌</span>
-                    <span>How do you simulate quantum systems?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(4)">
-                    <span class="button-icon">🔍</span>
-                    <span>What is QCVV?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(5)">
-                    <span class="button-icon">🛡️</span>
-                    <span>How do you handle errors?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(6)">
-                    <span class="button-icon">🤝</span>
-                    <span>Do you collaborate with others?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(7)">
-                    <span class="button-icon">🎓</span>
-                    <span>Is this lab promising?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(8)">
-                    <span class="button-icon">📚</span>
-                    <span>Not sure if it's for me?</span>
-                </button>
-                <button class="faq-button" onclick="showAnswer(9)">
-                    <span class="button-icon">🚀</span>
-                    <span>How do I get started?</span>
-                </button>
-            </div>
+        <div class="footer">
+            © 2026 h.koh
         </div>
     </div>
 
@@ -628,40 +594,61 @@
         const faqData = {
             1: {
                 question: "Hi—nice to meet you! Curious about the Otten Group?",
-                answer: "We are a <strong>theoretical quantum information science group</strong> at the University of Wisconsin–Madison, working toward making useful-scale quantum computers, quantum networks, and quantum sensors a reality."
+                answer: "We are a <strong>theoretical quantum information science group</strong> at the University of Wisconsin–Madison, working toward making useful-scale quantum computers, quantum networks, and quantum sensors a reality.",
+                nextQuestions: [2, 3, 7]
             },
             2: {
                 question: "What kind of quantum algorithms do you develop?",
-                answer: "We develop, analyze, and test quantum algorithms for <strong>quantum chemistry, quantum physics, and quantum machine learning</strong>, with a strong focus on what actually solves real problems—not just toy models."
+                answer: "We develop, analyze, and test quantum algorithms for <strong>quantum chemistry, quantum physics, and quantum machine learning</strong>, with a strong focus on what actually solves real problems—not just toy models.",
+                nextQuestions: [3, 4, 5]
             },
             3: {
                 question: "How do you simulate open quantum systems?",
-                answer: "Using numerical methods and high-performance computing, we simulate open quantum systems to understand <strong>noise, errors, and performance limits</strong> across different hardware platforms, including neutral atoms, semiconductor qubits, and superconducting qubits."
+                answer: "Using numerical methods and high-performance computing, we simulate open quantum systems to understand <strong>noise, errors, and performance limits</strong> across different hardware platforms, including neutral atoms, semiconductor qubits, and superconducting qubits.",
+                nextQuestions: [4, 5, 2]
             },
             4: {
                 question: "What is QCVV and why does it matter?",
-                answer: "We design <strong>QCVV (Characterization, Verification, and Validation) techniques</strong> to measure quantum system performance, understand error sources, and develop practical error-mitigation strategies that scale to real experimental devices."
+                answer: "We design <strong>QCVV (Characterization, Verification, and Validation) techniques</strong> to measure quantum system performance, understand error sources, and develop practical error-mitigation strategies that scale to real experimental devices.",
+                nextQuestions: [5, 3, 6]
             },
             5: {
                 question: "How do you approach error correction?",
-                answer: "By integrating quantum algorithms with fault-tolerant error-correction frameworks, we estimate the <strong>resources required for utility-scale quantum applications</strong> and identify the true bottlenecks in realistic implementations."
+                answer: "By integrating quantum algorithms with fault-tolerant error-correction frameworks, we estimate the <strong>resources required for utility-scale quantum applications</strong> and identify the true bottlenecks in realistic implementations.",
+                nextQuestions: [2, 4, 6]
             },
             6: {
                 question: "Do you collaborate with other research groups?",
-                answer: "Absolutely! Our work bridges theory and experiment, <strong>collaborating closely with experimental groups</strong> to ensure that our research contributes meaningfully to scientific discovery and industrial applications."
+                answer: "Absolutely! Our work bridges theory and experiment, <strong>collaborating closely with experimental groups</strong> to ensure that our research contributes meaningfully to scientific discovery and industrial applications.",
+                nextQuestions: [7, 8, 9]
             },
             7: {
                 question: "So... is this lab actually promising?",
-                answer: "<strong>Short answer: yes</strong>—and UW–Madison is a big part of why. Wisconsin has a strong ecosystem in quantum science, high-performance computing, and interdisciplinary research, making it an ideal place to work on problems that matter."
+                answer: "<strong>Short answer: yes</strong>—and UW–Madison is a big part of why. Wisconsin has a strong ecosystem in quantum science, high-performance computing, and interdisciplinary research, making it an ideal place to work on problems that matter.",
+                nextQuestions: [8, 9, 1]
             },
             8: {
                 question: "Still not sure if it's for you?",
-                answer: "You can always try reviewing quantum computing first:<br><br>• <strong>Introduction to Quantum Computing (PHYSICS 709)</strong><br>• <strong>Advanced Quantum Computing (PHYSICS)</strong><br>• Algorithm-focused courses<br><br>Think of them as a low-risk way to see if this field—and this group—fits you."
+                answer: "You can always try reviewing quantum computing first:<br><br>• <strong>Introduction to Quantum Computing (PHYSICS 709)</strong><br>• <strong>Advanced Quantum Computing (PHYSICS)</strong><br>• Algorithm-focused courses<br><br>Think of them as a low-risk way to see if this field—and this group—fits you.",
+                nextQuestions: [9, 7, 1]
             },
             9: {
                 question: "I'm interested! How do I get started?",
-                answer: "If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> that don't yet have clear answers, we're glad you're here—and we'd love to talk. <strong>Welcome to Wisconsin!</strong> 🎓<br><br>Feel free to reach out to discuss research opportunities!"
+                answer: "If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> that don't yet have clear answers, we're glad you're here—and we'd love to talk. <strong>Welcome to Wisconsin!</strong> 🎓<br><br>Feel free to reach out to discuss research opportunities!",
+                nextQuestions: [1, 2, 7]
             }
+        };
+
+        const questionLabels = {
+            1: { icon: "👋", text: "Curious about Otten Group?" },
+            2: { icon: "⚛️", text: "What algorithms do you develop?" },
+            3: { icon: "🌌", text: "How do you simulate quantum systems?" },
+            4: { icon: "🔍", text: "What is QCVV?" },
+            5: { icon: "🛡️", text: "How do you handle errors?" },
+            6: { icon: "🤝", text: "Do you collaborate with others?" },
+            7: { icon: "🎓", text: "Is this lab promising?" },
+            8: { icon: "📚", text: "Not sure if it's for me?" },
+            9: { icon: "🚀", text: "How do I get started?" }
         };
 
         const qubitSVG = `
@@ -705,11 +692,11 @@
             const chatContainer = document.getElementById('chatContainer');
             const data = faqData[id];
             
-            // Clear welcome message if it exists
+            // Clear welcome message and initial suggestions if they exist
             const welcome = chatContainer.querySelector('.welcome-message');
-            if (welcome) {
-                welcome.remove();
-            }
+            const initialSuggestions = document.getElementById('initialSuggestions');
+            if (welcome) welcome.remove();
+            if (initialSuggestions) initialSuggestions.remove();
             
             // Add bot message (question) - LEFT SIDE
             const botWrapper = document.createElement('div');
@@ -736,7 +723,7 @@
                 chatContainer.appendChild(typingWrapper);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
-                // Add user message (answer) all at once - RIGHT SIDE
+                // Add user message (answer) - RIGHT SIDE
                 setTimeout(() => {
                     typingWrapper.remove();
                     
@@ -748,6 +735,33 @@
                     `;
                     chatContainer.appendChild(userWrapper);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    // Add next question suggestions
+                    setTimeout(() => {
+                        const suggestionsDiv = document.createElement('div');
+                        suggestionsDiv.className = 'question-suggestions';
+                        
+                        let buttonsHTML = '';
+                        data.nextQuestions.forEach(qId => {
+                            const label = questionLabels[qId];
+                            buttonsHTML += `
+                                <button class="suggestion-button" onclick="showAnswer(${qId})">
+                                    <span class="suggestion-icon">${label.icon}</span>
+                                    <span>${label.text}</span>
+                                </button>
+                            `;
+                        });
+                        
+                        suggestionsDiv.innerHTML = `
+                            <div class="suggestions-header">💭 What's next?</div>
+                            <div class="suggestions-grid">
+                                ${buttonsHTML}
+                            </div>
+                        `;
+                        
+                        chatContainer.appendChild(suggestionsDiv);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 200);
                 }, 800);
             }, 300);
         }
