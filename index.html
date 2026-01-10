@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Otten Group - Quantum Computing Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(20, 20, 30, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.1),
+                        0 0 100px rgba(138, 43, 226, 0.05);
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            max-height: 800px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px 30px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .bot-avatar {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: #00ffff;
+            font-size: 1.5em;
+            margin-bottom: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .header p {
+            color: #b0b0b0;
+            font-size: 0.85em;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            animation: statusBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            background: rgba(10, 10, 15, 0.5);
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00ffff 0%, #8a2be2 100%);
+            border-radius: 10px;
+        }
+
+        .message-wrapper {
+            margin-bottom: 20px;
+            animation: slideIn 0.4s ease-out;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+        }
+
+        .bot-message-wrapper {
+            flex-direction: row;
+        }
+
+        .user-message-wrapper {
+            flex-direction: row-reverse;
+        }
+
+        .bot-message {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+            padding: 15px 18px;
+            border-radius: 18px 18px 18px 5px;
+            border-left: 3px solid #00ffff;
+            color: #e0e0e0;
+            line-height: 1.6;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+            max-width: 75%;
+            position: relative;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(0, 255, 255, 0.1) 100%);
+            padding: 12px 16px;
+            border-radius: 18px 18px 5px 18px;
+            border-right: 3px solid #8a2be2;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.15);
+            max-width: 70%;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 15px 20px;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 18px;
+            max-width: 80px;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .buttons-container {
+            padding: 15px 20px;
+            background: rgba(15, 15, 20, 0.8);
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .buttons-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .buttons-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .buttons-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00ffff 0%, #8a2be2 100%);
+            border-radius: 10px;
+        }
+
+        .buttons-label {
+            color: #00ffff;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px;
+        }
+
+        .faq-button {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .faq-button:hover::before {
+            left: 100%;
+        }
+
+        .faq-button:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
+            border-color: #00ffff;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .faq-button:active {
+            transform: translateX(3px);
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .welcome-qubit {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+        }
+
+        .welcome-message h2 {
+            color: #00ffff;
+            margin-bottom: 12px;
+            font-size: 1.6em;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .welcome-message p {
+            color: #999;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .button-icon {
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        strong {
+            color: #00ffff;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                max-height: 95vh;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.3em;
+            }
+
+            .header p {
+                font-size: 0.75em;
+            }
+
+            .bot-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .chat-container {
+                padding: 15px;
+            }
+
+            .message-avatar {
+                width: 28px;
+                height: 28px;
+            }
+
+            .bot-message, .user-message {
+                max-width: 85%;
+                font-size: 0.9em;
+                padding: 12px 15px;
+            }
+
+            .welcome-qubit {
+                width: 100px;
+                height: 100px;
+            }
+
+            .welcome-message h2 {
+                font-size: 1.3em;
+            }
+
+            .welcome-message p {
+                font-size: 0.85em;
+            }
+
+            .buttons-container {
+                padding: 12px 15px;
+                max-height: 180px;
+            }
+
+            .buttons-label {
+                font-size: 0.8em;
+                margin-bottom: 8px;
+            }
+
+            .button-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .faq-button {
+                padding: 10px 12px;
+                font-size: 0.8em;
+                gap: 8px;
+            }
+
+            .button-icon {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.1em;
+            }
+
+            .header p {
+                font-size: 0.7em;
+            }
+
+            .bot-avatar {
+                width: 35px;
+                height: 35px;
+            }
+
+            .message-avatar {
+                width: 25px;
+                height: 25px;
+            }
+
+            .bot-message, .user-message {
+                font-size: 0.85em;
+                padding: 10px 12px;
+            }
+
+            .welcome-qubit {
+                width: 80px;
+                height: 80px;
+            }
+
+            .welcome-message h2 {
+                font-size: 1.1em;
+            }
+
+            .welcome-message p {
+                font-size: 0.8em;
+            }
+
+            .buttons-container {
+                max-height: 160px;
+            }
+
+            .faq-button {
+                padding: 9px 10px;
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .chat-container {
+                padding: 12px;
+            }
+
+            .bot-message, .user-message {
+                font-size: 0.8em;
+                padding: 8px 10px;
+            }
+
+            .faq-button {
+                font-size: 0.7em;
+                padding: 8px 10px;
+            }
+        }
+
+        /* Landscape orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                max-height: 98vh;
+            }
+
+            .header {
+                padding: 10px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.2em;
+            }
+
+            .bot-avatar {
+                width: 35px;
+                height: 35px;
+            }
+
+            .buttons-container {
+                max-height: 120px;
+            }
+
+            .welcome-message {
+                padding: 20px;
+            }
+
+            .welcome-qubit {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <svg class="bot-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Cute Qubit character -->
+                <!-- Outer orbit -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.4">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Inner core (cute face) -->
+                <circle cx="50" cy="50" r="22" fill="url(#qubitGradient)"/>
+                <defs>
+                    <linearGradient id="qubitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <!-- Cute eyes -->
+                <circle cx="43" cy="47" r="3" fill="#000"/>
+                <circle cx="57" cy="47" r="3" fill="#000"/>
+                <!-- Cute smile -->
+                <path d="M 43 55 Q 50 60 57 55" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <!-- Electron particles -->
+                <circle cx="85" cy="50" r="4" fill="#ff00ff">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="15" cy="50" r="4" fill="#00ffff">
+                    <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+            <div class="header-text">
+                <h1>Qubit Assistant</h1>
+                <p><span class="status-indicator"></span>Otten Group @ UW–Madison</p>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome-message">
+                <svg class="welcome-qubit" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Larger welcome qubit -->
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.3">
+                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="50" cy="50" r="28" fill="none" stroke="#8a2be2" stroke-width="1.5" opacity="0.3">
+                        <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="-180 50 50" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="50" cy="50" r="25" fill="url(#welcomeGradient)"/>
+                    <defs>
+                        <linearGradient id="welcomeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.9" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="42" cy="45" r="3.5" fill="#000"/>
+                    <circle cx="58" cy="45" r="3.5" fill="#000"/>
+                    <path d="M 42 54 Q 50 60 58 54" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- Sparkles -->
+                    <circle cx="25" cy="25" r="2" fill="#00ffff" opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="75" cy="30" r="2" fill="#ff00ff" opacity="0.8">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="70" cy="75" r="2" fill="#00ffff" opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                <h2>Hi! I'm Qubit 👋</h2>
+                <p>Your friendly quantum guide to the Otten Group!<br>
+                Click any button below to learn about our research 🔬✨</p>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <div class="buttons-label">
+                💬 Ask me anything:
+            </div>
+            <div class="button-grid">
+                <button class="faq-button" onclick="showAnswer(1)">
+                    <span class="button-icon">👋</span>
+                    <span>Curious about Otten Group?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(2)">
+                    <span class="button-icon">⚛️</span>
+                    <span>What algorithms do you develop?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(3)">
+                    <span class="button-icon">🌌</span>
+                    <span>How do you simulate quantum systems?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(4)">
+                    <span class="button-icon">🔍</span>
+                    <span>What is QCVV?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(5)">
+                    <span class="button-icon">🛡️</span>
+                    <span>How do you handle errors?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(6)">
+                    <span class="button-icon">🤝</span>
+                    <span>Do you collaborate with others?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(7)">
+                    <span class="button-icon">🎓</span>
+                    <span>Is this lab promising?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(8)">
+                    <span class="button-icon">📚</span>
+                    <span>Not sure if it's for me?</span>
+                </button>
+                <button class="faq-button" onclick="showAnswer(9)">
+                    <span class="button-icon">🚀</span>
+                    <span>How do I get started?</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const faqData = {
+            1: {
+                question: "Hi—nice to meet you! Curious about the Otten Group?",
+                answer: "We are a <strong>theoretical quantum information science group</strong> at the University of Wisconsin–Madison, working toward making useful-scale quantum computers, quantum networks, and quantum sensors a reality."
+            },
+            2: {
+                question: "What kind of quantum algorithms do you develop?",
+                answer: "We develop, analyze, and test quantum algorithms for <strong>quantum chemistry, quantum physics, and quantum machine learning</strong>, with a strong focus on what actually solves real problems—not just toy models."
+            },
+            3: {
+                question: "How do you simulate open quantum systems?",
+                answer: "Using numerical methods and high-performance computing, we simulate open quantum systems to understand <strong>noise, errors, and performance limits</strong> across different hardware platforms, including neutral atoms, semiconductor qubits, and superconducting qubits."
+            },
+            4: {
+                question: "What is QCVV and why does it matter?",
+                answer: "We design <strong>QCVV (Characterization, Verification, and Validation) techniques</strong> to measure quantum system performance, understand error sources, and develop practical error-mitigation strategies that scale to real experimental devices."
+            },
+            5: {
+                question: "How do you approach error correction?",
+                answer: "By integrating quantum algorithms with fault-tolerant error-correction frameworks, we estimate the <strong>resources required for utility-scale quantum applications</strong> and identify the true bottlenecks in realistic implementations."
+            },
+            6: {
+                question: "Do you collaborate with other research groups?",
+                answer: "Absolutely! Our work bridges theory and experiment, <strong>collaborating closely with experimental groups</strong> to ensure that our research contributes meaningfully to scientific discovery and industrial applications."
+            },
+            7: {
+                question: "So... is this lab actually promising?",
+                answer: "<strong>Short answer: yes</strong>—and UW–Madison is a big part of why. Wisconsin has a strong ecosystem in quantum science, high-performance computing, and interdisciplinary research, making it an ideal place to work on problems that matter."
+            },
+            8: {
+                question: "Still not sure if it's for you?",
+                answer: "You can always try reviewing quantum computing first:<br><br>• <strong>Introduction to Quantum Computing (PHYSICS 709)</strong><br>• <strong>Advanced Quantum Computing (PHYSICS)</strong><br>• Algorithm-focused courses<br><br>Think of them as a low-risk way to see if this field—and this group—fits you."
+            },
+            9: {
+                question: "I'm interested! How do I get started?",
+                answer: "If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> that don't yet have clear answers, we're glad you're here—and we'd love to talk. <strong>Welcome to Wisconsin!</strong> 🎓<br><br>Feel free to reach out to discuss research opportunities!"
+            }
+        };
+
+        const qubitSVG = `
+            <svg class="message-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.4">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="50" cy="50" r="22" fill="url(#msgQubitGradient)"/>
+                <defs>
+                    <linearGradient id="msgQubitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <circle cx="43" cy="47" r="3" fill="#000"/>
+                <circle cx="57" cy="47" r="3" fill="#000"/>
+                <path d="M 43 55 Q 50 60 57 55" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <circle cx="85" cy="50" r="4" fill="#ff00ff">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="15" cy="50" r="4" fill="#00ffff">
+                    <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        `;
+
+        const userSVG = `
+            <svg class="message-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="30" fill="url(#userGradient)"/>
+                <defs>
+                    <linearGradient id="userGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#8a2be2;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#ff00ff;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <text x="50" y="65" font-size="40" text-anchor="middle" fill="#fff">👤</text>
+            </svg>
+        `;
+
+        function showAnswer(id) {
+            const chatContainer = document.getElementById('chatContainer');
+            const data = faqData[id];
+            
+            // Clear welcome message if it exists
+            const welcome = chatContainer.querySelector('.welcome-message');
+            if (welcome) {
+                welcome.remove();
+            }
+            
+            // Add bot message (question) - LEFT SIDE
+            const botWrapper = document.createElement('div');
+            botWrapper.className = 'message-wrapper bot-message-wrapper';
+            botWrapper.innerHTML = `
+                ${qubitSVG}
+                <div class="bot-message">${data.question}</div>
+            `;
+            chatContainer.appendChild(botWrapper);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Show typing indicator on RIGHT SIDE
+            setTimeout(() => {
+                const typingWrapper = document.createElement('div');
+                typingWrapper.className = 'message-wrapper user-message-wrapper';
+                typingWrapper.innerHTML = `
+                    <div class="typing-indicator active">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    ${userSVG}
+                `;
+                chatContainer.appendChild(typingWrapper);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // Add user message (answer) all at once - RIGHT SIDE
+                setTimeout(() => {
+                    typingWrapper.remove();
+                    
+                    const userWrapper = document.createElement('div');
+                    userWrapper.className = 'message-wrapper user-message-wrapper';
+                    userWrapper.innerHTML = `
+                        <div class="user-message">${data.answer}</div>
+                        ${userSVG}
+                    `;
+                    chatContainer.appendChild(userWrapper);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 800);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
