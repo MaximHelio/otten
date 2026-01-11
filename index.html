@@ -53,7 +53,7 @@
         }
 
         .header:hover {
-            background: linear-gradient(135deg, #1e1e32 0%, #1a2548 100%);
+            background: linear-gradient(135deg, #1f1f33 0%, #1a2744 100%);
         }
 
         .header::before {
@@ -139,9 +139,8 @@
             margin-bottom: 20px;
             animation: slideIn 0.4s ease-out;
             display: flex;
-            flex-direction: column;
             align-items: flex-start;
-            gap: 8px;
+            gap: 12px;
         }
 
         @keyframes slideIn {
@@ -162,11 +161,11 @@
         }
 
         .bot-message-wrapper {
-            align-items: flex-start;
+            flex-direction: row;
         }
 
         .user-message-wrapper {
-            align-items: flex-end;
+            flex-direction: row-reverse;
         }
 
         .bot-message {
@@ -177,7 +176,7 @@
             color: #e0e0e0;
             line-height: 1.7;
             box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
-            width: 100%;
+            max-width: 75%;
             font-size: 0.95em;
         }
 
@@ -188,7 +187,7 @@
             border-right: 3px solid #8a2be2;
             color: #fff;
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.15);
-            width: 100%;
+            max-width: 70%;
             font-size: 0.95em;
             line-height: 1.6;
         }
@@ -198,7 +197,7 @@
             padding: 15px 20px;
             background: rgba(0, 255, 255, 0.05);
             border-radius: 18px;
-            width: 100%;
+            max-width: 80px;
         }
 
         .typing-indicator.active {
@@ -246,7 +245,7 @@
 
         .suggestions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
 
@@ -391,7 +390,7 @@
             }
 
             .bot-message, .user-message {
-                width: 100%;
+                max-width: 85%;
                 font-size: 0.9em;
                 padding: 12px 15px;
             }
@@ -410,7 +409,7 @@
             }
 
             .suggestions-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .suggestion-button {
@@ -458,6 +457,10 @@
 
             .welcome-message p {
                 font-size: 0.8em;
+            }
+
+            .suggestions-grid {
+                grid-template-columns: 1fr;
             }
 
             .suggestion-button {
@@ -575,7 +578,7 @@
                 <p>Your friendly quantum guide to the Otten Group!</p>
             </div>
 
-            <!-- Initial question suggestions -->
+            <!-- Initial question suggestions (UPDATED: removed 3 and 4) -->
             <div class="question-suggestions" id="questionList">
                 <div class="suggestions-header">💬 What would you like to know?</div>
                 <div class="suggestions-grid">
@@ -586,14 +589,6 @@
                     <button class="suggestion-button" onclick="showAnswer(2)">
                         <span class="suggestion-icon">⚛️</span>
                         <span>Quantum Algorithms</span>
-                    </button>
-                    <button class="suggestion-button" onclick="showAnswer(3)">
-                        <span class="suggestion-icon">🌌</span>
-                        <span>Quantum Simulations</span>
-                    </button>
-                    <button class="suggestion-button" onclick="showAnswer(4)">
-                        <span class="suggestion-icon">🔍</span>
-                        <span>QCVV</span>
                     </button>
                     <button class="suggestion-button" onclick="showAnswer(5)">
                         <span class="suggestion-icon">🛡️</span>
@@ -615,6 +610,10 @@
                         <span class="suggestion-icon">🚀</span>
                         <span>Getting Started</span>
                     </button>
+                    <button class="suggestion-button" onclick="showAnswer(10)">
+                        <span class="suggestion-icon">💰</span>
+                        <span>Funding Status</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -625,56 +624,57 @@
     </div>
 
     <script>
+        // UPDATED: removed 3 and 4 from faqData, and updated 7 + tightened wording elsewhere
         const faqData = {
             1: {
                 question: "Hi, nice to meet you! I'm curious about the Otten Group.",
-                answer: "We are a <strong>theoretical quantum information science group</strong> at the University of Wisconsin–Madison, working toward making useful-scale quantum computers, quantum networks, and quantum sensors a reality.<br><br>We focus on bridging the gap between <strong>quantum algorithms and real hardware</strong>—developing methods that work not just on paper, but on actual quantum devices. Our research spans quantum chemistry, error correction, system simulations, and practical benchmarking.<br><br>Want to learn more? Check out our <a href='https://scholar.google.com/citations?hl=en&user=iMbZ9pUAAAAJ&view_op=list_works&sortby=pubdate' target='_blank'>latest publications</a>.",
+                answer: "We are a <strong>theoretical quantum information science group</strong> at the University of Wisconsin–Madison, working toward making useful-scale quantum computers, quantum networks, and quantum sensors a reality.<br><br>Our research focuses on bridging the gap between <strong>quantum algorithms and real hardware</strong>—developing methods that work not just in theory, but on actual quantum devices. We work across quantum chemistry, error correction, system simulations, and practical benchmarking.<br><br>For recent work, see our <a href='https://scholar.google.com/citations?hl=en&user=iMbZ9pUAAAAJ&view_op=list_works&sortby=pubdate' target='_blank'>latest publications</a>."
             },
             2: {
                 question: "What kind of quantum algorithms do you develop?",
-                answer: "We develop, analyze, and test quantum algorithms across several frontiers:<br><br>• <strong>Quantum Chemistry</strong>: Variational quantum eigensolvers (VQE) with localized active space methods, coupled cluster techniques, and quantum kernels for molecular simulations<br>• <strong>Quantum Machine Learning</strong>: Hardware-efficient quantum kernels using multimode bulk acoustic resonators, benchmarking across diverse datasets<br>• <strong>Quantum Optimal Control</strong>: Physics-informed neural networks for gate design and optimization<br><br>Recent work includes ground state energy estimation, first ionization potential calculations for transition metals (Cr, Mo, W), and developing polynomial-scaling methods that make utility-scale applications feasible.",
+                answer: "We develop, analyze, and test quantum algorithms with a focus on <strong>practical performance on real hardware</strong>:<br><br>• <strong>Quantum Chemistry</strong>: Variational quantum eigensolvers (VQE) with localized active space methods, coupled cluster techniques, and quantum kernels for molecular simulations<br>• <strong>Quantum Machine Learning</strong>: Hardware-efficient quantum kernels using multimode bulk acoustic resonators, benchmarking across diverse datasets<br>• <strong>Quantum Optimal Control</strong>: Physics-informed neural networks for gate design and optimization<br><br>Recent work includes ground state energy estimation, first ionization potential calculations for transition metals (Cr, Mo, W), and polynomial-scaling methods aimed at utility-scale applications."
             },
-            3: {
-                question: "How do you simulate open quantum systems?",
-                answer: "We use <strong>advanced numerical methods and high-performance computing</strong> to understand how real quantum systems behave in noisy environments:<br><br>• Simulating large-scale <strong>neutral-atom quantum systems</strong> (1D chains)<br>• Modeling <strong>noise, decoherence, and performance limits</strong> across hardware platforms including Rydberg atoms, semiconductor qubits, and superconducting circuits<br>• Developing <strong>Gottesman-Kitaev-Preskill (GKP) codes</strong> with energy-scaled zero-noise extrapolation<br>• Simulating <strong>fusion atomic processes</strong> relevant to plasma physics applications<br><br>This work connects directly to experimental systems—ensuring our theoretical predictions match real-world quantum device behavior.",
-            },
-            4: {
-                question: "What is QCVV and why does it matter?",
-                answer: "<strong>QCVV (Characterization, Verification, and Validation)</strong> is how we measure and understand quantum system performance—essentially the 'quality control' for quantum computers.<br><br>Our contributions include:<br>• <strong>QB Ground State Energy Estimation Benchmark</strong>—standardized metrics for comparing quantum chemistry algorithms across platforms<br>• Practical <strong>error-mitigation strategies</strong> that scale to real devices<br>• Understanding how to extract reliable results from <strong>noisy intermediate-scale quantum (NISQ)</strong> processors<br><br>Without rigorous QCVV, it's impossible to know if your quantum algorithm is actually outperforming classical methods or just producing noise. We develop the tools that make quantum computing results trustworthy.",
-            },
+
             5: {
                 question: "How do you approach error correction?",
-                answer: "Error correction is central to achieving <strong>fault-tolerant quantum computing</strong>. Our research tackles both the theory and practical implementation:<br><br>• <strong>Quantum LDPC codes</strong>: Fast implementation using optimized Rydberg gates with realistic gate architectures<br>• <strong>Full-stack co-design</strong>: Estimating resources for utility-scale applications by integrating algorithms with error-correction frameworks<br>• <strong>Cost mitigation</strong>: Developing techniques like nonunitary variational methods with the localized active space approach to reduce quantum resource requirements<br><br>Recent work shows how to build quantum supercomputers by addressing scaling challenges at every layer—from individual qubits to system architecture. We identify the <strong>true bottlenecks</strong> in realistic fault-tolerant implementations.",
+                answer: "Error correction is central to achieving <strong>fault-tolerant quantum computing</strong>:<br><br>• <strong>Quantum LDPC codes</strong>: Fast implementation using optimized Rydberg gates with realistic gate architectures<br>• <strong>Full-stack co-design</strong>: Resource estimation by integrating algorithms with error-correction frameworks and hardware constraints<br>• <strong>Cost mitigation</strong>: Nonunitary variational methods and localized active space approaches to reduce quantum resource requirements<br><br>We focus on identifying practical scaling bottlenecks and quantifying realistic resource requirements."
             },
             6: {
                 question: "Do you collaborate with other research groups?",
-                answer: "Absolutely! Our work bridges <strong>theory and experiment</strong> through extensive collaborations:<br><br>• <strong>Experimental groups</strong>: Working directly with Rydberg atom platforms, neutral atom systems, and quantum hardware developers<br>• <strong>Industry partnerships</strong>: Contributing to quantum-centric supercomputing initiatives and modular quantum processor architectures<br>• <strong>Multi-institutional projects</strong>: Collaborating on benchmarking standards, materials science applications, and strongly correlated metal-protein interactions (Quanta-Bind project)<br><br>We're part of the broader <strong>quantum information ecosystem at UW–Madison</strong>, which includes experimental physics, chemistry, and materials science groups. This ensures our theoretical work has immediate relevance to cutting-edge experimental systems.",
+                answer: "Yes—our work connects <strong>theory, experiment, and applications</strong> through collaborations:<br><br>• <strong>Experimental groups</strong>: Working with Rydberg atom platforms, neutral atom systems, and quantum hardware developers<br>• <strong>Industry partnerships</strong>: Contributing to quantum-centric supercomputing initiatives and modular processor architectures<br>• <strong>Multi-institutional projects</strong>: Benchmarking standards, materials science applications, and strongly correlated metal–protein interactions (Quanta-Bind project)<br><br>We are part of the broader <strong>quantum information ecosystem at UW–Madison</strong>, spanning physics, chemistry, and materials science."
             },
             7: {
                 question: "So... is this lab actually promising?",
-                answer: "<strong>Short answer: yes—and here's why.</strong><br><br>The group actively publishes in top venues like <strong>J. Chem. Theory Comput.</strong> and <strong>Phys. Rev. A</strong>, contributing to major initiatives in quantum supercomputing and fault-tolerant architecture design.<br><br><strong>🌟 Why UW–Madison?</strong><br>• Strong quantum science ecosystem<br>• High-performance computing infrastructure<br>• Interdisciplinary collaborations across physics, chemistry, and engineering<br><br><strong>💰 Regional Quantum Hub:</strong><br>The Chicago-Wisconsin region is emerging as a major quantum hub with billions in investment. The Chicago Quantum Exchange hosts 2 of DOE's 5 National Quantum Centers (<strong>Q-NEXT</strong> and <strong>SQMS</strong>) with <strong>$625M funding over 5 years</strong>. UW-Madison's first quantum startup <strong>Qolab</strong> raised <strong>$16M+ in Series A</strong> (2025), and NSF's <strong>Quantum Crossroads</strong> is strengthening the Illinois-Wisconsin ecosystem. (<a href='https://research.wisc.edu/uncategorized/2025/11/06/uw-madison-builds-on-partnerships-at-chicago-quantum-summit/' target='_blank'>Learn more</a>)<br><br>The group tackles problems that matter—not just toy models, but challenges that determine whether quantum computers will actually be useful at scale.",
+                answer: "<strong>Short answer: yes</strong>—and UW–Madison is a big part of why.<br><br>Wisconsin has a strong ecosystem in quantum science, high-performance computing, and interdisciplinary research, making it a strong environment for research that targets real scalability challenges.<br><br><strong>Regional Quantum Hub Evidence:</strong><br>The Chicago–Wisconsin region is one of the fastest-growing quantum hubs in the U.S., anchored by the Chicago Quantum Exchange (CQE) and two DOE National Quantum Information Science Research Centers (Q-NEXT and SQMS), supported by <strong>$625M in federal funding</strong>. UW–Madison is an active contributor to this regional ecosystem."
             },
             8: {
-                question: "I'm not sure if this is for me. Are there any courses I can take first?",
-                answer: "Absolutely! You can explore quantum computing through several courses at UW–Madison before committing:<br><br>• <strong>CHEM 675</strong> - Introduction to Quantum Chemistry<br>• <strong>PHYSICS 709</strong> - Introduction to Quantum Computing<br>• <strong>PHYSICS 731</strong> - Quantum Mechanics<br>• <strong>PHYSICS 765</strong> - Quantum Algorithms and Error Correction<br>• <strong>PHYSICS 779</strong> - Advanced Quantum Computing<br><br>These courses give you hands-on exposure to:<br>• Quantum algorithm design and analysis<br>• Error correction theory<br>• Computational quantum chemistry<br>• Practical implementation challenges<br><br>Think of them as a <strong>low-risk way to see if this field—and this group—fits you</strong>. Many successful group members started by taking one of these courses first.",
+                question: "I'm still not sure if this is for me",
+                answer: "Absolutely! You can explore quantum computing through several courses at UW–Madison before committing:<br><br>• <strong>CHEM 675</strong> - Introduction to Quantum Chemistry<br>• <strong>PHYSICS 709</strong> - Introduction to Quantum Computing<br>• <strong>PHYSICS 731</strong> - Quantum Mechanics<br>• <strong>PHYSICS 765</strong> - Quantum Algorithms and Error Correction<br>• <strong>PHYSICS 779</strong> - Advanced Quantum Computing<br><br>These courses give you hands-on exposure to quantum algorithm design, error correction, computational quantum chemistry, and implementation constraints. Think of this as a <strong>low-risk way to see if the field—and this group—fits you</strong>."
             },
             9: {
                 question: "I'm interested! How do I get started?",
-                answer: "We're glad you're interested! Here's how to get started:<br><br><strong>📋 Current Opportunities:</strong><br>Check out available positions and application details at:<br><a href='https://otten.physics.wisc.edu/jobs/' target='_blank'>https://otten.physics.wisc.edu/jobs/</a><br><br><strong>🎯 What we're looking for:</strong><br>If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> that don't yet have clear answers—problems at the intersection of quantum algorithms, error correction, and real hardware—we'd love to talk.<br><br><strong>💡 Research areas you might explore:</strong><br>• Quantum algorithm development for chemistry and machine learning<br>• Error correction and fault-tolerant quantum computing<br>• Quantum system simulations and benchmarking<br>• Optimal control and gate design<br><br><strong>Welcome to Wisconsin!</strong> 🎓",
+                answer: "Here’s how to get started:<br><br><strong>📋 Current Opportunities:</strong><br>Check available positions and application details at:<br><a href='https://otten.physics.wisc.edu/jobs/' target='_blank'>https://otten.physics.wisc.edu/jobs/</a><br><br><strong>🎯 What we look for:</strong><br>If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> at the intersection of quantum algorithms, error correction, and real hardware, we’d love to talk.<br><br><strong>💡 Research areas you might explore:</strong><br>• Quantum algorithm development for chemistry and machine learning<br>• Error correction and fault-tolerant quantum computing<br>• System simulations, benchmarking, and resource estimation<br>• Optimal control and gate design"
+            },
+            10: {
+                question: "How is the funding status here?",
+                answer: "<strong>The Chicago–Wisconsin region is emerging as a major quantum hub</strong> with significant public and private investment.<br><br><strong>🔬 Chicago Quantum Exchange & Federal Funding:</strong><br>The Chicago Quantum Exchange (CQE) hosts 2 of DOE's 5 National Quantum Information Science Research Centers (<strong>Q-NEXT</strong> and <strong>SQMS</strong>), which were renewed with <strong>$625M in funding over 5 years</strong> as of 2025. (<a href='https://chicagoquantum.org/news/department-energy-announces-625m-quantum-center-renewal-summit' target='_blank'>Reference</a>)<br><br><strong>🧀 Wisconsin Momentum:</strong><br><strong>Qolab</strong>, UW–Madison's first quantum startup, raised <strong>$16M+ in Series A funding</strong> in early 2025 (including $5M from Japan's Development Bank of Japan). Qolab joined the CQE as a corporate partner, strengthening the Chicago–Wisconsin R&D axis. (<a href='https://thequantuminsider.com/2025/01/13/qolab-the-first-uw-madison-incubated-quantum-startup-joins-the-cqe/' target='_blank'>Reference</a>)<br><br><strong>🌉 Cross-Regional Programs:</strong><br>NSF's <strong>Quantum Crossroads</strong> Regional Innovation Engines awarded <strong>$1M in seed funding</strong> (2024–2026) to strengthen the Illinois–Wisconsin quantum ecosystem, focusing on commercialization, startups, and investment linkages. (<a href='https://nsf.elsevierpure.com/en/projects/nsf-engines-development-award-advancing-quantum-technologies-in-t/' target='_blank'>Reference</a>)<br><br>This ecosystem translates into <strong>strong funding opportunities, industry partnerships, and startup potential</strong> for quantum researchers. (<a href='https://research.wisc.edu/uncategorized/2025/11/06/uw-madison-builds-on-partnerships-at-chicago-quantum-summit/' target='_blank'>UW–Madison Partnership Overview</a>)"
             }
         };
 
+        // UPDATED: removed 3 and 4 from labels
         const questionLabels = {
             1: { icon: "👋", text: "About Otten Group" },
             2: { icon: "⚛️", text: "Quantum Algorithms" },
-            3: { icon: "🌌", text: "Quantum Simulations" },
-            4: { icon: "🔍", text: "QCVV" },
             5: { icon: "🛡️", text: "Error Correction" },
             6: { icon: "🤝", text: "Collaborations" },
             7: { icon: "🎓", text: "Lab Potential" },
             8: { icon: "📚", text: "Still Not Sure" },
-            9: { icon: "🚀", text: "Getting Started" }
+            9: { icon: "🚀", text: "Getting Started" },
+            10: { icon: "💰", text: "Funding & Ecosystem" }
         };
+
+        // Keep consistent order for buttons
+        const questionOrder = [1, 2, 5, 6, 7, 8, 9, 10];
 
         const qubitSVG = `
             <svg class="message-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -715,8 +715,6 @@
 
         function resetChat() {
             const chatContainer = document.getElementById('chatContainer');
-            
-            // Clear all content
             chatContainer.innerHTML = `
                 <div class="welcome-message">
                     <svg class="welcome-qubit" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -749,45 +747,74 @@
                     <h2>Hi! I'm Qubit 👋</h2>
                     <p>Your friendly quantum guide to the Otten Group!</p>
                 </div>
+
+                <div class="question-suggestions" id="questionList">
+                    <div class="suggestions-header">💬 What would you like to know?</div>
+                    <div class="suggestions-grid">
+                        <button class="suggestion-button" onclick="showAnswer(1)">
+                            <span class="suggestion-icon">👋</span>
+                            <span>About Otten Group</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(2)">
+                            <span class="suggestion-icon">⚛️</span>
+                            <span>Quantum Algorithms</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(5)">
+                            <span class="suggestion-icon">🛡️</span>
+                            <span>Error Correction</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(6)">
+                            <span class="suggestion-icon">🤝</span>
+                            <span>Collaborations</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(7)">
+                            <span class="suggestion-icon">🎓</span>
+                            <span>Lab Potential</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(8)">
+                            <span class="suggestion-icon">📚</span>
+                            <span>Still Not Sure</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(9)">
+                            <span class="suggestion-icon">🚀</span>
+                            <span>Getting Started</span>
+                        </button>
+                        <button class="suggestion-button" onclick="showAnswer(10)">
+                            <span class="suggestion-icon">💰</span>
+                            <span>Funding Status</span>
+                        </button>
+                    </div>
+                </div>
             `;
-            
-            // Show all questions
-            showAllQuestions();
-            
-            // Scroll to top
-            chatContainer.scrollTop = 0;
         }
 
         function showAllQuestions() {
             const chatContainer = document.getElementById('chatContainer');
-            
-            // Check if question list already exists
-            if (document.getElementById('questionList')) {
-                return;
-            }
-            
+
+            if (document.getElementById('questionList')) return;
+
             const suggestionsDiv = document.createElement('div');
             suggestionsDiv.className = 'question-suggestions';
             suggestionsDiv.id = 'questionList';
-            
+
             let buttonsHTML = '';
-            for (let i = 1; i <= 9; i++) {
-                const label = questionLabels[i];
+            for (const id of questionOrder) {
+                const label = questionLabels[id];
                 buttonsHTML += `
-                    <button class="suggestion-button" onclick="showAnswer(${i})">
+                    <button class="suggestion-button" onclick="showAnswer(${id})">
                         <span class="suggestion-icon">${label.icon}</span>
                         <span>${label.text}</span>
                     </button>
                 `;
             }
-            
+
             suggestionsDiv.innerHTML = `
                 <div class="suggestions-header">💬 What would you like to know?</div>
                 <div class="suggestions-grid">
                     ${buttonsHTML}
                 </div>
             `;
-            
+
             chatContainer.appendChild(suggestionsDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
@@ -795,25 +822,25 @@
         function showAnswer(id) {
             const chatContainer = document.getElementById('chatContainer');
             const data = faqData[id];
-            
+
             // Remove welcome message if it exists
             const welcome = chatContainer.querySelector('.welcome-message');
             if (welcome) welcome.remove();
-            
+
             // Remove existing question list
             const existingList = document.getElementById('questionList');
             if (existingList) existingList.remove();
-            
+
             // Add user message (question) - RIGHT SIDE
             const userWrapper = document.createElement('div');
             userWrapper.className = 'message-wrapper user-message-wrapper';
             userWrapper.innerHTML = `
-                ${userSVG}
                 <div class="user-message">${data.question}</div>
+                ${userSVG}
             `;
             chatContainer.appendChild(userWrapper);
             chatContainer.scrollTop = chatContainer.scrollHeight;
-            
+
             // Show typing indicator on LEFT SIDE
             setTimeout(() => {
                 const typingWrapper = document.createElement('div');
@@ -828,11 +855,11 @@
                 `;
                 chatContainer.appendChild(typingWrapper);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
-                
+
                 // Add bot message (answer) - LEFT SIDE
                 setTimeout(() => {
                     typingWrapper.remove();
-                    
+
                     const botWrapper = document.createElement('div');
                     botWrapper.className = 'message-wrapper bot-message-wrapper';
                     botWrapper.innerHTML = `
@@ -841,11 +868,11 @@
                     `;
                     chatContainer.appendChild(botWrapper);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
-                    
-                    // Show all questions again after 10 seconds
+
+                    // Show all questions again
                     setTimeout(() => {
                         showAllQuestions();
-                    }, 2000);
+                    }, 200);
                 }, 800);
             }, 300);
         }
