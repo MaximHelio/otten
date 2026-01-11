@@ -158,14 +158,17 @@
             width: 35px;
             height: 35px;
             flex-shrink: 0;
+            align-self: flex-start;
         }
 
         .bot-message-wrapper {
             flex-direction: row;
+            align-items: flex-start;
         }
 
         .user-message-wrapper {
             flex-direction: row-reverse;
+            align-items: flex-start;
         }
 
         .bot-message {
@@ -176,8 +179,9 @@
             color: #e0e0e0;
             line-height: 1.7;
             box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
-            max-width: 75%;
+            max-width: 100%;
             font-size: 0.95em;
+            flex: 1;
         }
 
         .user-message {
@@ -187,9 +191,10 @@
             border-right: 3px solid #8a2be2;
             color: #fff;
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.15);
-            max-width: 70%;
+            max-width: 100%;
             font-size: 0.95em;
             line-height: 1.6;
+            flex: 1;
         }
 
         .typing-indicator {
@@ -299,6 +304,33 @@
             flex-shrink: 0;
         }
 
+        .reset-button {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15) 0%, rgba(0, 255, 255, 0.15) 100%);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            color: #8a2be2;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            text-align: center;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+            max-width: 200px;
+        }
+
+        .reset-button:hover {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.25) 0%, rgba(0, 255, 255, 0.25) 100%);
+            border-color: #8a2be2;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+        }
+
         .footer {
             padding: 12px;
             text-align: center;
@@ -390,7 +422,6 @@
             }
 
             .bot-message, .user-message {
-                max-width: 85%;
                 font-size: 0.9em;
                 padding: 12px 15px;
             }
@@ -797,34 +828,48 @@
 
             if (document.getElementById('questionList')) return;
 
+            const remainingQuestions = questionOrder.filter(id => !askedQuestions.has(id));
+
+            if (remainingQuestions.length === 0) {
+                // All questions answered - show reset button
+                const resetDiv = document.createElement('div');
+                resetDiv.className = 'question-suggestions';
+                resetDiv.id = 'questionList';
+                resetDiv.innerHTML = `
+                    <button class="reset-button" onclick="resetChat()">
+                        <span>🔄</span>
+                        <span>Explore Again⭐</span>
+                    </button>
+                `;
+                chatContainer.appendChild(resetDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                return;
+            }
+
             const suggestionsDiv = document.createElement('div');
             suggestionsDiv.className = 'question-suggestions';
             suggestionsDiv.id = 'questionList';
 
             let buttonsHTML = '';
-            for (const id of questionOrder) {
-                if (!askedQuestions.has(id)) {
-                    const label = questionLabels[id];
-                    buttonsHTML += `
-                        <button class="suggestion-button" onclick="showAnswer(${id})">
-                            <span class="suggestion-icon">${label.icon}</span>
-                            <span>${label.text}</span>
-                        </button>
-                    `;
-                }
-            }
-
-            if (buttonsHTML) {
-                suggestionsDiv.innerHTML = `
-                    <div class="suggestions-header">💬 What would you like to know?</div>
-                    <div class="suggestions-grid">
-                        ${buttonsHTML}
-                    </div>
+            for (const id of remainingQuestions) {
+                const label = questionLabels[id];
+                buttonsHTML += `
+                    <button class="suggestion-button" onclick="showAnswer(${id})">
+                        <span class="suggestion-icon">${label.icon}</span>
+                        <span>${label.text}</span>
+                    </button>
                 `;
-
-                chatContainer.appendChild(suggestionsDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
+
+            suggestionsDiv.innerHTML = `
+                <div class="suggestions-header">💬 What would you like to know?</div>
+                <div class="suggestions-grid">
+                    ${buttonsHTML}
+                </div>
+            `;
+
+            chatContainer.appendChild(suggestionsDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
         function showAnswer(id) {
@@ -845,8 +890,8 @@
             const userWrapper = document.createElement('div');
             userWrapper.className = 'message-wrapper user-message-wrapper';
             userWrapper.innerHTML = `
-                <div class="user-message">${data.question}</div>
                 ${userSVG}
+                <div class="user-message">${data.question}</div>
             `;
             chatContainer.appendChild(userWrapper);
             chatContainer.scrollTop = chatContainer.scrollHeight;
