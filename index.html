@@ -624,6 +624,9 @@
     </div>
 
     <script>
+        // Track asked questions
+        let askedQuestions = new Set();
+
         // UPDATED: removed 3 and 4 from faqData, and updated 7 + tightened wording elsewhere
         const faqData = {
             1: {
@@ -653,7 +656,7 @@
             },
             9: {
                 question: "I'm interested! How do I get started?",
-                answer: "Here’s how to get started:<br><br><strong>📋 Current Opportunities:</strong><br>Check available positions and application details at:<br><a href='https://otten.physics.wisc.edu/jobs/' target='_blank'>https://otten.physics.wisc.edu/jobs/</a><br><br><strong>🎯 What we look for:</strong><br>If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> at the intersection of quantum algorithms, error correction, and real hardware, we’d love to talk.<br><br><strong>💡 Research areas you might explore:</strong><br>• Quantum algorithm development for chemistry and machine learning<br>• Error correction and fault-tolerant quantum computing<br>• System simulations, benchmarking, and resource estimation<br>• Optimal control and gate design"
+                answer: "Here's how to get started:<br><br><strong>📋 Current Opportunities:</strong><br>Check available positions and application details at:<br><a href='https://otten.physics.wisc.edu/jobs/' target='_blank'>https://otten.physics.wisc.edu/jobs/</a><br><br><strong>🎯 What we look for:</strong><br>If you're <strong>curious, ambitious, and enjoy tackling hard problems</strong> at the intersection of quantum algorithms, error correction, and real hardware, we'd love to talk.<br><br><strong>💡 Research areas you might explore:</strong><br>• Quantum algorithm development for chemistry and machine learning<br>• Error correction and fault-tolerant quantum computing<br>• System simulations, benchmarking, and resource estimation<br>• Optimal control and gate design"
             },
             10: {
                 question: "How is the funding status here?",
@@ -714,6 +717,7 @@
         `;
 
         function resetChat() {
+            askedQuestions.clear();
             const chatContainer = document.getElementById('chatContainer');
             chatContainer.innerHTML = `
                 <div class="welcome-message">
@@ -799,27 +803,33 @@
 
             let buttonsHTML = '';
             for (const id of questionOrder) {
-                const label = questionLabels[id];
-                buttonsHTML += `
-                    <button class="suggestion-button" onclick="showAnswer(${id})">
-                        <span class="suggestion-icon">${label.icon}</span>
-                        <span>${label.text}</span>
-                    </button>
-                `;
+                if (!askedQuestions.has(id)) {
+                    const label = questionLabels[id];
+                    buttonsHTML += `
+                        <button class="suggestion-button" onclick="showAnswer(${id})">
+                            <span class="suggestion-icon">${label.icon}</span>
+                            <span>${label.text}</span>
+                        </button>
+                    `;
+                }
             }
 
-            suggestionsDiv.innerHTML = `
-                <div class="suggestions-header">💬 What would you like to know?</div>
-                <div class="suggestions-grid">
-                    ${buttonsHTML}
-                </div>
-            `;
+            if (buttonsHTML) {
+                suggestionsDiv.innerHTML = `
+                    <div class="suggestions-header">💬 What would you like to know?</div>
+                    <div class="suggestions-grid">
+                        ${buttonsHTML}
+                    </div>
+                `;
 
-            chatContainer.appendChild(suggestionsDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+                chatContainer.appendChild(suggestionsDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
         }
 
         function showAnswer(id) {
+            askedQuestions.add(id);
+            
             const chatContainer = document.getElementById('chatContainer');
             const data = faqData[id];
 
