@@ -19,7 +19,7 @@ export default {
     try {
       const { messages, system } = await request.json();
 
-      // Groq API 호출 (완전 무료!)
+      // Groq API 호출
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {

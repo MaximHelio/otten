@@ -39,13 +39,13 @@
 
         .header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 16px 20px;
+            padding: 14px 16px;
             border-bottom: 2px solid rgba(0, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-shrink: 0;
         }
 
@@ -66,8 +66,8 @@
         }
 
         .bot-avatar {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             position: relative;
             z-index: 1;
             flex-shrink: 0;
@@ -82,7 +82,7 @@
 
         .header h1 {
             color: #00ffff;
-            font-size: 1.25em;
+            font-size: 1.15em;
             margin-bottom: 2px;
             text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
             font-weight: 600;
@@ -93,7 +93,7 @@
 
         .header p {
             color: #b0b0b0;
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: 400;
             white-space: nowrap;
             overflow: hidden;
@@ -102,8 +102,8 @@
 
         .status-indicator {
             display: inline-block;
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: #00ff00;
             border-radius: 50%;
             margin-right: 4px;
@@ -120,16 +120,16 @@
             background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(0, 255, 255, 0.2) 100%);
             border: 1.5px solid rgba(138, 43, 226, 0.4);
             color: #b19cd9;
-            padding: 8px 14px;
+            padding: 7px 12px;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             z-index: 1;
             box-shadow: 0 2px 8px rgba(138, 43, 226, 0.15);
             flex-shrink: 0;
@@ -147,30 +147,20 @@
         }
 
         .reset-icon {
-            font-size: 1.1em;
-            animation: rotateReset 0.6s ease-in-out;
-        }
-
-        @keyframes rotateReset {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .reset-button:hover .reset-icon {
-            animation: rotateReset 0.6s ease-in-out infinite;
+            font-size: 1.05em;
         }
 
         .chat-container {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 16px;
+            padding: 14px;
             background: rgba(10, 10, 15, 0.5);
             -webkit-overflow-scrolling: touch;
         }
 
         .chat-container::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
 
         .chat-container::-webkit-scrollbar-track {
@@ -183,11 +173,11 @@
         }
 
         .message-wrapper {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             animation: slideIn 0.4s ease-out;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
         }
 
         @keyframes slideIn {
@@ -202,8 +192,8 @@
         }
 
         .message-avatar {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             flex-shrink: 0;
             align-self: flex-start;
         }
@@ -220,29 +210,35 @@
 
         .bot-message {
             background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
-            padding: 12px 14px;
-            border-radius: 16px 16px 16px 4px;
+            padding: 11px 13px;
+            border-radius: 15px 15px 15px 4px;
             border-left: 3px solid #00ffff;
             color: #e0e0e0;
-            line-height: 1.6;
+            line-height: 1.55;
             box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
-            max-width: calc(100% - 42px);
-            font-size: 0.9em;
+            max-width: calc(100% - 38px);
+            font-size: 0.88em;
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
+        /* Name highlighting in messages */
+        .bot-message .name {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
         .user-message {
             background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(0, 255, 255, 0.1) 100%);
-            padding: 10px 14px;
-            border-radius: 16px 16px 4px 16px;
+            padding: 10px 13px;
+            border-radius: 15px 15px 4px 15px;
             border-right: 3px solid #8a2be2;
             color: #fff;
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.15);
-            max-width: calc(100% - 42px);
-            font-size: 0.9em;
-            line-height: 1.6;
+            max-width: calc(100% - 38px);
+            font-size: 0.88em;
+            line-height: 1.55;
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -250,16 +246,16 @@
 
         .typing-indicator {
             display: flex;
-            padding: 12px 16px;
+            padding: 11px 14px;
             background: rgba(0, 255, 255, 0.05);
-            border-radius: 16px;
-            gap: 5px;
+            border-radius: 15px;
+            gap: 4px;
             align-items: center;
         }
 
         .typing-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             background: #00ffff;
             border-radius: 50%;
             animation: typingBounce 1.4s infinite;
@@ -275,48 +271,48 @@
 
         @keyframes typingBounce {
             0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-8px); }
+            30% { transform: translateY(-7px); }
         }
 
         .welcome-message {
             text-align: center;
-            padding: 20px 16px 16px;
+            padding: 12px 14px 10px;
         }
 
         .welcome-qubit {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 12px;
         }
 
         .welcome-message h2 {
             color: #00ffff;
-            margin-bottom: 10px;
-            font-size: 1.4em;
+            margin-bottom: 8px;
+            font-size: 1.2em;
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
             font-weight: 600;
         }
 
         .welcome-message p {
             color: #999;
-            font-size: 0.9em;
-            line-height: 1.5;
+            font-size: 0.85em;
+            line-height: 1.4;
             font-weight: 400;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .quick-faqs {
-            margin-top: 20px;
-            margin-bottom: 12px;
+            margin-top: 12px;
+            margin-bottom: 10px;
         }
 
         .faq-header {
             color: #00ffff;
-            font-size: 0.8em;
-            margin-bottom: 10px;
+            font-size: 0.75em;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             opacity: 0.9;
             font-weight: 500;
             padding: 0 4px;
@@ -325,24 +321,24 @@
         .faq-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 8px;
+            gap: 7px;
         }
 
         .faq-chip {
             background: linear-gradient(135deg, rgba(0, 255, 255, 0.08) 0%, rgba(138, 43, 226, 0.08) 100%);
             border: 1px solid rgba(0, 255, 255, 0.25);
             color: #00ffff;
-            padding: 12px 14px;
-            border-radius: 10px;
+            padding: 10px 12px;
+            border-radius: 9px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.85em;
+            font-size: 0.8em;
             text-align: left;
             font-weight: 500;
             font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
         }
 
         .faq-chip:active {
@@ -352,16 +348,16 @@
         }
 
         .suggested-questions {
-            margin-top: 16px;
+            margin-top: 12px;
         }
 
         .suggestions-header {
             color: #8a2be2;
-            font-size: 0.8em;
-            margin-bottom: 8px;
+            font-size: 0.75em;
+            margin-bottom: 7px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             opacity: 0.9;
             font-weight: 500;
             padding: 0 4px;
@@ -377,11 +373,11 @@
             background: linear-gradient(135deg, rgba(138, 43, 226, 0.06) 0%, rgba(0, 255, 255, 0.06) 100%);
             border: 1px solid rgba(138, 43, 226, 0.2);
             color: #b19cd9;
-            padding: 10px 12px;
+            padding: 8px 10px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.8em;
+            font-size: 0.75em;
             text-align: left;
             font-weight: 500;
             font-family: 'Inter', sans-serif;
@@ -394,15 +390,14 @@
         }
 
         .input-container {
-            padding: 12px 16px 12px 16px;
+            padding: 10px 12px;
             background: rgba(10, 10, 15, 0.7);
             border-top: 1px solid rgba(0, 255, 255, 0.1);
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: flex-end;
             flex-shrink: 0;
-            /* Safe area for iOS */
-            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
         }
 
         .input-wrapper {
@@ -414,15 +409,15 @@
             width: 100%;
             background: rgba(30, 30, 45, 0.8);
             border: 1px solid rgba(0, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 10px 14px;
+            border-radius: 11px;
+            padding: 10px 12px;
             color: #fff;
             font-family: 'Inter', sans-serif;
-            font-size: 0.9em;
+            font-size: 16px; /* Prevents iOS zoom */
             resize: none;
-            max-height: 100px;
-            min-height: 42px;
-            line-height: 1.4;
+            max-height: 90px;
+            min-height: 40px;
+            line-height: 1.35;
             transition: all 0.3s ease;
         }
 
@@ -439,9 +434,9 @@
         .send-button {
             background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
             border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -467,8 +462,8 @@
         }
 
         .send-button:active::before {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
         }
 
         .send-button:active:not(:disabled) {
@@ -481,8 +476,8 @@
         }
 
         .send-button svg {
-            width: 20px;
-            height: 20px;
+            width: 19px;
+            height: 19px;
             fill: #fff;
             position: relative;
             z-index: 1;
@@ -492,10 +487,10 @@
         .error-message {
             background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 100, 100, 0.1) 100%);
             border-left: 3px solid #ff4444;
-            padding: 12px 14px;
-            border-radius: 12px;
+            padding: 11px 13px;
+            border-radius: 11px;
             color: #ffaaaa;
-            font-size: 0.85em;
+            font-size: 0.82em;
             margin: 10px 0;
             word-wrap: break-word;
         }
@@ -519,16 +514,15 @@
         }
 
         .footer {
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             background: rgba(10, 10, 15, 0.5);
             border-top: 1px solid rgba(0, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.3);
-            font-size: 0.7em;
+            font-size: 0.68em;
             font-weight: 400;
             flex-shrink: 0;
-            /* Safe area for iOS */
-            padding-bottom: max(10px, env(safe-area-inset-bottom));
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
         }
 
         /* Desktop adjustments */
@@ -791,36 +785,36 @@
                         <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
                 </svg>
-                <h2>Hi! I'm Qubit 👋</h2>
-                <p>Your quantum chemistry guide to the Otten Group!<br>Ask me anything about quantum computing research for chemistry PhD students.</p>
+                <h2>Hi! I'm Qubit</h2>
+                <p>Your friendly quantum guide to the Otten Group!</p>
             </div>
 
             <div class="quick-faqs">
-                <div class="faq-header">⚡ Quick Topics:</div>
+                <div class="faq-header">Quick Topics:</div>
                 <div class="faq-grid">
                     <div class="faq-chip" onclick="answerFAQ('research')">
-                        🔬 Research Overview
+                        Research Overview
                     </div>
                     <div class="faq-chip" onclick="answerFAQ('team')">
-                        👥 Meet the Team
+                        Meet the Team
                     </div>
                     <div class="faq-chip" onclick="answerFAQ('chemistry')">
-                        🧪 Quantum Chemistry
+                        Quantum Chemistry
                     </div>
                     <div class="faq-chip" onclick="answerFAQ('funding')">
-                        💰 Funding & Madison
+                        Funding & Madison
                     </div>
                     <div class="faq-chip" onclick="answerFAQ('phd')">
-                        🎓 PhD Opportunities
+                        PhD Opportunities
                     </div>
                     <div class="faq-chip" onclick="answerFAQ('apply')">
-                        📝 How to Apply
+                        How to Apply
                     </div>
                 </div>
             </div>
 
             <div class="suggested-questions">
-                <div class="suggestions-header">💬 Or ask freely:</div>
+                <div class="suggestions-header">Or ask freely:</div>
                 <div class="suggestions-grid">
                     <div class="suggestion-chip" onclick="askQuestion('What quantum chemistry projects can I work on?')">
                         Chemistry projects
@@ -861,151 +855,37 @@
     </div>
 
     <script>
-        // FAQ Answers - Fast responses without API call
+        // FAQ Answers
         const FAQ_ANSWERS = {
-            research: `We're a <strong>theoretical quantum information science group</strong> at UW–Madison, working to make useful-scale quantum computers a reality! 🚀<br><br>Our research bridges quantum algorithms and real hardware:<br><br>• <strong>Quantum Chemistry</strong>: VQE, coupled cluster methods, active space selection for molecular simulations<br>• <strong>Quantum Error Correction</strong>: LDPC codes, fault-tolerant computing, resource estimation<br>• <strong>Quantum Machine Learning</strong>: Hardware-efficient quantum kernels, benchmarking on real devices<br>• <strong>Quantum-Classical Co-design</strong>: Algorithm optimization for actual quantum processors<br><br>We test everything on real quantum computers (IBM, IonQ, Rigetti) to ensure practical impact! ⚛️<br><br>Want to know more about a specific research area?`,
+            research: `We're a theoretical quantum information science group at UW–Madison, working to make useful-scale quantum computers a reality.<br><br>Our research bridges quantum algorithms and real hardware:<br><br>• Quantum Chemistry: VQE, coupled cluster methods, active space selection for molecular simulations<br>• Quantum Error Correction: LDPC codes, fault-tolerant computing, resource estimation<br>• Quantum Machine Learning: Hardware-efficient quantum kernels, benchmarking on real devices<br>• Quantum-Classical Co-design: Algorithm optimization for actual quantum processors<br><br>We test everything on real quantum computers (IBM, IonQ, Rigetti) to ensure practical impact.<br><br>Want to know more about a specific research area?`,
 
-            team: `Our lab has an amazing interdisciplinary team! 👥<br><br><strong>Principal Investigator:</strong><br>• Dr. Matthew Otten (otten@physics.wisc.edu)<br><br><strong>Postdocs:</strong><br>• Dr. Katerina Gratsea (TitleTownTech Fellow)<br>• Dr. Cody Poole<br>• Dr. Gavin Rockwood<br>• Dr. Hao Zhang<br><br><strong>Chemistry PhD Students:</strong><br>• <strong>Haejung Koh</strong> 🧪<br>• <strong>Sarag Kunnumbrath</strong> 🧪<br>• <strong>Atharva Sandeep Vidwans</strong> 🧪<br><br><strong>Physics PhD Students:</strong><br>• Gage Erwin (CSGF Fellow)<br>• Zeyu (Bery) Fan<br>• Natalie Hilliard<br>• Zachary Jerzyk<br>• Jihyeon Park<br>• Colin Stewart<br>• Jisoo Yu (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have <strong>3 chemistry PhD students</strong>—chemistry backgrounds are very welcome here! 🎓`,
+            team: `Our lab has an amazing interdisciplinary team.<br><br><strong>Principal Investigator:</strong><br>• Dr. Matthew Otten (otten@physics.wisc.edu)<br><br><strong>Postdocs:</strong><br>• Dr. Katerina Gratsea (TitleTownTech Fellow)<br>• Dr. Cody Poole<br>• Dr. Gavin Rockwood<br>• Dr. Hao Zhang<br><br><strong>Chemistry PhD Students:</strong><br>• <span class="name">Haejung Koh</span> (UW–Madison Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (UW–Madison Chemistry)<br>• <span class="name">Atharva Sandeep Vidwans</span> (UW–Madison Chemistry)<br><br><strong>Physics PhD Students:</strong><br>• Gage Erwin (CSGF Fellow)<br>• Zeyu (Bery) Fan<br>• Natalie Hilliard<br>• Zachary Jerzyk<br>• Jihyeon Park<br>• Colin Stewart<br>• Jisoo Yu (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have 3 chemistry PhD students—chemistry backgrounds are very welcome here.`,
 
-            chemistry: `Quantum chemistry is a <strong>major focus</strong> of our lab! 🧪⚛️<br><br><strong>What we do:</strong><br>• Ground state energy calculations for molecules<br>• First ionization potential for transition metals (Cr, Mo, W)<br>• Variational quantum eigensolvers (VQE) with localized active space methods<br>• Quantum kernels for molecular property prediction<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Our chemistry PhD students work on:</strong><br>• Haejung Koh: [quantum chemistry applications]<br>• Sarag Kunnumbrath: [quantum chemistry focus]<br>• Atharva Vidwans: [computational chemistry methods]<br><br><strong>Chemistry + Quantum Computing = Perfect match!</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.<br><br>Interested in a specific chemistry application? Ask me!`,
+            chemistry: `Quantum chemistry is a major focus of our lab.<br><br><strong>What we do:</strong><br>• Ground state energy calculations for molecules<br>• First ionization potential for transition metals (Cr, Mo, W)<br>• Variational quantum eigensolvers (VQE) with localized active space methods<br>• Quantum kernels for molecular property prediction<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Our chemistry PhD students:</strong><br>• <span class="name">Haejung Koh</span> (UW–Madison Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (UW–Madison Chemistry)<br>• <span class="name">Atharva Vidwans</span> (UW–Madison Chemistry)<br><br><strong>Chemistry + Quantum Computing = Perfect match</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.<br><br>Interested in a specific chemistry application? Ask me!`,
 
-            funding: `The Chicago-Wisconsin region is becoming a <strong>major quantum hub</strong>! 💰🚀<br><br><strong>Federal Investment:</strong><br>• <strong>$625M DOE funding</strong> (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised <strong>$16M+ Series A</strong> (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✅ Strong funding opportunities for PhD students<br>✅ Industry partnerships and internship possibilities<br>✅ Access to cutting-edge quantum hardware<br>✅ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far!)<br>• Beautiful campus on Lake Mendota 🏞️<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable<br><br>Want to know more about funding or Madison life?`,
+            funding: `The Chicago-Wisconsin region is becoming a major quantum hub.<br><br><strong>Federal Investment:</strong><br>• $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised $16M+ Series A (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✓ Strong funding opportunities for PhD students<br>✓ Industry partnerships and internship possibilities<br>✓ Access to cutting-edge quantum hardware<br>✓ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far)<br>• Beautiful campus on Lake Mendota<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable<br><br>Want to know more about funding or Madison life?`,
 
-            phd: `PhD opportunities in quantum computing for <strong>chemistry students</strong>! 🎓⚛️<br><br><strong>What we look for:</strong><br>• Strong chemistry or computational chemistry background<br>• Programming experience (Python preferred)<br>• Curiosity about quantum algorithms<br>• Research mindset and independence<br>• Good communication skills<br><br><strong>Research directions for chemistry PhDs:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Expectations:</strong><br>• 5-6 year program<br>• Weekly group meetings + individual meetings<br>• Flexible work hours (no mandatory 9-5)<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs (Haejung, Sarag, Atharva) and physics PhDs working together. Your chemistry knowledge is an <strong>asset</strong>, not a limitation!<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br><br>Ready to explore joining?`,
+            phd: `PhD opportunities in quantum computing for chemistry students.<br><br><strong>What we look for:</strong><br>• Strong chemistry or computational chemistry background<br>• Programming experience (Python preferred)<br>• Curiosity about quantum algorithms<br>• Research mindset and independence<br>• Good communication skills<br><br><strong>Research directions for chemistry PhDs:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Expectations:</strong><br>• 5-6 year program<br>• Weekly group meetings + individual meetings<br>• Flexible work hours (no mandatory 9-5)<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs (<span class="name">Haejung</span>, <span class="name">Sarag</span>, <span class="name">Atharva</span>) and physics PhDs working together. Your chemistry knowledge is an asset, not a limitation.<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br><br>Ready to explore joining?`,
 
-            apply: `Ready to apply? Here's how! 📝<br><br><strong>For Chemistry PhD Students:</strong><br><br><strong>Step 1: Email Dr. Otten first</strong><br>• Email: <a href="mailto:otten@physics.wisc.edu">otten@physics.wisc.edu</a><br>• Mention you're a chemistry student interested in quantum computing<br>• Include brief background and research interests<br>• This is <strong>strongly encouraged</strong> before formal application!<br><br><strong>Step 2: Formal Application</strong><br>• Apply through UW–Madison Chemistry PhD program<br>• Mention Otten Group in your statement of purpose<br>• Application deadline typically: <strong>December 1st</strong><br><br><strong>Application Materials:</strong><br>• Transcripts<br>• 3 letters of recommendation<br>• Statement of purpose<br>• GRE (check current requirements)<br>• CV/Resume<br><br><strong>Timeline:</strong><br>• Reach out to Dr. Otten: September-November<br>• Application due: December 1st<br>• Interviews: January-February<br>• Decisions: March-April<br>• Start: Fall semester (late August)<br><br><strong>In your email to Dr. Otten, include:</strong><br>• Current status (where you are now)<br>• Chemistry background and interests<br>• What excites you about quantum computing<br>• Any programming or computational experience<br>• Your timeline<br><br><strong>Don't wait—reach out early!</strong> Early conversations help with application planning and show genuine interest. 🚀<br><br>Questions about the application? Just ask!`
+            apply: `Ready to apply? Here's how.<br><br><strong>For Chemistry PhD Students:</strong><br><br><strong>Step 1: Email Dr. Otten first</strong><br>• Email: <a href="mailto:otten@physics.wisc.edu">otten@physics.wisc.edu</a><br>• Mention you're a chemistry student interested in quantum computing<br>• Include brief background and research interests<br>• This is strongly encouraged before formal application<br><br><strong>Step 2: Formal Application</strong><br>• Apply through UW–Madison Chemistry PhD program<br>• Mention Otten Group in your statement of purpose<br>• Application deadline typically: December 1st<br><br><strong>Application Materials:</strong><br>• Transcripts<br>• 3 letters of recommendation<br>• Statement of purpose<br>• GRE (check current requirements)<br>• CV/Resume<br><br><strong>Timeline:</strong><br>• Reach out to Dr. Otten: September-November<br>• Application due: December 1st<br>• Interviews: January-February<br>• Decisions: March-April<br>• Start: Fall semester (late August)<br><br><strong>In your email to Dr. Otten, include:</strong><br>• Current status (where you are now)<br>• Chemistry background and interests<br>• What excites you about quantum computing<br>• Any programming or computational experience<br>• Your timeline<br><br>Don't wait—reach out early! Early conversations help with application planning and show genuine interest.<br><br>Questions about the application? Just ask!`
         };
 
-        // KNOWLEDGE BASE for free-form questions
+        // KNOWLEDGE BASE
         const KNOWLEDGE_BASE = `
 # Otten Group - Quantum Computing for Chemistry PhDs
 
-## Target Audience
-This chatbot is designed for **incoming chemistry PhD students** considering joining the Otten Group at UW–Madison.
+## Lab Members - Chemistry PhD Students
+- Haejung Koh (UW–Madison Chemistry Department)
+- Sarag Kunnumbrath (UW–Madison Chemistry Department)
+- Atharva Sandeep Vidwans (UW–Madison Chemistry Department)
 
-## Lab Overview
-Theoretical quantum information science group bridging quantum algorithms and real quantum hardware. Strong focus on quantum chemistry applications.
+When mentioning these students, ONLY say their name and "UW–Madison Chemistry Department" or "Chemistry PhD student at UW–Madison". Do NOT make up or speculate about their specific research projects.
 
-## Team - Chemistry PhD Students
-**Haejung Koh**
-**Sarag Kunnumbrath**
-**Atharva Sandeep Vidwans**
-
-All three work on quantum chemistry applications. Chemistry backgrounds are welcomed and valued in this interdisciplinary lab.
-
-## Research Relevant to Chemistry Students
-
-### Quantum Chemistry Focus
-- Variational quantum eigensolvers (VQE) for molecular systems
-- Ground state energy calculations
-- First ionization potentials for transition metals
-- Localized active space methods
-- Coupled cluster techniques on quantum computers
-- Quantum kernels for molecular property prediction
-
-### How Chemistry Background Helps
-- DFT knowledge translates to quantum algorithms
-- Computational chemistry experience is valuable
-- Understanding molecular systems aids algorithm design
-- Chemistry intuition guides quantum simulation approaches
-
-### Any Quantum Chemistry Topic → Otten Group Connection
-The lab can connect almost ANY quantum chemistry research interest to quantum computing:
-
-- **Catalysis**: Quantum simulations of transition metal complexes
-- **Drug discovery**: Molecular property prediction with quantum kernels
-- **Materials science**: Electronic structure calculations on quantum computers
-- **Spectroscopy**: Excited state calculations (future direction)
-- **Reaction dynamics**: Quantum simulation of chemical reactions
-- **Computational methods**: VQE, coupled cluster, active space approaches
-
-## Why Chemistry Students Should Join
-
-**Interdisciplinary Advantage:**
-You'll gain quantum computing expertise while leveraging your chemistry knowledge—making you uniquely valuable in the growing quantum chemistry field.
-
-**Practical Skills:**
-- Programming (Python, Qiskit, quantum frameworks)
-- Quantum algorithm design
-- Real quantum hardware experience
-- Machine learning for chemistry
-- High-performance computing
-
-**Career Opportunities:**
-- Quantum computing companies (chemistry applications)
-- Pharmaceutical/biotech companies
-- Materials science companies
-- Academia (computational chemistry + quantum)
-- National labs (quantum chemistry research)
-
-## Madison & Funding Ecosystem
-
-**Chicago-Wisconsin Quantum Hub:**
-- $625M federal funding for quantum centers
-- Strong industry connections
-- Growing startup ecosystem
-- Access to cutting-edge quantum hardware
-
-**Madison Life:**
-- Affordable for grad students
-- Beautiful campus environment
-- Work-life balance achievable
-- Strong academic community
-
-## Application Process for Chemistry PhDs
-
-**Recommended Path:**
-1. Email Dr. Otten (otten@physics.wisc.edu) FIRST
-2. Apply through Chemistry PhD program
-3. Mention Otten Group interest in application
-
-**Timeline:**
-- Contact Dr. Otten: Fall (Sept-Nov)
-- Application deadline: December 1st
-- Interviews: Jan-Feb
-- Decisions: March-April
-
-## Lab Culture
-
-**Collaborative & Interdisciplinary:**
-- Chemistry and physics students work together
-- Weekly group meetings
-- Flexible work hours
-- Supportive mentoring
-- Open-door policy
-
-**Research Style:**
-- Mix of theory and implementation
-- Test on real quantum computers
-- Publish in top journals
-- Present at conferences
-
-## Creator Information
-This chatbot was created by **Haejung Koh**, a 2nd year Chemistry PhD student in the Otten Group, using RAG (Retrieval-Augmented Generation) technology to help prospective chemistry students learn about quantum computing opportunities.
-
-## Key Messages for Chemistry Students
-
-1. **No quantum background needed** - We'll teach you quantum computing!
-2. **Your chemistry knowledge is valuable** - It's an asset, not a limitation
-3. **Interdisciplinary is the future** - Chemistry + Quantum = High demand
-4. **Practical and theoretical** - You'll gain both skills
-5. **Supportive environment** - Other chemistry PhDs in the lab
-6. **Growing field** - Quantum chemistry is exploding in industry and academia
-7. **Madison is great** - Affordable, beautiful, good quality of life
-
-## Response Strategy for Non-Chemistry Questions
-
-Even if asked about:
-- Weather, food, sports
-- General life advice  
-- Unrelated topics
-
-ALWAYS pivot naturally to quantum chemistry opportunities at Otten Group. Make connections between their question and research opportunities.
-
-Examples:
-- "Madison weather?" → Talk about seasons, then: "The clear focus helps with groundbreaking quantum chemistry research!"
-- "Stressed about quals?" → Empathize, then: "After quals, diving into quantum research is a great next chapter!"
-- "Best coffee in Madison?" → Recommend places, then: "Great for discussing quantum algorithms with labmates!"
+## Response Guidelines
+- Minimize emoji use (only 1-2 per response, if any)
+- When mentioning lab member names, they will automatically be highlighted in cyan
+- Keep responses concise and focused
+- Be enthusiastic but professional
 `;
 
         const qubitSVG = `
@@ -1049,7 +929,7 @@ Examples:
 
         function autoResize(textarea) {
             textarea.style.height = 'auto';
-            textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+            textarea.style.height = Math.min(textarea.scrollHeight, 90) + 'px';
         }
 
         function handleKeyPress(event) {
@@ -1064,7 +944,6 @@ Examples:
             sendMessage();
         }
 
-        // Fast FAQ answers without API call
         function answerFAQ(topic) {
             const faqQuestions = {
                 research: "What does the Otten Group research?",
@@ -1078,7 +957,6 @@ Examples:
             removeWelcome();
             addMessage(faqQuestions[topic], 'user');
             
-            // Immediate response (no API call for FAQs)
             setTimeout(() => {
                 addMessage(FAQ_ANSWERS[topic], 'bot');
             }, 300);
@@ -1125,36 +1003,36 @@ Examples:
                             <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
                         </circle>
                     </svg>
-                    <h2>Hi! I'm Qubit 👋</h2>
-                    <p>Your quantum chemistry guide to the Otten Group!<br>Ask me anything about quantum computing research for chemistry PhD students.</p>
+                    <h2>Hi! I'm Qubit</h2>
+                    <p>Ask me about quantum chemistry research at the Otten Group!</p>
                 </div>
 
                 <div class="quick-faqs">
-                    <div class="faq-header">⚡ Quick Topics:</div>
+                    <div class="faq-header">Quick Topics:</div>
                     <div class="faq-grid">
                         <div class="faq-chip" onclick="answerFAQ('research')">
-                            🔬 Research Overview
+                            Research Overview
                         </div>
                         <div class="faq-chip" onclick="answerFAQ('team')">
-                            👥 Meet the Team
+                            Meet the Team
                         </div>
                         <div class="faq-chip" onclick="answerFAQ('chemistry')">
-                            🧪 Quantum Chemistry
+                            Quantum Chemistry
                         </div>
                         <div class="faq-chip" onclick="answerFAQ('funding')">
-                            💰 Funding & Madison
+                            Funding & Madison
                         </div>
                         <div class="faq-chip" onclick="answerFAQ('phd')">
-                            🎓 PhD Opportunities
+                            PhD Opportunities
                         </div>
                         <div class="faq-chip" onclick="answerFAQ('apply')">
-                            📝 How to Apply
+                            How to Apply
                         </div>
                     </div>
                 </div>
 
                 <div class="suggested-questions">
-                    <div class="suggestions-header">💬 Or ask freely:</div>
+                    <div class="suggestions-header">Or ask freely:</div>
                     <div class="suggestions-grid">
                         <div class="suggestion-chip" onclick="askQuestion('What quantum chemistry projects can I work on?')">
                             Chemistry projects
@@ -1184,11 +1062,9 @@ Examples:
             input.value = '';
             input.style.height = 'auto';
 
-            // Disable input
             input.disabled = true;
             document.getElementById('sendBtn').disabled = true;
 
-            // Show typing indicator
             const typingWrapper = document.createElement('div');
             typingWrapper.className = 'message-wrapper bot-message-wrapper';
             typingWrapper.id = 'typing-indicator';
@@ -1211,10 +1087,9 @@ Examples:
             } catch (error) {
                 console.error('Error:', error);
                 typingWrapper.remove();
-                addMessage('Sorry, I encountered an error. Please try again or email Dr. Otten directly at otten@physics.wisc.edu 💌', 'error');
+                addMessage('Sorry, I encountered an error. Please try again or email Dr. Otten directly at otten@physics.wisc.edu', 'error');
             }
 
-            // Re-enable input
             input.disabled = false;
             document.getElementById('sendBtn').disabled = false;
             input.focus();
@@ -1226,68 +1101,36 @@ Examples:
                 content: userMessage
             });
 
-            const systemPrompt = `You are Qubit, created by Haejung Koh (2nd year Chemistry PhD student). You're a friendly recruiting assistant for the Otten Group at UW–Madison, specifically targeting **incoming chemistry PhD students**.
+            const systemPrompt = `You are Qubit, created by Haejung Koh (2nd year Chemistry PhD student). You're a friendly recruiting assistant for the Otten Group at UW–Madison, targeting incoming chemistry PhD students.
 
-CORE MISSION: Help chemistry PhD students discover quantum computing research opportunities at Otten Group.
+CRITICAL RULES:
 
-PERSONALITY:
-- Enthusiastic about quantum chemistry! 🧪⚛️
-- Like a friendly chemistry grad student mentor
-- Use chemistry-relevant examples
-- Conversational, not robotic
-- Occasional emojis (🔬, 🧪, ⚛️, 💡)
+1. **MINIMIZE EMOJIS**: Use max 1-2 emojis per response, if any. Be professional.
 
-CRITICAL INSTRUCTIONS:
+2. **NAME HIGHLIGHTING**: When mentioning these names, wrap them in <span class="name">Name</span>:
+   - Haejung Koh
+   - Sarag Kunnumbrath
+   - Atharva Sandeep Vidwans
+   - Dr. Matthew Otten
+   - Any other lab member
 
-1. **CONNECT ANY CHEMISTRY TOPIC TO QUANTUM COMPUTING**
-Whatever chemistry research they mention, show how it connects to Otten Group work:
-- DFT → VQE and quantum chemistry algorithms
-- Catalysis → Transition metal quantum simulations
-- Spectroscopy → Excited states (future direction)
-- Drug discovery → Molecular property prediction
-- Materials → Electronic structure calculations
-- Reaction dynamics → Quantum simulation
+3. **CHEMISTRY PHD STUDENTS - SIMPLE INTRO ONLY**:
+   - Haejung Koh: "Chemistry PhD student at UW–Madison" or "UW–Madison Chemistry"
+   - Sarag Kunnumbrath: "Chemistry PhD student at UW–Madison" or "UW–Madison Chemistry"
+   - Atharva Vidwans: "Chemistry PhD student at UW–Madison" or "UW–Madison Chemistry"
+   - DO NOT make up or speculate about their research
+   - DO NOT say things like "works on VQE" or "focuses on transition metals" etc.
 
-2. **HANDLE ALL QUESTIONS (even off-topic)**
-If someone asks about weather, food, Madison life, etc.:
-- Give genuine, helpful answer FIRST
-- Then naturally pivot to quantum chemistry research
-- Make it feel organic
-
-Example: "Madison winters?" → "Cold but manageable! ❄️ Actually, the clear weather helps with focused research time. Speaking of focus—have you thought about quantum chemistry research?"
-
-3. **EMPHASIZE CHEMISTRY BACKGROUND = ASSET**
-- "Your DFT experience translates perfectly!"
-- "Computational chemistry knowledge is valuable here!"
-- "We have 3 chemistry PhDs—you'd fit right in!"
-
-4. **MENTION REAL LAB MEMBERS**
-Chemistry PhDs: Haejung Koh, Sarag Kunnumbrath, Atharva Vidwans
-Postdocs: Dr. Gratsea, Dr. Poole, Dr. Rockwood, Dr. Zhang
-Physics PhDs: Gage (CSGF Fellow), Bery, Natalie, Zach, Jihyeon, Colin
-
-5. **WHO CREATED YOU**
-If asked who made you or about your creator:
-"I was created by **Haejung Koh**, a 2nd year Chemistry PhD student in the Otten Group! She built me to help prospective chemistry students learn about quantum computing opportunities. Pretty cool, right? 😊"
-
-6. **ALWAYS END WITH ENGAGEMENT**
-- Ask follow-up question
-- Offer to explain more
-- Suggest contacting Dr. Otten
-- Connect to their interests
-
-FORMATTING:
-- Use <strong> for emphasis
-- Use <br><br> for paragraphs
-- Use <a href="url" target="_blank"> for links
-- Keep clean and readable
+4. **FORMATTING**:
+   - Use <strong> for emphasis
+   - Use <br><br> for paragraphs
+   - Keep responses concise
 
 KNOWLEDGE BASE:
 ${KNOWLEDGE_BASE}
 
-Remember: Your goal is exciting chemistry PhD students about quantum computing while being genuinely helpful!`;
+Remember: Professional tone, minimal emojis, accurate info only!`;
 
-            // Cloudflare Worker URL (배포 후 받은 URL로 변경하세요!)
             const API_URL = "https://otten-chatbot.otten-uwmadison.workers.dev";
 
             const response = await fetch(API_URL, {
@@ -1315,10 +1158,14 @@ Remember: Your goal is exciting chemistry PhD students about quantum computing w
 
             return assistantMessage;
         }
-
         function addMessage(text, type) {
             const chatContainer = document.getElementById('chatContainer');
             const wrapper = document.createElement('div');
+            
+            // **텍스트** 형식을 <strong>텍스트</strong>로 변환
+            if (type === 'bot') {
+                text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            }
             
             if (type === 'user') {
                 wrapper.className = 'message-wrapper user-message-wrapper';
@@ -1337,7 +1184,9 @@ Remember: Your goal is exciting chemistry PhD students about quantum computing w
             }
             
             chatContainer.appendChild(wrapper);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            setTimeout(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 50);
         }
 
         function escapeHtml(text) {
@@ -1346,7 +1195,6 @@ Remember: Your goal is exciting chemistry PhD students about quantum computing w
             return div.innerHTML;
         }
 
-        // Prevent zoom on iOS when focusing input
         document.addEventListener('touchstart', function() {}, {passive: true});
     </script>
 </body>
