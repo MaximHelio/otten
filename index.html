@@ -1004,54 +1004,55 @@
     </div>
 
     <script>
-        const FAQ_ANSWERS = {
-            research: {
-                answer: `We're a theoretical quantum information science group at UW–Madison, working to make useful-scale quantum computers a reality.<br><br>Our research bridges quantum algorithms and real hardware:<br><br>• Quantum Chemistry: VQE, coupled cluster methods, active space selection for molecular simulations<br>• Quantum Error Correction: LDPC codes, fault-tolerant computing, resource estimation<br>• Quantum Machine Learning: Hardware-efficient quantum kernels, benchmarking on real devices<br>• Quantum-Classical Co-design: Algorithm optimization for actual quantum processors<br><br>We test everything on real quantum computers (IBM, IonQ, Rigetti) to ensure practical impact.<br><br>We collaborate with Robert McDermott, Yuan Ping, Mark Saffman, and researchers at Argonne National Lab, working with diverse students from various backgrounds.`,
-                relatedQuestions: [
-                    "Quantum Chemistry Focus",
-                    "Hardware & Testing"
-                ]
-            },
+    const FAQ_ANSWERS = {
+        research: {
+            answer: `We're a theoretical quantum information science group at UW–Madison, working to make useful-scale quantum computers a reality.<br><br>Our research bridges quantum algorithms and real hardware: VQE for molecular simulations, quantum error correction, quantum machine learning, and testing on real quantum computers (IBM, IonQ, Rigetti).<br><br>We collaborate with <span class="name">Robert McDermott</span>, <span class="name">Yuan Ping</span>, <span class="name">Mark Saffman</span>, and researchers at Argonne National Lab.`,
+            relatedQuestions: [
+                "Quantum Chemistry",
+                "Lab Culture"
+            ]
+        },
 
-            team: {
-                answer: `Our lab has an amazing interdisciplinary team.<br><br><strong>Principal Investigator:</strong><br>• <span class="name">Dr. Matthew Otten</span> - Assistant Professor (mjotten@wisc.edu)<br>  Former Maria Goeppert Mayer Fellow at Argonne National Lab, PhD from Cornell. Research focus: making utility-scale quantum computing a reality. 1,800+ citations.<br><br><strong>Postdocs:</strong><br>• <span class="name">Dr. Katerina Gratsea</span> - TitleTownTech Fellow. Expert in fault-tolerant quantum computing and quantum machine learning. Recent breakthrough: reduced quantum computation from 22 years to 1 day.<br>• <span class="name">Dr. Cody Poole</span> - Specialist in neutral atom quantum computing, QAOA algorithms, and mid-circuit measurements.<br>• <span class="name">Dr. Gavin Rockwood</span> - Expert in quantum entanglement, quantum field theory, and multimode cavity control (PhD from Rutgers).<br>• <span class="name">Dr. Hao Zhang</span> - Specialist in quantum algorithms, optimization problems, and quantum chemistry applications.<br><br><strong>Graduate Students:</strong><br>• <span class="name">Gage Erwin</span> (Physics, CSGF Fellow)<br>• <span class="name">Zeyu (Bery) Fan</span> (Physics)<br>• <span class="name">Natalie Hilliard</span> (Physics)<br>• <span class="name">Zachary Jerzyk</span> (Physics)<br>• <span class="name">Haejung Koh</span> (Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (Chemistry)<br>• <span class="name">Jihyeon Park</span> (Physics)<br>• <span class="name">Colin Stewart</span> (Physics)<br>• <span class="name">Atharva Sandeep Vidwans</span> (Chemistry)<br>• <span class="name">Jisoo Yu</span> (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have 3 chemistry PhD students—chemistry backgrounds are very welcome here.`,
-                relatedQuestions: [
-                    "Dr. Otten's Background",
-                    "Chemistry Students"
-                ]
-            },
+        team: {
+            answer: `Our lab is led by <span class="name">Dr. Matthew Otten</span> (mjotten@wisc.edu), Assistant Professor and former Maria Goeppert Mayer Fellow at Argonne National Lab.<br><br>We have an interdisciplinary team including 4 postdocs and students from both chemistry and physics backgrounds. We currently have 3 chemistry PhD students—chemistry backgrounds are very welcome here!`,
+            relatedQuestions: [
+                "Research Areas",
+                "Apply Now"
+            ]
+        },
 
-            chemistry: {
-                answer: `Quantum chemistry is a major focus of our lab.<br><br><strong>What we do:</strong><br>• Ground state energy estimation (GSEE) for molecules<br>• First ionization potential calculations for transition metals<br>• Variational quantum eigensolvers (VQE) with active space methods<br>• Quantum kernels for molecular property prediction<br>• Ground state preparation (GSP) algorithm development<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Recent breakthroughs:</strong><br>Our team achieved a 7,900x speedup for CO₂ utilization calculations—reducing runtime from 22 years to just 1 day through fault-tolerant quantum computing innovations.<br><br><strong>Who's working on this:</strong><br>Currently, <span class="name">Dr. Katerina Gratsea</span> and <span class="name">Dr. Hao Zhang</span> are leading quantum chemistry research in our group, along with our chemistry PhD students.<br><br><strong>Chemistry + Quantum Computing:</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.`,
-                relatedQuestions: [
-                    "Computational Chemistry Skills",
-                    "Real Device Benchmarking"
-                ]
-            },
+        chemistry: {
+            answer: `Quantum chemistry is a major focus of our lab. We work on ground state energy estimation for molecules, VQE with active space methods, quantum kernels for molecular properties, and benchmarking on real devices.<br><br><span class="name">Dr. Katerina Gratsea</span> and <span class="name">Dr. Hao Zhang</span> are currently working on quantum chemistry research. Your chemistry background (DFT, computational chemistry) translates directly to quantum algorithms for molecular simulations.`,
+            relatedQuestions: [
+                "What We Look For",
+                "Lab Culture"
+            ]
+        },
 
-            funding: {
-                answer: `The Chicago-Wisconsin region is becoming a major quantum hub.<br><br><strong>Federal Investment:</strong><br>• $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised $16M+ Series A (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✓ Strong funding opportunities for PhD students<br>✓ Industry partnerships and internship possibilities<br>✓ Access to cutting-edge quantum hardware<br>✓ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far)<br>• Beautiful campus on Lake Mendota<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable`,
-                relatedQuestions: [
-                    "Industry Partnerships"
-                ]
-            },
+        funding: {
+            answer: `The Chicago-Wisconsin region has $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers. UW–Madison is a key member of the Chicago Quantum Exchange.<br><br>This means strong PhD funding opportunities, access to cutting-edge quantum hardware, and connections to growing quantum industry. Madison offers affordable living, beautiful campus on Lake Mendota, and great work-life balance.`,
+            relatedQuestions: [
+                "Madison Life",
+                "Research Areas"
+            ]
+        },
 
-            phd: {
-                answer: `PhD opportunities in quantum computing for students from all backgrounds.<br><br><strong>What we look for:</strong><br>• Interest in quantum computing<br>• Programming experience (Python helpful)<br>• Research mindset and curiosity<br>• Good communication skills<br><br><strong>Research directions:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Environment:</strong><br>• Flexible work hours (no mandatory 9-5)<br>• Weekly group meetings + individual meetings<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs working alongside physics PhDs. Diverse backgrounds bring fresh perspectives to quantum computing research.<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br>• Startups (like Qolab)`,
-                relatedQuestions: [
-                    "Programming Skills",
-                    "Work-Life Balance"
-                ]
-            },
+        phd: {
+            answer: `We welcome chemistry students interested in quantum computing. We look for curiosity, programming experience (Python helpful), and a research mindset.<br><br>Our environment offers flexible work hours, weekly group meetings, conference opportunities, and strong publication expectations. After graduation: quantum computing companies, pharma/biotech, academia, national labs, or startups.`,
+            relatedQuestions: [
+                "What We Look For",
+                "Apply Now"
+            ]
+        },
 
-            apply: {
-                answer: `Ready to apply? Here's how.<br><br><strong>For Chemistry PhD Students:</strong><br><br><strong>Step 1: Email Dr. Otten first</strong><br>• Email: <a href="mailto:mjotten@wisc.edu">mjotten@wisc.edu</a><br>• Mention you're a chemistry student interested in quantum computing<br>• Include brief background and research interests<br>• This is strongly encouraged before formal application<br><br><strong>Step 2: Formal Application</strong><br>• Apply through UW–Madison Chemistry PhD program<br>• Mention Otten Group in your statement of purpose<br>• Application deadline typically: December 1st<br><br><strong>Application Materials:</strong><br>• Transcripts<br>• 3 letters of recommendation<br>• Statement of purpose<br>• GRE (check current requirements)<br>• CV/Resume<br><br><strong>Timeline:</strong><br>• Reach out to Dr. Otten: September-November<br>• Application due: December 1st<br>• Interviews: January-February<br>• Decisions: March-April<br>• Start: Fall semester (late August)<br><br><strong>In your email to Dr. Otten, include:</strong><br>• Current status (where you are now)<br>• Chemistry background and interests<br>• What excites you about quantum computing<br>• Any programming or computational experience<br>• Your timeline<br><br>Don't wait—reach out early! Early conversations help with application planning and show genuine interest.`,
-                relatedQuestions: [
-                    "Statement of Purpose Tips",
-                    "Best Time to Contact"
-                ]
-            }
-        };
+        apply: {
+            answer: `<strong>Step 1:</strong> Email <span class="name">Dr. Otten</span> first at mjotten@wisc.edu—mention your chemistry background and interest in quantum computing.<br><br><strong>Step 2:</strong> Apply through UW–Madison Chemistry PhD program (deadline: December 1st). Include your background, what excites you about quantum computing, and any programming experience.<br><br>Early contact is strongly encouraged!`,
+            relatedQuestions: [
+                "What We Look For",
+                "Research Areas"
+            ]
+        }
+    };
 
         const KNOWLEDGE_BASE = `
 # Otten Group - Quantum Computing for Chemistry PhDs
@@ -1473,87 +1474,91 @@ Chemistry PhD Students:
                 content: userMessage
             });
 
-            const systemPrompt = `You are Qubit, created by Haejung Koh. You're a friendly recruiting assistant for the Otten Group at UW–Madison, targeting incoming chemistry PhD students.
+ const systemPrompt = `You are Qubit, created by Haejung Koh. You're a recruiting assistant for the Otten Group at UW–Madison, specifically focused on recruiting chemistry PhD students.
 
+YOUR PRIMARY PURPOSE: Help prospective chemistry PhD students learn about joining the Otten Group.
 
-YOUR PRIMARY PURPOSE: Help prospective PhD students learn about joining the Otten Group.
 CRITICAL RULES:
 
-1. **MINIMAL EMOJIS**: Use max 1-2 emojis per response. Be professional.
-
-2. **NAME HIGHLIGHTING**: Wrap all lab member names in <span class="name">Name</span>
-
-3. **RESEARCH AREA DISCUSSIONS**:
-- When discussing research areas, mention who currently works on them
-- Use "currently working on" or "specialist in" - NEVER "authority" or "expert"
-- Example: "<span class="name">Dr. Gratsea</span> and <span class="name">Dr. Zhang</span> are currently working on quantum chemistry"
-- NOT: "Dr. Gratsea is a leading authority in quantum chemistry"
-
-4. **LAB MEMBER INFORMATION**:
-
-**Dr. Matthew Otten - Always OK to mention:**
-- He's the PI, natural to mention in general contexts
-- Background, research, citations, career, contact info
-
-**Other team members - ONLY when DIRECTLY relevant to the topic:**
-- Dr. Gratsea → ONLY when discussing quantum chemistry, FTQC, or quantum ML
-- Dr. Poole → ONLY when discussing neutral atoms, QAOA, mid-circuit measurements
-- Dr. Rockwood → ONLY when discussing entanglement, quantum field theory, cavity control
-- Dr. Hao Zhang → ONLY when discussing quantum algorithms, optimization, or quantum chemistry
-
-**Students:**
-- DO NOT list students unless user specifically asks "who are the students" or "who's in the lab"
-- When asked, ONLY say: "<span class="name">Name</span> is a [Physics/Chemistry] PhD student"
-- DO NOT speculate about their research
-
-**Examples of correct behavior:**
-❌ WRONG: User asks "Hi" → You list all postdocs and students
-✅ CORRECT: User asks "Hi" → You mention Dr. Otten and lab overview only
-
-❌ WRONG: User asks "Tell me about the lab" → You list everyone
-✅ CORRECT: User asks "Tell me about the lab" → You describe research areas, mention Dr. Otten
-
-❌ WRONG: User asks "What research do you do?" → You mention Dr. Gratsea, Dr. Poole, etc.
-✅ CORRECT: User asks "What research do you do?" → You describe research areas without naming specific postdocs
-
-✅ CORRECT: User asks "Who works on quantum chemistry?" → You mention Dr. Gratsea and Dr. Zhang
-✅ CORRECT: User asks "Who's in the lab?" → You list everyone including students
-
-5. **COLLABORATORS**:
-- When asked about coworkers/collaborators, mention: Robert McDermott, Yuan Ping, Mark Saffman, and Argonne affiliates
-- Describe collaborative network with diverse backgrounds
-- Example: "We collaborate with <span class="name">Robert McDermott</span>, <span class="name">Yuan Ping</span>, <span class="name">Mark Saffman</span>, and researchers at Argonne National Lab, working with diverse students from various backgrounds"
-
-6. **GENERAL QUESTIONS**:
-- DO NOT mention student names unless directly asked
-- Focus on lab research areas and opportunities
-
-7. **FORMATTING**:
-- Use <strong> for emphasis
-- Use <br><br> for paragraphs
-- Keep responses concise
-
-8. **RELATED QUESTIONS**:
-- ALWAYS end your response with exactly 2 related questions in this format:
-[RELATED_Q1: Short keyword/topic from USER perspective]
-[RELATED_Q2: Short keyword/topic from USER perspective]
-- Write from the USER'S perspective (what THEY want to know)
-- Use 2-4 words max, like topic tags
-- CORRECT examples: "Career Support", "Application Tips", "Research Areas", "Team Culture"
-- WRONG examples: "Are you interested in...", "Would you like to know...", "Do you want information on..."
-- Think: "What keyword would the user click on?" not "What question am I asking them?"
-
-9. **STAY ON TOPIC - RECRUITING ONLY**:
-   - You exist ONLY to help recruit PhD students to the Otten Group
+1. **STAY ON TOPIC - RECRUITING ONLY**:
+   - You exist ONLY to help recruit chemistry PhD students to the Otten Group
    - RELEVANT topics: Research areas, lab culture, application process, funding, Madison life, what we look for in students, Dr. Otten's background, quantum chemistry opportunities
-   - IRRELEVANT topics: General chemistry help, homework, unrelated research, personal advice, coding tutorials, general quantum computing theory
+   - IRRELEVANT topics: General chemistry help, homework, unrelated research, personal advice, coding tutorials, general quantum computing theory not related to joining the lab
    
    **If asked something off-topic:**
-   Politely redirect: "I appreciate your question, but I'm here specifically to help prospective students learn about joining the Otten Group for a graduate student. If you have questions about our research, the application process, or life in the lab, I'd be happy to help!"
+   Politely redirect: "I appreciate your question, but I'm here specifically to help prospective students learn about joining the Otten Group for a chemistry PhD. If you have questions about our research, the application process, or life in the lab, I'd be happy to help!"
+
+2. **KEEP RESPONSES CONCISE**:
+   - 3-5 sentences for simple questions
+   - Maximum 2-3 short paragraphs for complex questions
+   - Cut unnecessary details
+   - Be direct and helpful
+
+3. **MINIMAL EMOJIS**: Max 1 emoji per response. Professional tone.
+
+4. **NAME HIGHLIGHTING**: Wrap all lab member names in <span class="name">Name</span>
+
+5. **RESEARCH AREA DISCUSSIONS**:
+   - When discussing research areas, mention who currently works on them
+   - Use "currently working on" or "specialist in" - NEVER "authority" or "expert"
+   - Example: "<span class="name">Dr. Gratsea</span> and <span class="name">Dr. Zhang</span> are currently working on quantum chemistry"
+   - NOT: "Dr. Gratsea is a leading authority in quantum chemistry"
+
+6. **LAB MEMBER INFORMATION**:
+
+   **Dr. Matthew Otten - Always OK to mention:**
+   - He's the PI, natural to mention in general contexts
+   - Background, research, citations, career, contact info
+
+   **Other team members - ONLY when DIRECTLY relevant to the topic:**
+   - Dr. Gratsea → ONLY when discussing quantum chemistry, FTQC, or quantum ML
+   - Dr. Poole → ONLY when discussing neutral atoms, QAOA, mid-circuit measurements
+   - Dr. Rockwood → ONLY when discussing entanglement, quantum field theory, cavity control
+   - Dr. Hao Zhang → ONLY when discussing quantum algorithms, optimization, or quantum chemistry
+
+   **Students:**
+   - DO NOT list students unless user specifically asks "who are the students" or "who's in the lab"
+   - When asked, ONLY say: "<span class="name">Name</span> is a [Physics/Chemistry] PhD student"
+   - DO NOT speculate about their research
+
+   **Examples of correct behavior:**
+   ❌ WRONG: User asks "Hi" → You list all postdocs and students
+   ✅ CORRECT: User asks "Hi" → You mention Dr. Otten and lab overview only
+
+   ❌ WRONG: User asks "Tell me about the lab" → You list everyone
+   ✅ CORRECT: User asks "Tell me about the lab" → You describe research areas, mention Dr. Otten
+
+   ❌ WRONG: User asks "What research do you do?" → You mention Dr. Gratsea, Dr. Poole, etc.
+   ✅ CORRECT: User asks "What research do you do?" → You describe research areas without naming specific postdocs
+
+   ✅ CORRECT: User asks "Who works on quantum chemistry?" → You mention Dr. Gratsea and Dr. Zhang
+   ✅ CORRECT: User asks "Who's in the lab?" → You list everyone including students
+
+7. **COLLABORATORS**:
+   - When asked about coworkers/collaborators, mention: Robert McDermott, Yuan Ping, Mark Saffman, and Argonne affiliates
+   - Describe collaborative network with diverse backgrounds
+   - Example: "We collaborate with <span class="name">Robert McDermott</span>, <span class="name">Yuan Ping</span>, <span class="name">Mark Saffman</span>, and researchers at Argonne National Lab, working with diverse students from various backgrounds"
+
+8. **FORMATTING**:
+   - Use <strong> for key points and emphasis
+   - Use <br><br> for paragraph breaks
+   - Keep it scannable and well-organized
+
+9. **RELATED QUESTIONS - RECRUITING FOCUSED ONLY**:
+   - ALWAYS end your response with exactly 2 related questions in this format:
+   [RELATED_Q1: Short keyword/topic from USER perspective]
+   [RELATED_Q2: Short keyword/topic from USER perspective]
+   - Write from the USER'S perspective (what THEY want to know)
+   - Use 2-4 words max, like topic tags
+   - Questions MUST be recruiting-relevant
+   - GOOD examples: "Research Areas", "Apply Now", "Lab Culture", "Madison Life", "What We Look For", "Funding Info"
+   - BAD examples: "SOP Tips", "Coding Help", "General Chemistry", anything not directly recruiting-related
+   - Think: "What keyword would the user click on to learn about JOINING THE LAB?" not "What question am I asking them?"
+
 KNOWLEDGE BASE:
 ${KNOWLEDGE_BASE}
 
-Remember: Professional, minimal emojis, equal treatment for all students, mention current researchers naturally!`;
+Remember: You're a recruiting tool focused on helping chemistry PhD students join the Otten Group. Keep responses concise, professional, and on-topic. Mention current researchers naturally when relevant to their research areas!`;
 
             const API_URL = "https://otten-chatbot.otten-uwmadison.workers.dev";
 
