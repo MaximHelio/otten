@@ -27,6 +27,7 @@
 
         .container {
             width: 100%;
+            height: 100vh;
             height: 100dvh;
             background: rgba(20, 20, 30, 0.95);
             box-shadow: 0 20px 60px rgba(0, 255, 255, 0.1);
@@ -49,6 +50,31 @@
             align-items: center;
             gap: 10px;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.compact {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .header.compact .bot-avatar {
+            width: 28px;
+            height: 28px;
+        }
+
+        .header.compact .header-text h1 {
+            font-size: 0.9em;
+            margin-bottom: 0;
+        }
+
+        .header.compact .header-text p {
+            display: none;
+        }
+
+        .header.compact .reset-button {
+            padding: 5px 8px;
+            font-size: 0.7em;
         }
 
         .header::before {
@@ -73,6 +99,7 @@
             position: relative;
             z-index: 1;
             flex-shrink: 0;
+            transition: all 0.3s ease;
         }
 
         .header-text {
@@ -91,6 +118,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: all 0.3s ease;
         }
 
         .header p {
@@ -100,6 +128,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: all 0.3s ease;
         }
 
         .status-indicator {
@@ -160,6 +189,7 @@
             padding: 14px;
             background: rgba(10, 10, 15, 0.5);
             -webkit-overflow-scrolling: touch;
+            min-height: 0;
         }
 
         .chat-container::-webkit-scrollbar {
@@ -244,6 +274,35 @@
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
+        }
+
+        .related-questions {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 255, 255, 0.15);
+        }
+
+        .related-questions-title {
+            color: #00ffff;
+            font-size: 0.8em;
+            margin-bottom: 6px;
+            opacity: 0.8;
+        }
+
+        .related-question {
+            color: #b19cd9;
+            font-size: 0.85em;
+            margin: 4px 0;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: rgba(177, 156, 217, 0.4);
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .related-question:hover {
+            color: #00ffff;
+            text-decoration-color: #00ffff;
         }
 
         .typing-indicator {
@@ -405,6 +464,8 @@
         .input-wrapper {
             flex: 1;
             position: relative;
+            display: flex;
+            align-items: flex-end;
         }
 
         #userInput {
@@ -418,7 +479,7 @@
             font-size: 16px;
             resize: none;
             max-height: 90px;
-            min-height: 40px;
+            min-height: 42px;
             line-height: 1.35;
             transition: all 0.3s ease;
         }
@@ -545,6 +606,19 @@
                 gap: 15px;
             }
 
+            .header.compact {
+                padding: 12px 20px;
+            }
+
+            .header.compact .bot-avatar {
+                width: 35px;
+                height: 35px;
+            }
+
+            .header.compact .header-text h1 {
+                font-size: 1.1em;
+            }
+
             .bot-avatar {
                 width: 50px;
                 height: 50px;
@@ -594,6 +668,10 @@
                 padding: 12px 16px;
                 border-radius: 18px 18px 5px 18px;
                 font-size: 0.95em;
+            }
+
+            .related-question {
+                font-size: 0.9em;
             }
 
             .welcome-message {
@@ -678,7 +756,7 @@
                 padding: 12px 16px;
                 font-size: 0.95em;
                 max-height: 120px;
-                min-height: 44px;
+                min-height: 48px;
             }
 
             .send-button {
@@ -724,7 +802,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <div class="header" id="mainHeader">
             <svg class="bot-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="35" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.4">
                     <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
@@ -847,17 +925,53 @@
 
     <script>
         const FAQ_ANSWERS = {
-            research: `We're a theoretical quantum information science group at UW–Madison, working to make useful-scale quantum computers a reality.<br><br>Our research bridges quantum algorithms and real hardware:<br><br>• Quantum Chemistry: VQE, coupled cluster methods, active space selection for molecular simulations<br>• Quantum Error Correction: LDPC codes, fault-tolerant computing, resource estimation<br>• Quantum Machine Learning: Hardware-efficient quantum kernels, benchmarking on real devices<br>• Quantum-Classical Co-design: Algorithm optimization for actual quantum processors<br><br>We test everything on real quantum computers (IBM, IonQ, Rigetti) to ensure practical impact.<br><br>Want to know more about a specific research area?`,
+            research: {
+                answer: `We're a theoretical quantum information science group at UW–Madison, working to make useful-scale quantum computers a reality.<br><br>Our research bridges quantum algorithms and real hardware:<br><br>• Quantum Chemistry: VQE, coupled cluster methods, active space selection for molecular simulations<br>• Quantum Error Correction: LDPC codes, fault-tolerant computing, resource estimation<br>• Quantum Machine Learning: Hardware-efficient quantum kernels, benchmarking on real devices<br>• Quantum-Classical Co-design: Algorithm optimization for actual quantum processors<br><br>We test everything on real quantum computers (IBM, IonQ, Rigetti) to ensure practical impact.<br><br>We collaborate with Robert McDermott, Yuan Ping, Mark Saffman, and researchers at Argonne National Lab, working with diverse students from various backgrounds.`,
+                relatedQuestions: [
+                    "Tell me more about quantum chemistry research",
+                    "What hardware do you use for testing?"
+                ]
+            },
 
-            team: `Our lab has an amazing interdisciplinary team.<br><br><strong>Principal Investigator:</strong><br>• <span class="name">Dr. Matthew Otten</span> - Assistant Professor (mjotten@wisc.edu)<br>  Former Maria Goeppert Mayer Fellow at Argonne National Lab, PhD from Cornell. Research focus: making utility-scale quantum computing a reality. 1,800+ citations.<br><br><strong>Postdocs:</strong><br>• <span class="name">Dr. Katerina Gratsea</span> - TitleTownTech Fellow. Expert in fault-tolerant quantum computing and quantum machine learning. Recent breakthrough: reduced quantum computation from 22 years to 1 day.<br>• <span class="name">Dr. Cody Poole</span> - Specialist in neutral atom quantum computing, QAOA algorithms, and mid-circuit measurements.<br>• <span class="name">Dr. Gavin Rockwood</span> - Expert in quantum entanglement, quantum field theory, and multimode cavity control (PhD from Rutgers).<br>• <span class="name">Dr. Hao Zhang</span> - Specialist in quantum algorithms, optimization problems, and quantum chemistry applications.<br><br><strong>Graduate Students:</strong><br>• <span class="name">Gage Erwin</span> (Physics, CSGF Fellow)<br>• <span class="name">Zeyu (Bery) Fan</span> (Physics)<br>• <span class="name">Natalie Hilliard</span> (Physics)<br>• <span class="name">Zachary Jerzyk</span> (Physics)<br>• <span class="name">Haejung Koh</span> (Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (Chemistry)<br>• <span class="name">Jihyeon Park</span> (Physics)<br>• <span class="name">Colin Stewart</span> (Physics)<br>• <span class="name">Atharva Sandeep Vidwans</span> (Chemistry)<br>• <span class="name">Jisoo Yu</span> (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have 3 chemistry PhD students—chemistry backgrounds are very welcome here.`,
+            team: {
+                answer: `Our lab has an amazing interdisciplinary team.<br><br><strong>Principal Investigator:</strong><br>• <span class="name">Dr. Matthew Otten</span> - Assistant Professor (mjotten@wisc.edu)<br>  Former Maria Goeppert Mayer Fellow at Argonne National Lab, PhD from Cornell. Research focus: making utility-scale quantum computing a reality. 1,800+ citations.<br><br><strong>Postdocs:</strong><br>• <span class="name">Dr. Katerina Gratsea</span> - TitleTownTech Fellow. Expert in fault-tolerant quantum computing and quantum machine learning. Recent breakthrough: reduced quantum computation from 22 years to 1 day.<br>• <span class="name">Dr. Cody Poole</span> - Specialist in neutral atom quantum computing, QAOA algorithms, and mid-circuit measurements.<br>• <span class="name">Dr. Gavin Rockwood</span> - Expert in quantum entanglement, quantum field theory, and multimode cavity control (PhD from Rutgers).<br>• <span class="name">Dr. Hao Zhang</span> - Specialist in quantum algorithms, optimization problems, and quantum chemistry applications.<br><br><strong>Graduate Students:</strong><br>• <span class="name">Gage Erwin</span> (Physics, CSGF Fellow)<br>• <span class="name">Zeyu (Bery) Fan</span> (Physics)<br>• <span class="name">Natalie Hilliard</span> (Physics)<br>• <span class="name">Zachary Jerzyk</span> (Physics)<br>• <span class="name">Haejung Koh</span> (Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (Chemistry)<br>• <span class="name">Jihyeon Park</span> (Physics)<br>• <span class="name">Colin Stewart</span> (Physics)<br>• <span class="name">Atharva Sandeep Vidwans</span> (Chemistry)<br>• <span class="name">Jisoo Yu</span> (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have 3 chemistry PhD students—chemistry backgrounds are very welcome here.`,
+                relatedQuestions: [
+                    "What is Dr. Otten's research background?",
+                    "Tell me about the chemistry PhD students"
+                ]
+            },
 
-            chemistry: `Quantum chemistry is a major focus of our lab.<br><br><strong>What we do:</strong><br>• Ground state energy estimation (GSEE) for molecules<br>• First ionization potential calculations for transition metals<br>• Variational quantum eigensolvers (VQE) with active space methods<br>• Quantum kernels for molecular property prediction<br>• Ground state preparation (GSP) algorithm development<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Recent breakthroughs:</strong><br>Our team achieved a 7,900x speedup for CO₂ utilization calculations—reducing runtime from 22 years to just 1 day through fault-tolerant quantum computing innovations.<br><br><strong>Chemistry + Quantum Computing = Perfect match</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.<br><br>Interested in a specific chemistry application? Ask me!`,
+            chemistry: {
+                answer: `Quantum chemistry is a major focus of our lab.<br><br><strong>What we do:</strong><br>• Ground state energy estimation (GSEE) for molecules<br>• First ionization potential calculations for transition metals<br>• Variational quantum eigensolvers (VQE) with active space methods<br>• Quantum kernels for molecular property prediction<br>• Ground state preparation (GSP) algorithm development<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Recent breakthroughs:</strong><br>Our team achieved a 7,900x speedup for CO₂ utilization calculations—reducing runtime from 22 years to just 1 day through fault-tolerant quantum computing innovations.<br><br><strong>Who's working on this:</strong><br>Currently, <span class="name">Dr. Katerina Gratsea</span> and <span class="name">Dr. Hao Zhang</span> are leading quantum chemistry research in our group, along with our chemistry PhD students.<br><br><strong>Chemistry + Quantum Computing:</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.`,
+                relatedQuestions: [
+                    "What computational chemistry experience is helpful?",
+                    "How do you benchmark on real quantum devices?"
+                ]
+            },
 
-            funding: `The Chicago-Wisconsin region is becoming a major quantum hub.<br><br><strong>Federal Investment:</strong><br>• $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised $16M+ Series A (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✓ Strong funding opportunities for PhD students<br>✓ Industry partnerships and internship possibilities<br>✓ Access to cutting-edge quantum hardware<br>✓ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far)<br>• Beautiful campus on Lake Mendota<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable<br><br>Want to know more about funding or Madison life?`,
+            funding: {
+                answer: `The Chicago-Wisconsin region is becoming a major quantum hub.<br><br><strong>Federal Investment:</strong><br>• $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised $16M+ Series A (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✓ Strong funding opportunities for PhD students<br>✓ Industry partnerships and internship possibilities<br>✓ Access to cutting-edge quantum hardware<br>✓ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far)<br>• Beautiful campus on Lake Mendota<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable`,
+                relatedQuestions: [
+                    "What's the cost of living in Madison?",
+                    "Tell me about industry partnerships"
+                ]
+            },
 
-            phd: `PhD opportunities in quantum computing for chemistry students.<br><br><strong>What we look for:</strong><br>• Strong chemistry or computational chemistry background<br>• Programming experience (Python preferred)<br>• Curiosity about quantum algorithms<br>• Research mindset and independence<br>• Good communication skills<br><br><strong>Research directions for chemistry PhDs:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Expectations:</strong><br>• 5-6 year program<br>• Weekly group meetings + individual meetings<br>• Flexible work hours (no mandatory 9-5)<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs working alongside physics PhDs. Your chemistry knowledge is an asset, not a limitation.<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br><br>Ready to explore joining?`,
+            phd: {
+                answer: `PhD opportunities in quantum computing for students from all backgrounds.<br><br><strong>What we look for:</strong><br>• Interest in quantum computing<br>• Programming experience (Python helpful)<br>• Research mindset and curiosity<br>• Good communication skills<br><br><strong>Research directions:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Environment:</strong><br>• Flexible work hours (no mandatory 9-5)<br>• Weekly group meetings + individual meetings<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs working alongside physics PhDs. Diverse backgrounds bring fresh perspectives to quantum computing research.<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br>• Startups (like Qolab)`,
+                relatedQuestions: [
+                    "What programming skills do I need?",
+                    "What's the work-life balance like?"
+                ]
+            },
 
-            apply: `Ready to apply? Here's how.<br><br><strong>For Chemistry PhD Students:</strong><br><br><strong>Step 1: Email Dr. Otten first</strong><br>• Email: <a href="mailto:mjotten@wisc.edu">mjotten@wisc.edu</a><br>• Mention you're a chemistry student interested in quantum computing<br>• Include brief background and research interests<br>• This is strongly encouraged before formal application<br><br><strong>Step 2: Formal Application</strong><br>• Apply through UW–Madison Chemistry PhD program<br>• Mention Otten Group in your statement of purpose<br>• Application deadline typically: December 1st<br><br><strong>Application Materials:</strong><br>• Transcripts<br>• 3 letters of recommendation<br>• Statement of purpose<br>• GRE (check current requirements)<br>• CV/Resume<br><br><strong>Timeline:</strong><br>• Reach out to Dr. Otten: September-November<br>• Application due: December 1st<br>• Interviews: January-February<br>• Decisions: March-April<br>• Start: Fall semester (late August)<br><br><strong>In your email to Dr. Otten, include:</strong><br>• Current status (where you are now)<br>• Chemistry background and interests<br>• What excites you about quantum computing<br>• Any programming or computational experience<br>• Your timeline<br><br>Don't wait—reach out early! Early conversations help with application planning and show genuine interest.<br><br>Questions about the application? Just ask!`
+            apply: {
+                answer: `Ready to apply? Here's how.<br><br><strong>For Chemistry PhD Students:</strong><br><br><strong>Step 1: Email Dr. Otten first</strong><br>• Email: <a href="mailto:mjotten@wisc.edu">mjotten@wisc.edu</a><br>• Mention you're a chemistry student interested in quantum computing<br>• Include brief background and research interests<br>• This is strongly encouraged before formal application<br><br><strong>Step 2: Formal Application</strong><br>• Apply through UW–Madison Chemistry PhD program<br>• Mention Otten Group in your statement of purpose<br>• Application deadline typically: December 1st<br><br><strong>Application Materials:</strong><br>• Transcripts<br>• 3 letters of recommendation<br>• Statement of purpose<br>• GRE (check current requirements)<br>• CV/Resume<br><br><strong>Timeline:</strong><br>• Reach out to Dr. Otten: September-November<br>• Application due: December 1st<br>• Interviews: January-February<br>• Decisions: March-April<br>• Start: Fall semester (late August)<br><br><strong>In your email to Dr. Otten, include:</strong><br>• Current status (where you are now)<br>• Chemistry background and interests<br>• What excites you about quantum computing<br>• Any programming or computational experience<br>• Your timeline<br><br>Don't wait—reach out early! Early conversations help with application planning and show genuine interest.`,
+                relatedQuestions: [
+                    "What should I include in my statement of purpose?",
+                    "When is the best time to reach out?"
+                ]
+            }
         };
 
         const KNOWLEDGE_BASE = `
@@ -872,6 +986,13 @@ Dr. Matthew Otten
 - Citations: 1,800+ on Google Scholar
 - Joined UW–Madison: January 2024
 
+## Collaborators
+- Robert McDermott (UW–Madison Physics)
+- Yuan Ping (UW–Madison Chemistry)
+- Mark Saffman (UW–Madison Physics)
+- Researchers at Argonne National Lab
+- Diverse students from various backgrounds
+
 ## Postdocs
 
 Dr. Katerina Gratsea (TitleTownTech Fellow)
@@ -879,6 +1000,7 @@ Dr. Katerina Gratsea (TitleTownTech Fellow)
 - Citations: 240+ on Google Scholar
 - Major Work: Co-authored breakthrough reducing quantum computation from 22 years to 1 day for CO₂ utilization
 - Previous: ICFO - Institute of Photonic Sciences
+- Currently working on: Quantum chemistry applications
 
 Dr. Cody Poole  
 - Research: Neutral atom quantum computing, mid-circuit measurements, QAOA algorithms
@@ -896,6 +1018,7 @@ Dr. Hao Zhang
 - Major Work: Quantum ground states, cyclic variational quantum eigensolver, quantum annealing
 - Expertise: Spin glasses, Ising models, topological transitions, computational complexity
 - Recent: Multiple publications in Physical Review and Nature journals
+- Currently working on: Quantum chemistry applications
 
 ## Graduate Students
 
@@ -925,6 +1048,14 @@ Chemistry PhD Students:
 - Quantum-Classical Co-design: Algorithm optimization for quantum processors
 - Testing on real quantum hardware: IBM, IonQ, Rigetti
 
+## Career Paths After Graduation
+- Quantum computing companies (IBM, Google, IonQ, etc.)
+- Pharma/biotech (quantum for drug discovery)
+- Academia (postdocs, faculty positions)
+- National labs (Argonne, Fermilab, etc.)
+- Tech industry
+- Quantum startups (e.g., Qolab - UW–Madison spinoff with $16M+ Series A funding)
+
 ## RESPONSE RULES
 
 ### General Principles:
@@ -932,6 +1063,11 @@ Chemistry PhD Students:
 - Professional but friendly tone
 - Use <span class="name">Name</span> for all lab member names
 - Focus on research areas and opportunities, not individual student projects unless asked
+
+### When discussing research areas:
+- Mention which postdocs/researchers currently work on specific topics
+- Avoid calling anyone "authority" or "expert" - use "currently working on" or "specialist in"
+- Example: "Dr. Gratsea and Dr. Zhang are currently leading quantum chemistry research" NOT "Dr. Gratsea is a leading authority"
 
 ### When asked about lab members:
 **Can discuss in detail:**
@@ -945,6 +1081,11 @@ Chemistry PhD Students:
 - Only mention: Name + Department/Program
 - Do NOT speculate about their specific research
 - Treat Chemistry and Physics students equally
+
+### When asked about collaborators:
+- Mention Robert McDermott, Yuan Ping, Mark Saffman, and Argonne affiliates
+- Describe as collaborative network, not hierarchy
+- Emphasize diverse backgrounds and interdisciplinary work
 `;
 
         const qubitSVG = `
@@ -985,6 +1126,15 @@ Chemistry PhD Students:
         `;
 
         let conversationHistory = [];
+        let isHeaderCompact = false;
+
+        // Header toggle functionality
+        document.getElementById('mainHeader').addEventListener('click', function(e) {
+            if (isHeaderCompact && !e.target.closest('.reset-button')) {
+                this.classList.remove('compact');
+                isHeaderCompact = false;
+            }
+        });
 
         window.addEventListener('load', function() {
             setTimeout(function() {
@@ -1020,11 +1170,21 @@ Chemistry PhD Students:
             };
 
             removeWelcome();
+            compactHeader();
             addMessage(faqQuestions[topic], 'user');
             
             setTimeout(() => {
-                addMessage(FAQ_ANSWERS[topic], 'bot');
+                const faqData = FAQ_ANSWERS[topic];
+                addMessage(faqData.answer, 'bot', faqData.relatedQuestions);
             }, 300);
+        }
+
+        function compactHeader() {
+            const header = document.getElementById('mainHeader');
+            if (!isHeaderCompact) {
+                header.classList.add('compact');
+                isHeaderCompact = true;
+            }
         }
 
         function removeWelcome() {
@@ -1038,6 +1198,10 @@ Chemistry PhD Students:
 
         function resetChat() {
             conversationHistory = [];
+            const header = document.getElementById('mainHeader');
+            header.classList.remove('compact');
+            isHeaderCompact = false;
+            
             const chatContainer = document.getElementById('chatContainer');
             chatContainer.innerHTML = `
                 <div class="welcome-message">
@@ -1114,6 +1278,7 @@ Chemistry PhD Students:
             if (!message) return;
 
             removeWelcome();
+            compactHeader();
             addMessage(message, 'user');
             input.value = '';
             input.style.height = 'auto';
@@ -1139,11 +1304,11 @@ Chemistry PhD Students:
             try {
                 const response = await getChatResponse(message);
                 typingWrapper.remove();
-                addMessage(response, 'bot');
+                addMessage(response.answer, 'bot', response.relatedQuestions);
             } catch (error) {
                 console.error('Error:', error);
                 typingWrapper.remove();
-                addMessage('Sorry, I encountered an error. Please try again or email Haejujg Koh h.koh@wisc.edu', 'error');
+                addMessage('Sorry, I encountered an error. Please try again or email Haejung Koh at h.koh@wisc.edu', 'error');
             }
 
             input.disabled = false;
@@ -1165,33 +1330,51 @@ CRITICAL RULES:
 
 2. **NAME HIGHLIGHTING**: Wrap all lab member names in <span class="name">Name</span>
 
-3. **LAB MEMBER INFORMATION**:
+3. **RESEARCH AREA DISCUSSIONS**:
+- When discussing research areas, mention who currently works on them
+- Use "currently working on" or "specialist in" - NEVER "authority" or "expert"
+- Example: "<span class="name">Dr. Gratsea</span> and <span class="name">Dr. Zhang</span> are currently working on quantum chemistry"
+- NOT: "Dr. Gratsea is a leading authority in quantum chemistry"
+
+4. **LAB MEMBER INFORMATION**:
 
 **Can discuss in detail:**
 - Dr. Matthew Otten: Background, research, citations, career
-- Dr. Katerina Gratsea: FTQC, quantum ML, publications  
+- Dr. Katerina Gratsea: FTQC, quantum ML, publications (currently working on quantum chemistry)
 - Dr. Cody Poole: Neutral atom computing, QAOA, mid-circuit measurements
 - Dr. Gavin Rockwood: Entanglement, quantum field theory, cavity control
-- Dr. Hao Zhang: Quantum algorithms, optimization, chemistry
+- Dr. Hao Zhang: Quantum algorithms, optimization, chemistry (currently working on quantum chemistry)
 
 **For ALL students (Physics AND Chemistry):**
 - ONLY say: "<span class="name">Name</span> is a [Physics/Chemistry] PhD student"
 - DO NOT speculate about their research
-- Treat all students equally - no special treatment
+- Treat all students equally
 
-4. **GENERAL QUESTIONS**:
+5. **COLLABORATORS**:
+- When asked about coworkers/collaborators, mention: Robert McDermott, Yuan Ping, Mark Saffman, and Argonne affiliates
+- Describe collaborative network with diverse backgrounds
+- Example: "We collaborate with <span class="name">Robert McDermott</span>, <span class="name">Yuan Ping</span>, <span class="name">Mark Saffman</span>, and researchers at Argonne National Lab, working with diverse students from various backgrounds"
+
+6. **GENERAL QUESTIONS**:
 - DO NOT mention student names unless directly asked
 - Focus on lab research areas and opportunities
 
-5. **FORMATTING**:
+7. **FORMATTING**:
 - Use <strong> for emphasis
 - Use <br><br> for paragraphs
 - Keep responses concise
 
+8. **RELATED QUESTIONS**:
+- ALWAYS end your response with exactly 2 related questions in this format:
+[RELATED_Q1: Question text here]
+[RELATED_Q2: Question text here]
+- Make questions relevant to what was just discussed
+- Questions should be natural conversation continuations
+
 KNOWLEDGE BASE:
 ${KNOWLEDGE_BASE}
 
-Remember: Professional, minimal emojis, equal treatment for all students!`;
+Remember: Professional, minimal emojis, equal treatment for all students, mention current researchers naturally!`;
 
             const API_URL = "https://otten-chatbot.otten-uwmadison.workers.dev";
 
@@ -1218,10 +1401,27 @@ Remember: Professional, minimal emojis, equal treatment for all students!`;
                 content: assistantMessage
             });
 
-            return assistantMessage;
+            // Extract related questions
+            const relatedQuestions = [];
+            const q1Match = assistantMessage.match(/\[RELATED_Q1: (.+?)\]/);
+            const q2Match = assistantMessage.match(/\[RELATED_Q2: (.+?)\]/);
+            
+            if (q1Match) relatedQuestions.push(q1Match[1]);
+            if (q2Match) relatedQuestions.push(q2Match[1]);
+
+            // Remove the markers from the answer
+            const cleanAnswer = assistantMessage
+                .replace(/\[RELATED_Q1: .+?\]/g, '')
+                .replace(/\[RELATED_Q2: .+?\]/g, '')
+                .trim();
+
+            return {
+                answer: cleanAnswer,
+                relatedQuestions: relatedQuestions.length > 0 ? relatedQuestions : null
+            };
         }
 
-        function addMessage(text, type) {
+        function addMessage(text, type, relatedQuestions = null) {
             const chatContainer = document.getElementById('chatContainer');
             const wrapper = document.createElement('div');
             
@@ -1239,10 +1439,25 @@ Remember: Professional, minimal emojis, equal treatment for all students!`;
                 wrapper.innerHTML = `<div class="error-message">${text}</div>`;
             } else {
                 wrapper.className = 'message-wrapper bot-message-wrapper';
-                wrapper.innerHTML = `
+                let messageHTML = `
                     ${qubitSVG}
-                    <div class="bot-message">${text}</div>
+                    <div class="bot-message">
+                        ${text}
                 `;
+                
+                if (relatedQuestions && relatedQuestions.length > 0) {
+                    messageHTML += `
+                        <div class="related-questions">
+                            <div class="related-questions-title">You might also ask:</div>
+                    `;
+                    relatedQuestions.forEach(q => {
+                        messageHTML += `<div class="related-question" onclick="askQuestion('${q.replace(/'/g, "\\'")}')">${q}</div>`;
+                    });
+                    messageHTML += `</div>`;
+                }
+                
+                messageHTML += `</div>`;
+                wrapper.innerHTML = messageHTML;
             }
             
             chatContainer.appendChild(wrapper);
