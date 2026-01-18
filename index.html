@@ -1032,7 +1032,6 @@
             funding: {
                 answer: `The Chicago-Wisconsin region is becoming a major quantum hub.<br><br><strong>Federal Investment:</strong><br>• $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised $16M+ Series A (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✓ Strong funding opportunities for PhD students<br>✓ Industry partnerships and internship possibilities<br>✓ Access to cutting-edge quantum hardware<br>✓ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far)<br>• Beautiful campus on Lake Mendota<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable`,
                 relatedQuestions: [
-                    "Cost of Living",
                     "Industry Partnerships"
                 ]
             },
@@ -1445,11 +1444,17 @@ Chemistry PhD Students:
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
             try {
+                console.log('Calling getChatResponse...');
                 const response = await getChatResponse(message);
+                console.log('Got response from getChatResponse:', response);
+                
                 typingWrapper.remove();
+                console.log('Adding message to UI...');
                 addMessage(response.answer, 'bot', response.relatedQuestions);
+                console.log('Message added to UI');
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error in sendMessage:', error);
+                console.error('Error stack:', error.stack);
                 typingWrapper.remove();
                 addMessage('Sorry, I encountered an error. Please try again or email Haejung Koh at h.koh@wisc.edu', 'error');
             }
@@ -1460,6 +1465,9 @@ Chemistry PhD Students:
         }
 
         async function getChatResponse(userMessage) {
+            console.log('=== Starting API Request ===');
+            console.log('User message:', userMessage);
+            
             conversationHistory.push({
                 role: "user",
                 content: userMessage
@@ -1467,6 +1475,8 @@ Chemistry PhD Students:
 
             const systemPrompt = `You are Qubit, created by Haejung Koh. You're a friendly recruiting assistant for the Otten Group at UW–Madison, targeting incoming chemistry PhD students.
 
+
+YOUR PRIMARY PURPOSE: Help prospective PhD students learn about joining the Otten Group.
 CRITICAL RULES:
 
 1. **MINIMAL EMOJIS**: Use max 1-2 emojis per response. Be professional.
@@ -1533,12 +1543,25 @@ CRITICAL RULES:
 - WRONG examples: "Are you interested in...", "Would you like to know...", "Do you want information on..."
 - Think: "What keyword would the user click on?" not "What question am I asking them?"
 
+9. **STAY ON TOPIC - RECRUITING ONLY**:
+   - You exist ONLY to help recruit PhD students to the Otten Group
+   - RELEVANT topics: Research areas, lab culture, application process, funding, Madison life, what we look for in students, Dr. Otten's background, quantum chemistry opportunities
+   - IRRELEVANT topics: General chemistry help, homework, unrelated research, personal advice, coding tutorials, general quantum computing theory
+   
+   **If asked something off-topic:**
+   Politely redirect: "I appreciate your question, but I'm here specifically to help prospective students learn about joining the Otten Group for a graduate student. If you have questions about our research, the application process, or life in the lab, I'd be happy to help!"
 KNOWLEDGE BASE:
 ${KNOWLEDGE_BASE}
 
 Remember: Professional, minimal emojis, equal treatment for all students, mention current researchers naturally!`;
 
             const API_URL = "https://otten-chatbot.otten-uwmadison.workers.dev";
+
+            console.log('Sending request to:', API_URL);
+            console.log('Request body:', {
+                system: systemPrompt.substring(0, 100) + '...',
+                messagesCount: conversationHistory.length
+            });
 
             const response = await fetch(API_URL, {
                 method: "POST",
@@ -1552,11 +1575,16 @@ Remember: Professional, minimal emojis, equal treatment for all students, mentio
             });
 
             if (!response.ok) {
+                console.error('API Response not OK:', response.status, response.statusText);
                 throw new Error(`API error: ${response.status}`);
             }
 
+            console.log('API Response OK, parsing JSON...');
             const data = await response.json();
+            console.log('Parsed data:', data);
+            
             const assistantMessage = data.content[0].text;
+            console.log('Assistant message:', assistantMessage);
 
             conversationHistory.push({
                 role: "assistant",
@@ -1568,6 +1596,9 @@ Remember: Professional, minimal emojis, equal treatment for all students, mentio
             const q1Match = assistantMessage.match(/\[RELATED_Q1: (.+?)\]/);
             const q2Match = assistantMessage.match(/\[RELATED_Q2: (.+?)\]/);
             
+            console.log('Q1 match:', q1Match);
+            console.log('Q2 match:', q2Match);
+            
             if (q1Match) relatedQuestions.push(q1Match[1]);
             if (q2Match) relatedQuestions.push(q2Match[1]);
 
@@ -1576,6 +1607,10 @@ Remember: Professional, minimal emojis, equal treatment for all students, mentio
                 .replace(/\[RELATED_Q1: .+?\]/g, '')
                 .replace(/\[RELATED_Q2: .+?\]/g, '')
                 .trim();
+
+            console.log('Clean answer:', cleanAnswer);
+            console.log('Related questions:', relatedQuestions);
+            console.log('=== API Request Complete ===');
 
             return {
                 answer: cleanAnswer,
