@@ -119,7 +119,6 @@
             z-index: 1;
             flex-shrink: 0;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .header-text {
@@ -127,7 +126,6 @@
             z-index: 1;
             flex: 1;
             min-width: 0;
-            cursor: pointer;
         }
 
         .header h1 {
@@ -1143,30 +1141,6 @@ Chemistry PhD Students:
 - Professional but friendly tone
 - Use <span class="name">Name</span> for all lab member names
 - Focus on research areas and opportunities, not individual student projects unless asked
-- DO NOT randomly mention team members - only when relevant to the topic
-
-### Team Member Mention Rules:
-
-**Dr. Matthew Otten - Always appropriate to mention:**
-- He's the PI, so it's natural to mention him in general contexts
-- Can discuss: Background, research, contact info, joining the lab
-
-**Postdocs - ONLY mention when discussing their specific research:**
-- Dr. Gratsea → quantum chemistry, FTQC, quantum ML
-- Dr. Poole → neutral atoms, QAOA, mid-circuit measurements  
-- Dr. Rockwood → entanglement, quantum field theory, cavity control
-- Dr. Zhang → quantum algorithms, optimization, quantum chemistry
-
-**Students - ONLY when explicitly asked:**
-- "Who are the students?" or "Who's in the lab?" → List them
-- Otherwise → Do NOT mention individual students
-- Never list students in general responses
-
-**Examples:**
-- "Hi" → Mention Dr. Otten and lab overview only
-- "Tell me about quantum chemistry" → Mention Dr. Gratsea and Dr. Zhang
-- "Who's in the lab?" → List everyone including students
-- "What research areas?" → Describe areas, mention Dr. Otten, but don't list all postdocs unless relevant
 
 ### When discussing research areas:
 - Mention which postdocs/researchers currently work on specific topics
@@ -1174,27 +1148,17 @@ Chemistry PhD Students:
 - Example: "Dr. Gratsea and Dr. Zhang are currently leading quantum chemistry research" NOT "Dr. Gratsea is a leading authority"
 
 ### When asked about lab members:
-**Dr. Matthew Otten - ALWAYS OK to mention:**
-- He's the PI, so mentioning him in general contexts is appropriate
-- Background, research focus, citations, career path
+**Can discuss in detail:**
+- Dr. Otten: Background, research focus, citations, career path
+- Dr. Gratsea: FTQC work, quantum ML, publications, breakthrough work
+- Dr. Poole: Neutral atom work, QAOA, mid-circuit measurements
+- Dr. Rockwood: Entanglement research, quantum field theory, cavity control
+- Dr. Zhang: Quantum algorithms, optimization, chemistry applications
 
-**Other team members - ONLY mention when DIRECTLY relevant:**
-- Dr. Gratsea: Only when discussing FTQC, quantum ML, or quantum chemistry
-- Dr. Poole: Only when discussing neutral atoms, QAOA, mid-circuit measurements
-- Dr. Rockwood: Only when discussing entanglement, quantum field theory, cavity control
-- Dr. Zhang: Only when discussing quantum algorithms, optimization, chemistry applications
-
-**Students - ONLY when directly asked:**
+**For all students (Physics & Chemistry):**
 - Only mention: Name + Department/Program
 - Do NOT speculate about their specific research
 - Treat Chemistry and Physics students equally
-- DO NOT list students unless explicitly asked "who are the students" or "who's in the lab"
-
-**General rule:**
-- If user says "Hi" or asks general questions → mention Dr. Otten and lab overview ONLY
-- If user asks about quantum chemistry → mention Dr. Gratsea and Dr. Zhang
-- If user asks about neutral atoms → mention Dr. Poole
-- If user asks "who's in the lab" → then list everyone
 
 ### When asked about collaborators:
 - Mention Robert McDermott, Yuan Ping, Mark Saffman, and Argonne affiliates
@@ -1244,38 +1208,9 @@ Chemistry PhD Students:
 
         // Header toggle functionality
         document.getElementById('mainHeader').addEventListener('click', function(e) {
-            // Check if clicked on logo or title (not reset button)
-            if (e.target.closest('.bot-avatar') || e.target.closest('.header-text')) {
-                resetChat();
-                return;
-            }
-            
-            // Expand header if compact and not clicking reset button
             if (isHeaderCompact && !e.target.closest('.reset-button')) {
                 this.classList.remove('compact');
                 isHeaderCompact = false;
-            }
-        });
-
-        // Scroll listener to expand header when at top
-        let lastScrollTop = 0;
-        document.getElementById('chatContainer').addEventListener('scroll', function() {
-            const scrollTop = this.scrollTop;
-            
-            // If scrolled to top (within 5px), expand header
-            if (scrollTop < 5 && isHeaderCompact) {
-                document.getElementById('mainHeader').classList.remove('compact');
-                isHeaderCompact = false;
-            }
-            
-            lastScrollTop = scrollTop;
-        });
-
-        // Click on empty space to focus input
-        document.getElementById('chatContainer').addEventListener('click', function(e) {
-            // Only if clicking directly on chat-container (not on messages or other elements)
-            if (e.target === this) {
-                document.getElementById('userInput').focus();
             }
         });
 
@@ -1481,33 +1416,17 @@ CRITICAL RULES:
 
 4. **LAB MEMBER INFORMATION**:
 
-**Dr. Matthew Otten - Always OK to mention:**
-- He's the PI, natural to mention in general contexts
-- Background, research, citations, career, contact info
+**Can discuss in detail:**
+- Dr. Matthew Otten: Background, research, citations, career
+- Dr. Katerina Gratsea: FTQC, quantum ML, publications (currently working on quantum chemistry)
+- Dr. Cody Poole: Neutral atom computing, QAOA, mid-circuit measurements
+- Dr. Gavin Rockwood: Entanglement, quantum field theory, cavity control
+- Dr. Hao Zhang: Quantum algorithms, optimization, chemistry (currently working on quantum chemistry)
 
-**Other team members - ONLY when DIRECTLY relevant to the topic:**
-- Dr. Gratsea → ONLY when discussing quantum chemistry, FTQC, or quantum ML
-- Dr. Poole → ONLY when discussing neutral atoms, QAOA, mid-circuit measurements
-- Dr. Rockwood → ONLY when discussing entanglement, quantum field theory, cavity control
-- Dr. Hao Zhang → ONLY when discussing quantum algorithms, optimization, or quantum chemistry
-
-**Students:**
-- DO NOT list students unless user specifically asks "who are the students" or "who's in the lab"
-- When asked, ONLY say: "<span class="name">Name</span> is a [Physics/Chemistry] PhD student"
+**For ALL students (Physics AND Chemistry):**
+- ONLY say: "<span class="name">Name</span> is a [Physics/Chemistry] PhD student"
 - DO NOT speculate about their research
-
-**Examples of correct behavior:**
-❌ WRONG: User asks "Hi" → You list all postdocs and students
-✅ CORRECT: User asks "Hi" → You mention Dr. Otten and lab overview only
-
-❌ WRONG: User asks "Tell me about the lab" → You list everyone
-✅ CORRECT: User asks "Tell me about the lab" → You describe research areas, mention Dr. Otten
-
-❌ WRONG: User asks "What research do you do?" → You mention Dr. Gratsea, Dr. Poole, etc.
-✅ CORRECT: User asks "What research do you do?" → You describe research areas without naming specific postdocs
-
-✅ CORRECT: User asks "Who works on quantum chemistry?" → You mention Dr. Gratsea and Dr. Zhang
-✅ CORRECT: User asks "Who's in the lab?" → You list everyone including students
+- Treat all students equally
 
 5. **COLLABORATORS**:
 - When asked about coworkers/collaborators, mention: Robert McDermott, Yuan Ping, Mark Saffman, and Argonne affiliates
