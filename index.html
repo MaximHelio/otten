@@ -223,7 +223,6 @@
             overflow-wrap: break-word;
         }
 
-        /* Name highlighting in messages */
         .bot-message .name {
             color: #00ffff;
             font-weight: 600;
@@ -413,7 +412,7 @@
             padding: 10px 12px;
             color: #fff;
             font-family: 'Inter', sans-serif;
-            font-size: 16px; /* Prevents iOS zoom */
+            font-size: 16px;
             resize: none;
             max-height: 90px;
             min-height: 40px;
@@ -525,7 +524,6 @@
             padding-bottom: max(8px, env(safe-area-inset-bottom));
         }
 
-        /* Desktop adjustments */
         @media (min-width: 769px) {
             body {
                 padding: 20px;
@@ -714,7 +712,6 @@
             }
         }
 
-        /* iOS specific fixes */
         @supports (-webkit-touch-callout: none) {
             .container {
                 height: -webkit-fill-available;
@@ -855,37 +852,89 @@
     </div>
 
     <script>
-        // FAQ Answers
         const FAQ_ANSWERS = {
             research: `We're a theoretical quantum information science group at UW–Madison, working to make useful-scale quantum computers a reality.<br><br>Our research bridges quantum algorithms and real hardware:<br><br>• Quantum Chemistry: VQE, coupled cluster methods, active space selection for molecular simulations<br>• Quantum Error Correction: LDPC codes, fault-tolerant computing, resource estimation<br>• Quantum Machine Learning: Hardware-efficient quantum kernels, benchmarking on real devices<br>• Quantum-Classical Co-design: Algorithm optimization for actual quantum processors<br><br>We test everything on real quantum computers (IBM, IonQ, Rigetti) to ensure practical impact.<br><br>Want to know more about a specific research area?`,
 
-            team: `Our lab has an amazing interdisciplinary team.<br><br><strong>Principal Investigator:</strong><br>• Dr. Matthew Otten (otten@physics.wisc.edu)<br><br><strong>Postdocs:</strong><br>• Dr. Katerina Gratsea (TitleTownTech Fellow)<br>• Dr. Cody Poole<br>• Dr. Gavin Rockwood<br>• Dr. Hao Zhang<br><br><strong>Chemistry PhD Students:</strong><br>• <span class="name">Haejung Koh</span> (UW–Madison Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (UW–Madison Chemistry)<br>• <span class="name">Atharva Sandeep Vidwans</span> (UW–Madison Chemistry)<br><br><strong>Physics PhD Students:</strong><br>• Gage Erwin (CSGF Fellow)<br>• Zeyu (Bery) Fan<br>• Natalie Hilliard<br>• Zachary Jerzyk<br>• Jihyeon Park<br>• Colin Stewart<br>• Jisoo Yu (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have 3 chemistry PhD students—chemistry backgrounds are very welcome here.`,
+            team: `Our lab has an amazing interdisciplinary team.<br><br><strong>Principal Investigator:</strong><br>• <span class="name">Dr. Matthew Otten</span> - Assistant Professor (otten@physics.wisc.edu)<br>  Former Maria Goeppert Mayer Fellow at Argonne National Lab, PhD from Cornell. Research focus: making utility-scale quantum computing a reality. 1,800+ citations on Google Scholar.<br><br><strong>Postdocs:</strong><br>• <span class="name">Dr. Katerina Gratsea</span> - TitleTownTech Fellow<br>  Expert in fault-tolerant quantum computing, quantum machine learning, and ground state preparation algorithms. Recent breakthrough: reduced quantum chemistry computation runtime from 22 years to 1 day through full-stack co-design.<br>• <span class="name">Dr. Cody Poole</span><br>• <span class="name">Dr. Gavin Rockwood</span><br>• <span class="name">Dr. Hao Zhang</span><br><br><strong>Chemistry PhD Students:</strong><br>• <span class="name">Haejung Koh</span> (UW–Madison Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (UW–Madison Chemistry)<br>• <span class="name">Atharva Sandeep Vidwans</span> (UW–Madison Chemistry)<br><br><strong>Physics PhD Students:</strong><br>• <span class="name">Gage Erwin</span> (CSGF Fellow)<br>• <span class="name">Zeyu (Bery) Fan</span><br>• <span class="name">Natalie Hilliard</span><br>• <span class="name">Zachary Jerzyk</span><br>• <span class="name">Jihyeon Park</span><br>• <span class="name">Colin Stewart</span><br>• <span class="name">Jisoo Yu</span> (Research Intern)<br><br><strong>Undergrads:</strong><br>• Sofiia Lauten, Harry Luo, Yufei Shen<br><br>We have 3 chemistry PhD students—chemistry backgrounds are very welcome here.`,
 
-            chemistry: `Quantum chemistry is a major focus of our lab.<br><br><strong>What we do:</strong><br>• Ground state energy calculations for molecules<br>• First ionization potential for transition metals (Cr, Mo, W)<br>• Variational quantum eigensolvers (VQE) with localized active space methods<br>• Quantum kernels for molecular property prediction<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Our chemistry PhD students:</strong><br>• <span class="name">Haejung Koh</span> (UW–Madison Chemistry)<br>• <span class="name">Sarag Kunnumbrath</span> (UW–Madison Chemistry)<br>• <span class="name">Atharva Vidwans</span> (UW–Madison Chemistry)<br><br><strong>Chemistry + Quantum Computing = Perfect match</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.<br><br>Interested in a specific chemistry application? Ask me!`,
+            chemistry: `Quantum chemistry is a major focus of our lab.<br><br><strong>What we do:</strong><br>• Ground state energy estimation (GSEE) for molecules<br>• First ionization potential calculations for transition metals<br>• Variational quantum eigensolvers (VQE) with active space methods<br>• Quantum kernels for molecular property prediction<br>• Ground state preparation (GSP) algorithm development<br>• Benchmarking quantum chemistry algorithms on real devices<br><br><strong>Recent breakthroughs:</strong><br>Our team achieved a 7,900x speedup for CO₂ utilization calculations—reducing runtime from 22 years to just 1 day through fault-tolerant quantum computing innovations.<br><br><strong>Chemistry + Quantum Computing = Perfect match</strong><br>Your chemistry background (DFT, computational chem, etc.) translates directly to quantum algorithms for molecular simulations. We collaborate closely between chemistry and physics departments.<br><br>Interested in a specific chemistry application? Ask me!`,
 
             funding: `The Chicago-Wisconsin region is becoming a major quantum hub.<br><br><strong>Federal Investment:</strong><br>• $625M DOE funding (renewed 2025) for Q-NEXT and SQMS quantum centers<br>• Chicago Quantum Exchange partnership (UW–Madison is a key member)<br>• NSF Quantum Crossroads program: $1M seed funding<br><br><strong>Local Momentum:</strong><br>• UW–Madison's Qolab startup raised $16M+ Series A (2025)<br>• Strong connections to Argonne National Lab and Fermilab<br>• Growing quantum industry ecosystem<br><br><strong>What this means for you:</strong><br>✓ Strong funding opportunities for PhD students<br>✓ Industry partnerships and internship possibilities<br>✓ Access to cutting-edge quantum hardware<br>✓ Networking with quantum startups<br><br><strong>Madison Life:</strong><br>• Affordable cost of living (PhD stipend goes far)<br>• Beautiful campus on Lake Mendota<br>• Bike-friendly, safe city<br>• Great food scene, farmers markets<br>• Work-life balance is achievable<br><br>Want to know more about funding or Madison life?`,
 
-            phd: `PhD opportunities in quantum computing for chemistry students.<br><br><strong>What we look for:</strong><br>• Strong chemistry or computational chemistry background<br>• Programming experience (Python preferred)<br>• Curiosity about quantum algorithms<br>• Research mindset and independence<br>• Good communication skills<br><br><strong>Research directions for chemistry PhDs:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Expectations:</strong><br>• 5-6 year program<br>• Weekly group meetings + individual meetings<br>• Flexible work hours (no mandatory 9-5)<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs (<span class="name">Haejung</span>, <span class="name">Sarag</span>, <span class="name">Atharva</span>) and physics PhDs working together. Your chemistry knowledge is an asset, not a limitation.<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br><br>Ready to explore joining?`,
+            phd: `PhD opportunities in quantum computing for chemistry students.<br><br><strong>What we look for:</strong><br>• Strong chemistry or computational chemistry background<br>• Programming experience (Python preferred)<br>• Curiosity about quantum algorithms<br>• Research mindset and independence<br>• Good communication skills<br><br><strong>Research directions for chemistry PhDs:</strong><br>• Quantum algorithms for molecular simulations<br>• VQE and quantum chemistry methods<br>• Hybrid quantum-classical approaches<br>• Benchmarking on real quantum computers<br>• Error mitigation for chemistry calculations<br><br><strong>Timeline & Expectations:</strong><br>• 5-6 year program<br>• Weekly group meetings + individual meetings<br>• Flexible work hours (no mandatory 9-5)<br>• Conference presentations encouraged<br>• Multiple publications expected<br><br><strong>Interdisciplinary Environment:</strong><br>We have chemistry PhDs working alongside physics PhDs. Your chemistry knowledge is an asset, not a limitation.<br><br><strong>After graduation:</strong><br>• Quantum computing companies (IBM, Google, IonQ, etc.)<br>• Pharma/biotech (quantum for drug discovery)<br>• Academia (postdocs, faculty)<br>• National labs<br>• Tech industry<br><br>Ready to explore joining?`,
 
             apply: `Ready to apply? Here's how.<br><br><strong>For Chemistry PhD Students:</strong><br><br><strong>Step 1: Email Dr. Otten first</strong><br>• Email: <a href="mailto:otten@physics.wisc.edu">otten@physics.wisc.edu</a><br>• Mention you're a chemistry student interested in quantum computing<br>• Include brief background and research interests<br>• This is strongly encouraged before formal application<br><br><strong>Step 2: Formal Application</strong><br>• Apply through UW–Madison Chemistry PhD program<br>• Mention Otten Group in your statement of purpose<br>• Application deadline typically: December 1st<br><br><strong>Application Materials:</strong><br>• Transcripts<br>• 3 letters of recommendation<br>• Statement of purpose<br>• GRE (check current requirements)<br>• CV/Resume<br><br><strong>Timeline:</strong><br>• Reach out to Dr. Otten: September-November<br>• Application due: December 1st<br>• Interviews: January-February<br>• Decisions: March-April<br>• Start: Fall semester (late August)<br><br><strong>In your email to Dr. Otten, include:</strong><br>• Current status (where you are now)<br>• Chemistry background and interests<br>• What excites you about quantum computing<br>• Any programming or computational experience<br>• Your timeline<br><br>Don't wait—reach out early! Early conversations help with application planning and show genuine interest.<br><br>Questions about the application? Just ask!`
         };
 
-        // KNOWLEDGE BASE
         const KNOWLEDGE_BASE = `
 # Otten Group - Quantum Computing for Chemistry PhDs
 
-## Lab Members - Chemistry PhD Students
-- Haejung Koh (UW–Madison Chemistry Department)
-- Sarag Kunnumbrath (UW–Madison Chemistry Department)
-- Atharva Sandeep Vidwans (UW–Madison Chemistry Department)
+## Principal Investigator
+Dr. Matthew Otten
+- Position: Assistant Professor, UW–Madison Physics Department
+- Email: otten@physics.wisc.edu
+- Background: PhD from Cornell University, former Maria Goeppert Mayer Fellow at Argonne National Laboratory, previously at HRL Laboratories
+- Research Focus: Making utility-scale quantum computing a reality through resource estimation, algorithm development, and benchmarking
+- Citations: 1,800+ on Google Scholar
+- Key Areas: Quantum Information Science, Open Quantum Systems, Quantum Computing
+- Notable: Joined UW–Madison in January 2024
 
-When mentioning these students, ONLY say their name and "UW–Madison Chemistry Department" or "Chemistry PhD student at UW–Madison". Do NOT make up or speculate about their specific research projects.
+## Postdocs
+Dr. Katerina Gratsea (TitleTownTech Fellow)
+- Former affiliation: ICFO - Institute of Photonic Sciences
+- Research Focus: Fault-tolerant quantum computing (FTQC), quantum machine learning, ground state preparation algorithms
+- Citations: 240+ on Google Scholar
+- Major Recent Work: Co-authored breakthrough paper reducing quantum chemistry computation time from 22 years to 1 day through full-stack FTQC co-design for CO₂ utilization
+- Key Areas: Quantum Applications, Quantum Benchmarking, FTQC, Quantum Software
+- Notable Publications: Early Fault-Tolerant Quantum Computing, Comparing Classical and Quantum Ground State Preparation Heuristics, Quantum Neural Network structures
 
-## Response Guidelines
-- Minimize emoji use (only 1-2 per response, if any)
-- When mentioning lab member names, they will automatically be highlighted in cyan
-- Keep responses concise and focused
-- Be enthusiastic but professional
+Dr. Cody Poole - Postdoc
+Dr. Gavin Rockwood - Postdoc  
+Dr. Hao Zhang - Postdoc
+
+## Graduate Students - Chemistry
+Haejung Koh - Graduate Student (Chemistry Department)
+Sarag Kunnumbrath - Graduate Student (Chemistry Department)
+Atharva Sandeep Vidwans - Graduate Student (Chemistry Department)
+
+## Graduate Students - Physics
+Gage Erwin - CSGF Fellow
+Zeyu (Bery) Fan - Graduate Student
+Natalie Hilliard - Graduate Student
+Zachary Jerzyk - Graduate Student
+Jihyeon Park - Graduate Student
+Colin Stewart - Graduate Student
+Jisoo Yu - Research Intern
+
+## Undergraduate Researchers
+Sofiia Lauten
+Harry Luo
+Yufei Shen
+
+## Lab Research Areas
+- Quantum Chemistry: VQE, coupled cluster methods, ground state energy estimation, active space selection
+- Quantum Error Correction: LDPC codes, fault-tolerant computing, resource estimation
+- Quantum Machine Learning: Hardware-efficient quantum kernels, benchmarking
+- Quantum-Classical Co-design: Algorithm optimization for quantum processors
+- Testing on real quantum hardware: IBM, IonQ, Rigetti
+
+## CRITICAL RESPONSE RULES
+
+### When asked about specific lab members:
+- PI (Dr. Otten): Can provide detailed background from his interview and Google Scholar
+- Dr. Gratsea: Can discuss her research on FTQC, quantum ML, and recent publications
+- Chemistry PhD students: ONLY mention name + "Chemistry PhD student at UW–Madison" - DO NOT speculate about research
+- Physics PhD students: ONLY mention name + position - DO NOT speculate about research
+
+### When asked general questions (chemistry projects, research areas):
+- DO NOT mention individual student names unless directly asked
+- Focus on lab research areas and opportunities
+- Talk about what chemistry students CAN work on, not what specific students ARE working on
+
+### Formatting:
+- Minimal emojis (1-2 max per response)
+- Use <span class="name">Name</span> when mentioning lab members
+- Professional but friendly tone
 `;
 
         const qubitSVG = `
@@ -926,6 +975,12 @@ When mentioning these students, ONLY say their name and "UW–Madison Chemistry 
         `;
 
         let conversationHistory = [];
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('userInput').focus();
+            }, 100);
+        });
 
         function autoResize(textarea) {
             textarea.style.height = 'auto';
@@ -1101,27 +1156,44 @@ When mentioning these students, ONLY say their name and "UW–Madison Chemistry 
                 content: userMessage
             });
 
-            const systemPrompt = `You are Qubit, created by Haejung Koh (2nd year Chemistry PhD student). You're a friendly recruiting assistant for the Otten Group at UW–Madison, targeting incoming chemistry PhD students.
+            const systemPrompt = `You are Qubit, created by Haejung Koh. You're a friendly recruiting assistant for the Otten Group at UW–Madison, targeting incoming chemistry PhD students.
 
 CRITICAL RULES:
 
 1. **MINIMIZE EMOJIS**: Use max 1-2 emojis per response, if any. Be professional.
 
 2. **NAME HIGHLIGHTING**: When mentioning these names, wrap them in <span class="name">Name</span>:
+   - Dr. Matthew Otten, Matthew Otten, Matt Otten
+   - Dr. Katerina Gratsea, Katerina Gratsea
    - Haejung Koh
    - Sarag Kunnumbrath
-   - Atharva Sandeep Vidwans
-   - Dr. Matthew Otten
+   - Atharva Sandeep Vidwans, Atharva Vidwans
    - Any other lab member
 
-3. **CHEMISTRY PHD STUDENTS - SIMPLE INTRO ONLY**:
-   - Haejung Koh: "Chemistry PhD student at UW–Madison" or "UW–Madison Chemistry"
-   - Sarag Kunnumbrath: "Chemistry PhD student at UW–Madison" or "UW–Madison Chemistry"
-   - Atharva Vidwans: "Chemistry PhD student at UW–Madison" or "UW–Madison Chemistry"
-   - DO NOT make up or speculate about their research
-   - DO NOT say things like "works on VQE" or "focuses on transition metals" etc.
+3. **LAB MEMBER INFORMATION RULES**:
+   
+   **Dr. Matthew Otten (PI):**
+   - Can discuss: Background (Cornell PhD, Argonne Fellow, HRL Labs), research focus on utility-scale quantum computing, 1,800+ citations
+   - Use information from knowledge base freely
+   
+   **Dr. Katerina Gratsea (Postdoc):**
+   - Can discuss: Research on FTQC, quantum ML, ground state preparation, 240+ citations, breakthrough reducing computation from 22 years to 1 day
+   - Use information from knowledge base freely
+   
+   **Chemistry PhD students (Haejung, Sarag, Atharva):**
+   - ONLY say: "<span class="name">Name</span> is a Chemistry PhD student at UW–Madison"
+   - DO NOT speculate about their research projects or interests
+   
+   **Physics PhD students:**
+   - ONLY mention name and position (e.g., "Graduate Student" or "CSGF Fellow")
+   - DO NOT speculate about research
 
-4. **FORMATTING**:
+4. **GENERAL QUESTIONS (chemistry projects, research areas):**
+   - DO NOT mention individual student names unless directly asked about students
+   - Focus on lab research areas and opportunities
+   - Example: "We work on VQE for molecular systems" NOT "Haejung works on VQE"
+
+5. **FORMATTING**:
    - Use <strong> for emphasis
    - Use <br><br> for paragraphs
    - Keep responses concise
@@ -1129,7 +1201,7 @@ CRITICAL RULES:
 KNOWLEDGE BASE:
 ${KNOWLEDGE_BASE}
 
-Remember: Professional tone, minimal emojis, accurate info only!`;
+Remember: Professional tone, minimal emojis, accurate info only, don't speculate about student research!`;
 
             const API_URL = "https://otten-chatbot.otten-uwmadison.workers.dev";
 
@@ -1158,11 +1230,11 @@ Remember: Professional tone, minimal emojis, accurate info only!`;
 
             return assistantMessage;
         }
+
         function addMessage(text, type) {
             const chatContainer = document.getElementById('chatContainer');
             const wrapper = document.createElement('div');
             
-            // **텍스트** 형식을 <strong>텍스트</strong>로 변환
             if (type === 'bot') {
                 text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             }
