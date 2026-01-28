@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Otten Group - Quantum Computing Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            background: rgba(20, 20, 30, 0.95);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.1);
+            overflow: hidden;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 14px 16px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .header.compact {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .header.compact .bot-avatar {
+            width: 28px;
+            height: 28px;
+        }
+
+        .header.compact .header-text h1 {
+            font-size: 0.9em;
+            margin-bottom: 0;
+        }
+
+        .header.compact .header-text p {
+            display: none;
+        }
+
+        .header.compact .reset-button {
+            padding: 5px 8px;
+            font-size: 0.7em;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .bot-avatar {
+            width: 38px;
+            height: 38px;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header-text {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            min-width: 0;
+            cursor: pointer;
+        }
+
+        .header h1 {
+            color: #00ffff;
+            font-size: 1.15em;
+            margin-bottom: 2px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+        }
+
+        .header p {
+            color: #b0b0b0;
+            font-size: 0.7em;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 4px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            animation: statusBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .reset-button {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(0, 255, 255, 0.2) 100%);
+            border: 1.5px solid rgba(138, 43, 226, 0.4);
+            color: #b19cd9;
+            padding: 7px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.75em;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(138, 43, 226, 0.15);
+            flex-shrink: 0;
+        }
+
+        .reset-button:hover {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.35) 0%, rgba(0, 255, 255, 0.35) 100%);
+            border-color: #8a2be2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(138, 43, 226, 0.3);
+        }
+
+        .reset-button:active {
+            transform: translateY(0);
+        }
+
+        .reset-icon {
+            font-size: 1.05em;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
+            padding: 14px;
+            padding-top: 70px;
+            padding-bottom: 80px;
+            background: rgba(10, 10, 15, 0.5);
+            -webkit-overflow-scrolling: touch;
+            min-height: 0;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00ffff 0%, #8a2be2 100%);
+            border-radius: 10px;
+        }
+
+        .message-wrapper {
+            margin-bottom: 14px;
+            animation: slideIn 0.4s ease-out;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        .bot-message-wrapper {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .user-message-wrapper {
+            flex-direction: row-reverse;
+            align-items: flex-start;
+        }
+        .bot-message ul, .bot-message ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .bot-message li {
+            margin: 4px 0;
+            line-height: 1.6;
+        }
+
+        .bot-message ul {
+            list-style-type: disc;
+        }
+
+        .bot-message ol {
+            list-style-type: decimal;
+        }
+
+        .bot-message {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+            padding: 11px 13px;
+            border-radius: 15px 15px 15px 4px;
+            border-left: 3px solid #00ffff;
+            color: #e0e0e0;
+            line-height: 1.55;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+            max-width: calc(100% - 38px);
+            font-size: 0.88em;
+            flex: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .bot-message .name {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(0, 255, 255, 0.1) 100%);
+            padding: 10px 13px;
+            border-radius: 15px 15px 4px 15px;
+            border-right: 3px solid #8a2be2;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.15);
+            max-width: calc(100% - 38px);
+            font-size: 0.88em;
+            line-height: 1.55;
+            flex: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .related-questions {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 255, 255, 0.15);
+        }
+
+        .related-questions-title {
+            color: #00ffff;
+            font-size: 0.75em;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .related-question {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15) 0%, rgba(0, 255, 255, 0.1) 100%);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            color: #b19cd9;
+            font-size: 0.8em;
+            margin: 3px 4px 3px 0;
+            padding: 5px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .related-question:hover {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.25) 0%, rgba(0, 255, 255, 0.2) 100%);
+            border-color: #8a2be2;
+            color: #00ffff;
+            transform: translateY(-1px);
+        }
+
+        .related-question:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .typing-indicator {
+            display: flex;
+            padding: 11px 14px;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 15px;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-7px); }
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 12px 14px 10px;
+        }
+
+        .welcome-qubit {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 12px;
+        }
+
+        .welcome-message h2 {
+            color: #00ffff;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            font-weight: 600;
+        }
+
+        .welcome-message p {
+            color: #999;
+            font-size: 0.85em;
+            line-height: 1.4;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .quick-faqs {
+            margin-top: 12px;
+            margin-bottom: 10px;
+        }
+
+        .faq-header {
+            color: #00ffff;
+            font-size: 0.75em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.9;
+            font-weight: 500;
+            padding: 0 4px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 7px;
+        }
+
+        .faq-chip {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.08) 0%, rgba(138, 43, 226, 0.08) 100%);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            color: #00ffff;
+            padding: 10px 12px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8em;
+            text-align: left;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .faq-chip:active {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
+            border-color: #00ffff;
+            transform: scale(0.98);
+        }
+
+        .suggested-questions {
+            margin-top: 12px;
+        }
+
+        .suggestions-header {
+            color: #8a2be2;
+            font-size: 0.75em;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.9;
+            font-weight: 500;
+            padding: 0 4px;
+        }
+
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .suggestion-chip {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.06) 0%, rgba(0, 255, 255, 0.06) 100%);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            color: #b19cd9;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.75em;
+            text-align: left;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .suggestion-chip:active {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.12) 0%, rgba(0, 255, 255, 0.12) 100%);
+            border-color: #8a2be2;
+            transform: scale(0.98);
+        }
+
+        .input-container {
+            padding: 10px 12px;
+            background: rgba(10, 10, 15, 0.98);
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+            flex-shrink: 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            width: 100%;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        #userInput {
+            width: 100%;
+            background: rgba(30, 30, 45, 0.8);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 11px;
+            padding: 10px 12px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            resize: none;
+            max-height: 90px;
+            min-height: 42px;
+            line-height: 1.35;
+            transition: all 0.3s ease;
+        }
+
+        #userInput:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        #userInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .send-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .send-button:active::before {
+            width: 70px;
+            height: 70px;
+        }
+
+        .send-button:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-button svg {
+            width: 19px;
+            height: 19px;
+            fill: #fff;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 100, 100, 0.1) 100%);
+            border-left: 3px solid #ff4444;
+            padding: 11px 13px;
+            border-radius: 11px;
+            color: #ffaaaa;
+            font-size: 0.82em;
+            margin: 10px 0;
+            word-wrap: break-word;
+        }
+
+        strong {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+
+        a:hover {
+            border-bottom-color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .footer {
+            padding: 8px;
+            text-align: center;
+            background: rgba(10, 10, 15, 0.5);
+            border-top: 1px solid rgba(0, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.68em;
+            font-weight: 400;
+            flex-shrink: 0;
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+        }
+
+        @media (min-width: 769px) {
+            html {
+                position: static;
+                overflow: auto;
+            }
+            
+            body {
+                padding: 20px;
+                position: static;
+                width: auto;
+                height: auto;
+            }
+
+            .container {
+                max-width: 900px;
+                height: 90vh;
+                max-height: 800px;
+                border-radius: 20px;
+                border: 1px solid rgba(0, 255, 255, 0.1);
+                position: relative;
+            }
+            
+            .header {
+                position: absolute;
+                border-radius: 20px 20px 0 0;
+            }
+            
+            .input-container {
+                position: absolute;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .header {
+                padding: 20px 30px;
+                gap: 15px;
+            }
+
+            .header.compact {
+                padding: 12px 20px;
+            }
+
+            .header.compact .bot-avatar {
+                width: 35px;
+                height: 35px;
+            }
+
+            .header.compact .header-text h1 {
+                font-size: 1.1em;
+            }
+
+            .bot-avatar {
+                width: 50px;
+                height: 50px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+                margin-bottom: 3px;
+            }
+
+            .header p {
+                font-size: 0.85em;
+            }
+
+            .reset-button {
+                padding: 10px 18px;
+                font-size: 0.9em;
+                gap: 8px;
+            }
+
+            .chat-container {
+                padding: 25px;
+                padding-top: 90px;
+                padding-bottom: 100px;
+            }
+
+            .chat-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .message-wrapper {
+                margin-bottom: 20px;
+                gap: 12px;
+            }
+
+            .message-avatar {
+                width: 35px;
+                height: 35px;
+            }
+
+            .bot-message {
+                padding: 15px 18px;
+                border-radius: 18px 18px 18px 5px;
+                font-size: 0.95em;
+                line-height: 1.7;
+            }
+
+            .user-message {
+                padding: 12px 16px;
+                border-radius: 18px 18px 5px 18px;
+                font-size: 0.95em;
+            }
+
+            .related-question {
+                font-size: 0.85em;
+                padding: 6px 12px;
+            }
+
+            .welcome-message {
+                padding: 40px 20px 20px;
+            }
+
+            .welcome-qubit {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 25px;
+            }
+
+            .welcome-message h2 {
+                font-size: 1.6em;
+                margin-bottom: 12px;
+            }
+
+            .welcome-message p {
+                font-size: 0.95em;
+                margin-bottom: 15px;
+            }
+
+            .quick-faqs {
+                margin-top: 25px;
+                margin-bottom: 15px;
+            }
+
+            .faq-header {
+                font-size: 0.85em;
+                margin-bottom: 12px;
+                gap: 8px;
+            }
+
+            .faq-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .faq-chip {
+                padding: 10px 14px;
+                font-size: 0.85em;
+            }
+
+            .faq-chip:hover {
+                background: linear-gradient(135deg, rgba(0, 255, 255, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
+                border-color: #00ffff;
+                transform: translateX(5px);
+                box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            }
+
+            .suggested-questions {
+                margin-top: 20px;
+            }
+
+            .suggestions-header {
+                font-size: 0.8em;
+                margin-bottom: 10px;
+                gap: 8px;
+            }
+
+            .suggestions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .suggestion-chip {
+                padding: 8px 12px;
+            }
+
+            .suggestion-chip:hover {
+                background: linear-gradient(135deg, rgba(138, 43, 226, 0.12) 0%, rgba(0, 255, 255, 0.12) 100%);
+                border-color: #8a2be2;
+                transform: translateX(3px);
+                box-shadow: 0 3px 12px rgba(138, 43, 226, 0.25);
+            }
+
+            .input-container {
+                padding: 20px;
+                gap: 12px;
+            }
+
+            #userInput {
+                padding: 12px 16px;
+                font-size: 0.95em;
+                max-height: 120px;
+                min-height: 48px;
+            }
+
+            .send-button {
+                width: 48px;
+                height: 48px;
+            }
+
+            .send-button:hover:not(:disabled) {
+                transform: translateY(-2px) scale(1.05);
+                box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
+            }
+
+            .send-button:hover::before {
+                width: 100px;
+                height: 100px;
+            }
+
+            .send-button:active:not(:disabled) {
+                transform: translateY(0) scale(1.02);
+            }
+
+            .send-button svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .send-button:hover:not(:disabled) svg {
+                transform: translateX(2px);
+            }
+
+            .footer {
+                padding: 12px;
+                font-size: 0.75em;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            .container {
+                height: -webkit-fill-available;
+            }
+            
+            body {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            
+            .header {
+                position: fixed;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            
+            .input-container {
+                position: fixed;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header" id="mainHeader">
+            <svg class="bot-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.4">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="50" cy="50" r="22" fill="url(#qubitGradient)"/>
+                <defs>
+                    <linearGradient id="qubitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <circle cx="43" cy="47" r="3" fill="#000"/>
+                <circle cx="57" cy="47" r="3" fill="#000"/>
+                <path d="M 43 55 Q 50 60 57 55" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <circle cx="85" cy="50" r="4" fill="#ff00ff">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="15" cy="50" r="4" fill="#00ffff">
+                    <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+            <div class="header-text">
+                <h1>Qubit Assistant</h1>
+                <p><span class="status-indicator"></span>Otten Group @ UW–Madison</p>
+            </div>
+            <button class="reset-button" onclick="resetChat()">
+                <span class="reset-icon">↻</span>
+                <span>Reset</span>
+            </button>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome-message">
+                <svg class="welcome-qubit" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.3">
+                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="50" cy="50" r="28" fill="none" stroke="#8a2be2" stroke-width="1.5" opacity="0.3">
+                        <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="-180 50 50" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="50" cy="50" r="25" fill="url(#welcomeGradient)"/>
+                    <defs>
+                        <linearGradient id="welcomeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.9" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="42" cy="45" r="3.5" fill="#000"/>
+                    <circle cx="58" cy="45" r="3.5" fill="#000"/>
+                    <path d="M 42 54 Q 50 60 58 54" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <circle cx="25" cy="25" r="2" fill="#00ffff" opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="75" cy="30" r="2" fill="#ff00ff" opacity="0.8">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="70" cy="75" r="2" fill="#00ffff" opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                <h2>Hi! I'm Qubit</h2>
+                <p>Your friendly quantum guide to the Otten Group!</p>
+            </div>
+
+            <div class="quick-faqs">
+                <div class="faq-header">Quick Topics:</div>
+                <div class="faq-grid">
+                    <div class="faq-chip" onclick="answerFAQ('research')">
+                        Research Overview
+                    </div>
+                    <div class="faq-chip" onclick="answerFAQ('team')">
+                        Meet the Team
+                    </div>
+                    <div class="faq-chip" onclick="answerFAQ('chemistry')">
+                        Quantum Chemistry
+                    </div>
+                    <div class="faq-chip" onclick="answerFAQ('funding')">
+                        Funding & Madison
+                    </div>
+                    <div class="faq-chip" onclick="answerFAQ('phd')">
+                        PhD Opportunities
+                    </div>
+                    <div class="faq-chip" onclick="answerFAQ('apply')">
+                        How to Apply
+                    </div>
+                </div>
+            </div>
+
+            <div class="suggested-questions">
+                <div class="suggestions-header">Or ask freely:</div>
+                <div class="suggestions-grid">
+                    <div class="suggestion-chip" onclick="askQuestion('What\'s Madison like for grad students?')">
+                        Life in Madison
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-wrapper">
+                <textarea 
+                    id="userInput" 
+                    placeholder="Ask me anything!"
+                    rows="1"
+                    onkeydown="handleKeyPress(event)"
+                    oninput="autoResize(this)"
+                ></textarea>
+            </div>
+            <button class="send-button" onclick="sendMessage()" id="sendBtn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="footer">
+            © 2026 H.Koh
+        </div>
+    </div>
+
+    <script>
+    const FAQ_ANSWERS = {
+        research: {
+            answer: `We work on making utility-scale quantum computers a reality.<br><br><strong>Core Research Areas:</strong><br>• Quantum algorithms (VQE, error correction)<br>• Molecular simulations<br>• Quantum machine learning<br>• Testing on real hardware<br><br><strong>Key Collaborators:</strong><br>• Robert McDermott (UW–Madison Physics)<br>• Yuan Ping (UW–Madison MSE, Physics, Chemistry)<br>• Mark Saffman (UW–Madison Physics)<br>• Argonne National Lab researchers`
+        },
+
+        team: {
+            answer: `<strong>Principal Investigator:</strong><br><span class="name">Dr. Matthew Otten</span> - Assistant Professor, former Maria Goeppert Mayer Fellow at Argonne<br>Contact: mjotten@wisc.edu<br><br><strong>Postdoctoral Researchers:</strong><br>• <span class="name">Dr. Katerina Gratsea</span> - Quantum chemistry, FTQC, quantum ML<br>• <span class="name">Dr. Cody Poole</span> - Neutral atoms, QAOA, mid-circuit measurements<br>• <span class="name">Dr. Gavin Rockwood</span> - Entanglement, quantum field theory<br>• <span class="name">Dr. Hao Zhang</span> - Quantum algorithms, optimization, chemistry<br><br><strong>Graduate Students:</strong><br>Physics: Gage Erwin, Zeyu Fan, Natalie Hilliard, Zachary Jerzyk, Jihyeon Park, Colin Stewart, Jisoo Yu<br>Chemistry: Haejung Koh, Sarag Kunnumbrath, Atharva Vidwans`
+        },
+
+        chemistry: {
+            answer: `<strong>Quantum Chemistry Research:</strong><br>• Ground state energy estimation<br>• VQE with active space methods<br>• Quantum kernels for molecular properties<br>• Benchmarking on real devices<br><br><span class="name">Dr. Katerina Gratsea</span> and <span class="name">Dr. Hao Zhang</span> lead our quantum chemistry research. Your DFT/computational chemistry background translates directly to quantum molecular simulations!`
+        },
+
+        funding: {
+            answer: `<strong>Chicago Quantum Exchange:</strong><br>• $625M DOE funding (renewed 2025)<br>• Q-NEXT and SQMS quantum centers<br>• UW–Madison is a key member<br><br><strong>What This Means For You:</strong><br>• Strong PhD funding opportunities<br>• Access to cutting-edge quantum hardware<br>• Growing industry connections<br>• Affordable Madison living<br>• Beautiful campus on Lake Mendota`
+        },
+
+        phd: {
+            answer: `<strong>What We Look For:</strong><br>The most important thing is genuine curiosity and willingness to learn! We welcome students from diverse backgrounds.<br>• Research mindset & desire to learn<br>• Programming helpful (but can be learned)<br>• Chemistry/physics background welcome<br><br><strong>Lab Environment:</strong><br>• Flexible work hours<br>• Weekly group meetings<br>• Conference opportunities<br>• Practical research guidance<br><br><strong>Opportunities:</strong><br>The lab collaborates with Argonne National Lab, Qolab, and regional quantum startups. <span class="name">Dr. Otten</span> is very supportive of student interests—if you have a research topic you're passionate about, he's open to exploring it!<br><br><strong>Career Paths:</strong><br>• Quantum computing companies<br>• Academia & national labs<br>• Tech industry<br>• Startups`
+        },
+
+        apply: {
+            answer: `<strong>Application Steps:</strong><br><br>1. <strong>Email Dr. Otten</strong> (mjotten@wisc.edu)<br>   → Express interest & share background<br>   → Schedule a meeting<br><br>2. <strong>Complete Lab Rotation</strong><br>   → Experience the research firsthand<br><br>3. <strong>Apply to UW–Madison Chemistry PhD Lab Assignment</strong><br>   → Deadline: Mid-November or December 1st<br><br>💡 Early contact is strongly encouraged!`
+        }
+    };
+
+        const qubitSVG = `
+            <svg class="message-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.4">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="50" cy="50" r="22" fill="url(#msgQubitGradient)"/>
+                <defs>
+                    <linearGradient id="msgQubitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <circle cx="43" cy="47" r="3" fill="#000"/>
+                <circle cx="57" cy="47" r="3" fill="#000"/>
+                <path d="M 43 55 Q 50 60 57 55" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <circle cx="85" cy="50" r="4" fill="#ff00ff">
+                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="15" cy="50" r="4" fill="#00ffff">
+                    <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="3s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        `;
+
+        const userSVG = `
+            <svg class="message-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="30" fill="url(#userGradient)"/>
+                <defs>
+                    <linearGradient id="userGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#8a2be2;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#ff00ff;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <text x="50" y="65" font-size="40" text-anchor="middle" fill="#fff">👤</text>
+            </svg>
+        `;
+
+        let conversationHistory = [];
+        let isHeaderCompact = false;
+
+        // Header toggle functionality
+        document.getElementById('mainHeader').addEventListener('click', function(e) {
+            // Check if clicked on logo or title (not reset button)
+            if (e.target.closest('.bot-avatar') || e.target.closest('.header-text')) {
+                resetChat();
+                return;
+            }
+            
+            // Expand header if compact and not clicking reset button
+            if (isHeaderCompact && !e.target.closest('.reset-button')) {
+                this.classList.remove('compact');
+                isHeaderCompact = false;
+            }
+        });
+
+        // Scroll listener to expand header when at top
+        let lastScrollTop = 0;
+        document.getElementById('chatContainer').addEventListener('scroll', function() {
+            const scrollTop = this.scrollTop;
+            
+            // If scrolled to top (within 5px), expand header
+            if (scrollTop < 5 && isHeaderCompact) {
+                document.getElementById('mainHeader').classList.remove('compact');
+                isHeaderCompact = false;
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Click on empty space to focus input
+        document.getElementById('chatContainer').addEventListener('click', function(e) {
+            // Only if clicking directly on chat-container (not on messages or other elements)
+            if (e.target === this) {
+                document.getElementById('userInput').focus();
+            }
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('userInput').focus();
+            }, 100);
+        });
+
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 90) + 'px';
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function askQuestion(question) {
+            document.getElementById('userInput').value = question;
+            sendMessage();
+        }
+
+        function answerFAQ(topic) {
+            const faqQuestions = {
+                research: "What does the Otten Group research?",
+                team: "Who are the people in the lab?",
+                chemistry: "Tell me about quantum chemistry research here",
+                funding: "What about funding and Madison?",
+                phd: "What are the PhD opportunities?",
+                apply: "How do I apply?"
+            };
+
+            removeWelcome();
+            compactHeader();
+            addMessage(faqQuestions[topic], 'user');
+            
+            setTimeout(() => {
+                const faqData = FAQ_ANSWERS[topic];
+                addMessage(faqData.answer, 'bot');
+            }, 300);
+        }
+
+        function compactHeader() {
+            const header = document.getElementById('mainHeader');
+            if (!isHeaderCompact) {
+                header.classList.add('compact');
+                isHeaderCompact = true;
+            }
+        }
+
+        function removeWelcome() {
+            const welcome = document.querySelector('.welcome-message');
+            if (welcome) welcome.remove();
+            const quickFaqs = document.querySelector('.quick-faqs');
+            if (quickFaqs) quickFaqs.remove();
+            const suggestions = document.querySelector('.suggested-questions');
+            if (suggestions) suggestions.remove();
+        }
+
+        function resetChat() {
+            conversationHistory = [];
+            const header = document.getElementById('mainHeader');
+            header.classList.remove('compact');
+            isHeaderCompact = false;
+            
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = `
+                <div class="welcome-message">
+                    <svg class="welcome-qubit" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.3">
+                            <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="50" cy="50" r="28" fill="none" stroke="#8a2be2" stroke-width="1.5" opacity="0.3">
+                            <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="-180 50 50" dur="10s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="50" cy="50" r="25" fill="url(#welcomeGradient)"/>
+                        <defs>
+                            <linearGradient id="welcomeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.9" />
+                                <stop offset="100%" style="stop-color:#8a2be2;stop-opacity:0.9" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="42" cy="45" r="3.5" fill="#000"/>
+                        <circle cx="58" cy="45" r="3.5" fill="#000"/>
+                        <path d="M 42 54 Q 50 60 58 54" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                        <circle cx="25" cy="25" r="2" fill="#00ffff" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="75" cy="30" r="2" fill="#ff00ff" opacity="0.8">
+                            <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="70" cy="75" r="2" fill="#00ffff" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                    <h2>Hi! I'm Qubit</h2>
+                    <p>Your friendly quantum guide to the Otten group</p>
+                </div>
+
+                <div class="quick-faqs">
+                    <div class="faq-header">Quick Topics:</div>
+                    <div class="faq-grid">
+                        <div class="faq-chip" onclick="answerFAQ('research')">
+                            Research Overview
+                        </div>
+                        <div class="faq-chip" onclick="answerFAQ('team')">
+                            Meet the Team
+                        </div>
+                        <div class="faq-chip" onclick="answerFAQ('chemistry')">
+                            Quantum Chemistry
+                        </div>
+                        <div class="faq-chip" onclick="answerFAQ('funding')">
+                            Funding & Madison
+                        </div>
+                        <div class="faq-chip" onclick="answerFAQ('phd')">
+                            PhD Opportunities
+                        </div>
+                        <div class="faq-chip" onclick="answerFAQ('apply')">
+                            How to Apply
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggested-questions">
+                    <div class="suggestions-header">Or ask freely:</div>
+                    <div class="suggestions-grid">
+                        <div class="suggestion-chip" onclick="askQuestion('What\\'s Madison like for grad students?')">
+                            Life in Madison
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            removeWelcome();
+            compactHeader();
+            addMessage(message, 'user');
+            input.value = '';
+            input.style.height = 'auto';
+
+            input.disabled = true;
+            document.getElementById('sendBtn').disabled = true;
+
+            const typingWrapper = document.createElement('div');
+            typingWrapper.className = 'message-wrapper bot-message-wrapper';
+            typingWrapper.id = 'typing-indicator';
+            typingWrapper.innerHTML = `
+                ${qubitSVG}
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.appendChild(typingWrapper);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            try {
+                console.log('Calling getChatResponse...');
+                const response = await getChatResponse(message);
+                console.log('Got response from getChatResponse:', response);
+                
+                typingWrapper.remove();
+                console.log('Adding message to UI...');
+                addMessage(response.answer, 'bot', response.relatedQuestions);
+                console.log('Message added to UI');
+            } catch (error) {
+                console.error('Error in sendMessage:', error);
+                console.error('Error stack:', error.stack);
+                typingWrapper.remove();
+                addMessage('Sorry, I encountered an error. Please try again or email Haejung Koh at h.koh@wisc.edu', 'error');
+            }
+
+            input.disabled = false;
+            document.getElementById('sendBtn').disabled = false;
+            input.focus();
+        }
+
+        async function getChatResponse(userMessage) {
+            console.log('=== Starting API Request ===');
+            console.log('User message:', userMessage);
+            
+            conversationHistory.push({
+                role: "user",
+                content: userMessage
+            });
+
+            const API_URL = "https://otten-chatbot.otten-uwmadison.workers.dev";
+
+            console.log('Sending request to:', API_URL);
+            console.log('Request body:', {
+                messagesCount: conversationHistory.length
+            });
+
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    messages: conversationHistory  // system 필드 제거!
+                })
+            });
+
+            if (!response.ok) {
+                console.error('API Response not OK:', response.status, response.statusText);
+                throw new Error(`API error: ${response.status}`);
+            }
+
+            console.log('API Response OK, parsing JSON...');
+            const data = await response.json();
+            console.log('Parsed data:', data);
+            
+            const assistantMessage = data.content[0].text;
+            console.log('Assistant message:', assistantMessage);
+
+            conversationHistory.push({
+                role: "assistant",
+                content: assistantMessage
+            });
+
+            console.log('=== API Request Complete ===');
+
+            return {
+                answer: assistantMessage,
+                relatedQuestions: null
+            };
+        }
+
+        function addMessage(text, type, relatedQuestions = null) {
+            const chatContainer = document.getElementById('chatContainer');
+            const wrapper = document.createElement('div');
+            
+            if (type === 'bot') {
+                // Format the text for better readability
+                text = formatBotMessage(text);
+            }
+            
+            if (type === 'user') {
+                wrapper.className = 'message-wrapper user-message-wrapper';
+                wrapper.innerHTML = `
+                    ${userSVG}
+                    <div class="user-message">${escapeHtml(text)}</div>
+                `;
+            } else if (type === 'error') {
+                wrapper.innerHTML = `<div class="error-message">${text}</div>`;
+            } else {
+                wrapper.className = 'message-wrapper bot-message-wrapper';
+                wrapper.innerHTML = `
+                    ${qubitSVG}
+                    <div class="bot-message">
+                        ${text}
+                    </div>
+                `;
+            }
+            
+            chatContainer.appendChild(wrapper);
+            setTimeout(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 50);
+        }
+
+        function formatBotMessage(text) {
+            // Convert **bold** to <strong>
+            text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            
+            // Convert bullet points (*, -, •) to proper HTML lists
+            text = text.replace(/^[\*\-•]\s+(.+)$/gm, '<li>$1</li>');
+            
+            // Wrap consecutive <li> items in <ul>
+            text = text.replace(/(<li>.*<\/li>\n?)+/g, match => {
+                return '<ul>' + match + '</ul>';
+            });
+            
+            // Convert numbered lists (1., 2., etc.) to proper HTML lists
+            text = text.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>');
+            text = text.replace(/(<li>.*<\/li>\n?)+/g, match => {
+                // Check if already wrapped in <ul>
+                if (!match.startsWith('<ul>')) {
+                    return '<ol>' + match + '</ol>';
+                }
+                return match;
+            });
+            
+            // Convert line breaks to paragraphs (but not inside lists)
+            const parts = text.split(/(<\/?[uo]l>)/);
+            for (let i = 0; i < parts.length; i++) {
+                if (!parts[i].match(/<\/?[uo]l>/)) {
+                    parts[i] = parts[i].replace(/\n\n+/g, '<br><br>');
+                    parts[i] = parts[i].replace(/\n/g, '<br>');
+                }
+            }
+            text = parts.join('');
+            
+            return text;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.addEventListener('touchstart', function() {}, {passive: true});
+    </script>
+</body>
+</html>
