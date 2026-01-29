@@ -1,4 +1,4 @@
-![alt text](qrcode.png)
+![alt text](/otten/public/qrcode.png)
 
 ## Request → Response Flow
 

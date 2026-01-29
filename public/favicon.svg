@@ -1,0 +1,27 @@
+<!-- Save as: favicon.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="faceGrad" x1="30%" y1="20%" x2="80%" y2="85%">
+      <stop offset="0%" stop-color="#00FFFF" stop-opacity="0.85"></stop>
+      <stop offset="100%" stop-color="#8A2BE2" stop-opacity="0.85"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer orbit ring -->
+  <circle cx="64" cy="64" r="52" fill="none" stroke="#00FFFF" stroke-width="3" opacity="0.45"></circle>
+
+  <!-- Face -->
+  <circle cx="64" cy="64" r="38" fill="url(#faceGrad)"></circle>
+
+  <!-- Eyes -->
+  <circle cx="52" cy="60" r="4" fill="#000"></circle>
+  <circle cx="76" cy="60" r="4" fill="#000"></circle>
+
+  <!-- Smile -->
+  <path d="M52 78 Q64 88 76 78" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"></path>
+
+  <!-- Orbit dots -->
+  <circle cx="30" cy="44" r="4" fill="#00FFFF" opacity="0.9"></circle>
+  <circle cx="98" cy="46" r="4" fill="#FF00FF" opacity="0.85"></circle>
+  <circle cx="38" cy="86" r="4" fill="#00FFFF" opacity="0.85"></circle>
+</svg>
