@@ -1009,7 +1009,7 @@
             <div class="suggested-questions">
                 <div class="suggestions-header">Or ask freely:</div>
                 <div class="suggestions-grid">
-                    <div class="suggestion-chip" onclick="askQuestion('What\'s Madison like for grad students?')">
+                    <div class="suggestion-chip" onclick="answerFAQ('madison')">
                         Life in Madison
                     </div>
                 </div>
@@ -1041,7 +1041,7 @@
     <script>
     const FAQ_ANSWERS = {
         research: {
-            answer: `We work on making utility-scale quantum computers a reality.<br><br><strong>Core Research Areas:</strong><br>• Quantum algorithms (VQE, error correction)<br>• Molecular simulations<br>• Quantum machine learning<br>• Testing on real hardware<br><br><strong>Key Collaborators:</strong><br>• Robert McDermott (UW–Madison Physics)<br>• Yuan Ping (UW–Madison MSE, Physics, Chemistry)<br>• Mark Saffman (UW–Madison Physics)<br>• Argonne National Lab researchers`
+            answer: `We work on making utility-scale quantum computers a reality.<br><br><strong>Core Research Areas:</strong><br>• Quantum Chemistry & Molecular Simulation - VQE, ground/excited state calculations, active space methods<br>• Quantum Error Correction - LDPC codes, fault-tolerant computing, GKP codes<br>• Quantum Machine Learning - Quantum kernels, hardware-efficient algorithms<br>• Quantum-Classical Co-design - Full-stack optimization, resource estimation<br>• Quantum Hardware & Control - Gate optimization, neutral atoms, qubit-resonator coupling<br>• Applied Quantum Computing - Catalysis, materials science, drug discovery<br><br><strong>Key Collaborators:</strong><br>• Robert McDermott (UW–Madison Physics)<br>• Yuan Ping (UW–Madison MSE, Physics, Chemistry)<br>• Mark Saffman (UW–Madison Physics)<br>• Argonne National Lab researchers`
         },
 
         team: {
@@ -1051,17 +1051,22 @@
         chemistry: {
             answer: `<strong>Quantum Chemistry Research:</strong><br>• Ground/Excited state energy estimation<br>• VQE with active space methods<br>• Quantum kernels for molecular properties<br>• Benchmarking on real devices<br><br><span class="name">Your DFT/computational chemistry background translates directly to quantum molecular simulations!`
         },
+        
         funding: {
             answer: `<strong>Research Funding (as of 2026):</strong><br>• National Science Foundation (NSF)<br>• U.S. Department of Energy (DOE)<br>• Defense Advanced Research Projects Agency (DARPA)<br>• U.S. Army Research Office (ARO)<br>• TitleTownTech (early-stage technology venture fund)<br>• U.S. Air Force Office of Scientific Research (AFOSR)<br><strong>Chicago Quantum Exchange (CQE):</strong><br>• Major multi-institution quantum research initiative supported by the U.S. Department of Energy (DOE)<br>• Home to flagship national quantum centers, including Q-NEXT and SQMS<br>• UW–Madison is a core and long-standing member of the CQE network<br><strong>Outlook:</strong><br>• Sustained federal investment and coordinated regional collaboration position the Chicago–Wisconsin corridor as a growing national hub for quantum science and technology<br>• Long-term growth driven by strong government support, increasing industry engagement, and deep integration across universities, national labs, and startups`
-            },
+        },
 
         phd: {
             answer: `<strong>What We Look For:</strong><br>The most important thing is genuine curiosity and willingness to do! We welcome students from diverse backgrounds.<br>• Research mindset & desire to do<br>• Programming helpful (but can be learned)<br>• Chemistry/physics background welcome<br><br><strong>Lab Environment:</strong><br>• Flexible work hours<br>• Weekly group meetings<br>• Conference opportunities<br>• Practical research guidance<br><br><strong>Opportunities:</strong><br>The lab collaborates with Argonne National Lab, Qolab, and regional quantum startups. <span class="name">Dr. Otten</span> is very supportive of student interests—if you have a research topic you're passionate about, he's open to exploring it!<br><br><strong>Career Paths:</strong><br>• Quantum computing companies<br>• Academia & national labs<br>• Tech industry<br>• Startups`
         },
+        
         apply: {
-        answer: `<strong>Application Steps:</strong><br><strong>1. Email Dr. Otten</strong> (mjotten@wisc.edu)<br>→ Express interest & share background<br>→ Schedule a meeting<br><strong>2. Complete Lab Rotation</strong><br>→ Experience the research firsthand<br><strong>3. Apply to UW–Madison Chemistry PhD Lab Assignment</strong><br>→ Deadline: Mid-November or December 1st<br>→ Details: <a href="https://chem.wisc.edu/joining-procedure-phd/" target="_blank" rel="noopener noreferrer">https://chem.wisc.edu/joining-procedure-phd/</a><br><span class="name">Early contact is strongly encouraged!</span>`
+            answer: `<strong>Application Steps:</strong><br><strong>1. Email Dr. Otten</strong> (mjotten@wisc.edu)<br>→ Express interest & share background<br>→ Schedule a meeting<br><strong>2. Complete Lab Rotation</strong><br>→ Experience the research firsthand<br><strong>3. Apply to UW–Madison Chemistry PhD Lab Assignment</strong><br>→ Deadline: Mid-November or December 1st<br>→ Details: <a href="https://chem.wisc.edu/joining-procedure-phd/" target="_blank" rel="noopener noreferrer">https://chem.wisc.edu/joining-procedure-phd/</a><br><span class="name">Early contact is strongly encouraged!</span>`
+        },
+        
+        madison: {
+            answer: `<strong>Madison Life for Grad Students:</strong><br><strong>The City:</strong><br>• Capital of Wisconsin, vibrant college town atmosphere<br>• Safe, clean, and very walkable/bikeable<br>• Four distinct seasons (be ready for cold winters!)<br>• Beautiful lakes (Mendota, Monona) perfect for summer activities<br><br><strong>Campus & Research:</strong><br>• Top-tier research facilities and libraries<br>• Strong quantum science community via Chicago Quantum Exchange<br>• Regular seminars, workshops, and conferences<br>• Access to Argonne National Lab collaborations<br><br><strong>Cost of Living:</strong><br>• Affordable compared to coastal cities<br>• Grad student stipend covers living expenses comfortably<br>• Great farmer's markets, local food scene<br><br><strong>Culture & Activities:</strong><br>• Live music venues, art museums, theater<br>• Outdoor recreation: hiking, biking, kayaking, skiing<br>• Football game days at Camp Randall (go Badgers!)<br>• Diverse international community<br><br><strong>Work-Life Balance:</strong><br>• Supportive academic environment<br>• Easy commute (most students bike year-round)<br>• Active grad student social scene<br><br><span class="name">Madison consistently ranks as one of the best cities for young professionals and students!</span>`
         }
-
     };
 
         const qubitSVG = `
@@ -1171,7 +1176,8 @@
                 chemistry: "Tell me about quantum chemistry research here",
                 funding: "What about funding and Madison?",
                 phd: "What are the PhD opportunities?",
-                apply: "How do I apply?"
+                apply: "How do I apply?",
+                madison: "What's Madison like for grad students?"
             };
 
             removeWelcome();
@@ -1268,7 +1274,7 @@
                 <div class="suggested-questions">
                     <div class="suggestions-header">Or ask freely:</div>
                     <div class="suggestions-grid">
-                        <div class="suggestion-chip" onclick="askQuestion('What\\'s Madison like for grad students?')">
+                        <div class="suggestion-chip" onclick="answerFAQ('madison')">
                             Life in Madison
                         </div>
                     </div>
